@@ -3,7 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Borrowing;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -15,7 +15,7 @@ class RecentBorrowingsTable extends TableWidget
 
   protected int|string|array $columnSpan = 'full';
 
-  protected static ?string $heading = 'Peminjaman Terbaru';
+  protected ?string $heading = 'Peminjaman Terbaru';
 
   public function table(Table $table): Table
   {
@@ -69,12 +69,6 @@ class RecentBorrowingsTable extends TableWidget
           ->falseIcon('heroicon-o-x-circle')
           ->trueColor('success')
           ->falseColor('danger'),
-      ])
-      ->actions([
-        Action::make('view')
-          ->label('Lihat')
-          ->url(fn(Borrowing $record) => route('filament.admin.resources.borrowings.view', $record))
-          ->icon('heroicon-o-eye'),
       ])
       ->paginated(false);
   }

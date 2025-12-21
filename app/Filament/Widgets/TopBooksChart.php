@@ -9,9 +9,9 @@ class TopBooksChart extends ChartWidget
 {
   protected static ?int $sort = 3;
 
-  protected static ?string $heading = 'Buku Terpopuler';
+  protected ?string $heading = 'Buku Terpopuler';
 
-  protected static ?string $maxHeight = '300px';
+  protected ?string $maxHeight = '300px';
 
   protected function getData(): array
   {
