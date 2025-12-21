@@ -24,9 +24,9 @@
 | Phase              | Status      | Days      |
 | ------------------ | ----------- | --------- |
 | Setup              | ✅ Complete | Day 1     |
-| Books & Categories | 🔲 Pending  | Day 2-3   |
-| Book Copies        | 🔲 Pending  | Day 4-5   |
-| User Catalog       | 🔲 Pending  | Day 6     |
+| Books & Categories | ✅ Complete | Day 2-3   |
+| Book Copies        | ✅ Complete | Day 4-5   |
+| User Catalog       | ✅ Complete | Day 6     |
 | Borrowing System   | 🔲 Pending  | Day 7-9   |
 | Fees & Fines       | 🔲 Pending  | Day 10    |
 | Admin Dashboard    | 🔲 Pending  | Day 11    |
@@ -55,87 +55,91 @@
 
 ---
 
-## Day 2-3: Books & Categories 🔲
+## Day 2-3: Books & Categories ✅
 
 ### Category Management
 
--   [ ] Create CategorySeeder with sample data
--   [ ] Create CategoryResource (Filament)
-    -   [ ] List: name, description, books count
-    -   [ ] Form: name (required), description (optional)
-    -   [ ] Actions: create, edit, delete
+-   [x] Create CategorySeeder with sample data (8 categories)
+-   [x] Create CategoryResource (Filament)
+    -   [x] List: name, description, books count
+    -   [x] Form: name (required), description (optional)
+    -   [x] Indonesian labels (Nama Kategori, Deskripsi)
 
 ### Book Management
 
--   [ ] Create BookResource (Filament)
-    -   [ ] List: title, author, category, rental_fee, available/total copies
-    -   [ ] Form: title, author, category (dropdown), isbn, description, rental_fee, copies_count
-    -   [ ] Search: by title, author
-    -   [ ] Filter: by category, availability
-    -   [ ] Sort: by title, author, times_borrowed
+-   [x] Create BookResource (Filament)
+    -   [x] List: title, author, category, rental_fee, available/total copies
+    -   [x] Form: title, author, category (dropdown), description, rental_fee, copies_count
+    -   [x] Search: by title, author
+    -   [x] Indonesian labels (Judul, Penulis, Kategori, Biaya Sewa, Eksemplar)
+-   [x] Remove ISBN field (tidak diperlukan)
+-   [x] Create AdminSeeder for default admin user
 
-**Files to Create:**
+**Files Created:**
 
--   `app/Filament/Resources/CategoryResource.php`
--   `app/Filament/Resources/BookResource.php`
+-   `app/Filament/Resources/Categories/` - CategoryResource + pages
+-   `app/Filament/Resources/Books/` - BookResource + pages
 -   `database/seeders/CategorySeeder.php`
+-   `database/seeders/AdminSeeder.php`
 
 ---
 
-## Day 4-5: Book Copies 🔲
+## Day 4-5: Book Copies ✅
 
 ### Copy Management
 
--   [ ] Implement auto-generate copy codes (format: BK001-C01, BK001-C02)
--   [ ] Create CopiesRelationManager for BookResource
-    -   [ ] List: copy_code, status, notes
-    -   [ ] Actions: create, edit, update status
--   [ ] Auto-create copies when book is created
--   [ ] Update `available_copies` on Book when copy status changes
--   [ ] Create BookCopyResource (optional, for standalone view)
+-   [x] Implement auto-generate copy codes (format: BK001-C01, BK001-C02)
+-   [x] Create CopiesRelationManager for BookResource
+    -   [x] List: copy_code, status, notes
+    -   [x] Actions: create, edit, delete
+    -   [x] Indonesian labels (Kode Eksemplar, Status, Catatan)
+-   [x] Auto-create copies when book is created
+-   [x] Update `available_copies` on Book when copy status changes
 
 ### Copy Status Logic
 
--   [ ] Available → Borrowed (when borrowed)
--   [ ] Borrowed → Available (when returned)
--   [ ] Maintenance status (manual)
--   [ ] Lost status (manual)
+-   [x] Status options: Tersedia, Dipinjam, Perawatan, Hilang
+-   [x] Color badges for each status
+-   [x] Sync counts on create/edit/delete
 
-**Files to Create:**
+**Files Created:**
 
--   `app/Filament/Resources/BookResource/RelationManagers/CopiesRelationManager.php`
--   `app/Observers/BookCopyObserver.php` (for status sync)
+-   `app/Filament/Resources/Books/RelationManagers/CopiesRelationManager.php`
+-   Updated `app/Filament/Resources/Books/Pages/CreateBook.php` with afterCreate hook
 
 ---
 
-## Day 6: User Catalog 🔲
+## Day 6: User Catalog ✅
 
 ### Catalog Controller
 
--   [ ] Create CatalogController
-    -   [ ] index() - list books with filters
-    -   [ ] show() - book detail
+-   [x] Create CatalogController
+    -   [x] index() - list books with search & filter
+    -   [x] show() - book detail with borrow form
 
 ### Catalog Views
 
--   [ ] Create `resources/views/catalog/index.blade.php`
-    -   [ ] Book grid/list view
-    -   [ ] Search input (title/author)
-    -   [ ] Category dropdown filter
-    -   [ ] Availability filter toggle
-    -   [ ] Pagination
--   [ ] Create `resources/views/catalog/show.blade.php`
-    -   [ ] Book info (title, author, category, description)
-    -   [ ] Rental fee display
-    -   [ ] Availability badge
-    -   [ ] "Borrow" button (if available)
+-   [x] Create `resources/views/catalog/index.blade.php`
+    -   [x] Book grid view with cards
+    -   [x] Search input (title/author)
+    -   [x] Category dropdown filter
+    -   [x] Show all toggle (including out of stock)
+    -   [x] Pagination
+    -   [x] Indonesian labels
+-   [x] Create `resources/views/catalog/show.blade.php`
+    -   [x] Book info (title, author, category, description)
+    -   [x] Rental fee display
+    -   [x] Availability stats
+    -   [x] "Pinjam Buku" button with duration selector
 
 ### Routes
 
--   [ ] GET `/catalog` → catalog.index
--   [ ] GET `/catalog/{book}` → catalog.show
+-   [x] GET `/catalog` → catalog.index
+-   [x] GET `/catalog/{book}` → catalog.show
+-   [x] Home `/` redirects to catalog
+-   [x] Updated navigation with "Katalog" link
 
-**Files to Create:**
+**Files Created:**
 
 -   `app/Http/Controllers/CatalogController.php`
 -   `resources/views/catalog/index.blade.php`
