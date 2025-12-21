@@ -2,7 +2,7 @@
 
 ## Overview
 
-The admin panel is built using **Laravel Filament v3**, providing a modern, feature-rich CMS out of the box.
+The admin panel is built using **Laravel Filament v4**, providing a modern, feature-rich CMS out of the box.
 
 ### Why Filament?
 
@@ -19,7 +19,7 @@ The admin panel is built using **Laravel Filament v3**, providing a modern, feat
 
 ```bash
 # Install Filament
-composer require filament/filament:"^3.2"
+composer require filament/filament
 
 # Install panel
 php artisan filament:install --panels

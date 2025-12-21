@@ -64,9 +64,9 @@ database/
 
 ```json
 {
-    "laravel/framework": "^10.0",
+    "laravel/framework": "^11.0",
     "laravel/breeze": "^1.0",
-    "filament/filament": "^3.0"
+    "filament/filament": "^4.0"
 }
 ```
 
