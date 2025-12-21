@@ -15,7 +15,7 @@ class RecentBorrowingsTable extends TableWidget
 
   protected int|string|array $columnSpan = 'full';
 
-  protected ?string $heading = 'Peminjaman Terbaru';
+  protected static ?string $heading = 'Peminjaman Terbaru';
 
   public function table(Table $table): Table
   {
