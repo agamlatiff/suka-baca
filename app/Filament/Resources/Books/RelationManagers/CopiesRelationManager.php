@@ -8,11 +8,11 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\CreateAction;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -99,7 +99,7 @@ class CopiesRelationManager extends RelationManager
       ->headerActions([
         CreateAction::make()
           ->label('Tambah Eksemplar')
-          ->mutateFormDataUsing(function (array $data): array {
+          ->mutateDataUsing(function (array $data): array {
             $book = $this->getOwnerRecord();
             $nextNumber = $book->copies()->count() + 1;
             $data['copy_code'] = sprintf('BK%03d-C%02d', $book->id, $nextNumber);
@@ -110,7 +110,7 @@ class CopiesRelationManager extends RelationManager
             $this->syncBookCopyCounts();
           }),
       ])
-      ->actions([
+      ->rowActions([
         EditAction::make()
           ->label('Edit')
           ->after(function () {

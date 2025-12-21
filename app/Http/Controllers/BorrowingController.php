@@ -7,9 +7,11 @@ use App\Models\Book;
 use App\Models\BookCopy;
 use App\Models\Borrowing;
 use App\Models\Setting;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class BorrowingController extends Controller
@@ -19,7 +21,8 @@ class BorrowingController extends Controller
    */
   public function index(Request $request): View
   {
-    $user = auth()->user();
+    /** @var User $user */
+    $user = Auth::user();
 
     // Get active borrowings
     $activeBorrowings = Borrowing::with(['book', 'bookCopy'])
@@ -46,7 +49,8 @@ class BorrowingController extends Controller
    */
   public function store(BorrowBookRequest $request): RedirectResponse
   {
-    $user = auth()->user();
+    /** @var User $user */
+    $user = Auth::user();
     $book = Book::findOrFail($request->book_id);
     $duration = (int) $request->duration;
 

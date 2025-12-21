@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Book;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BorrowBookRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class BorrowBookRequest extends FormRequest
    */
   public function authorize(): bool
   {
-    return auth()->check();
+    return Auth::check();
   }
 
   /**

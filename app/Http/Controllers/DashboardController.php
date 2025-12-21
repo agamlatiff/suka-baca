@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Borrowing;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -13,7 +15,8 @@ class DashboardController extends Controller
    */
   public function index(): View
   {
-    $user = auth()->user();
+    /** @var User $user */
+    $user = Auth::user();
 
     // Get active borrowings
     $activeBorrowings = Borrowing::with(['book', 'bookCopy'])
