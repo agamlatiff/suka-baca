@@ -248,7 +248,7 @@
 
 ## 6. Tech Stack (Simple)
 
--   **Laravel 10** + **MySQL**
+-   **Laravel 11** + **MySQL**
 -   **Laravel Breeze** (auth scaffolding)
 -   **Laravel Filament** (admin panel CMS)
 -   **Blade + Tailwind CSS** (no JS framework)

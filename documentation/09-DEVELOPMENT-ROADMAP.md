@@ -26,7 +26,7 @@
 
 ### Day 1: Project Setup
 
--   [ ] Install Laravel 10
+-   [ ] Install Laravel 11
 -   [ ] Configure MySQL database
 -   [ ] Install Laravel Breeze
 -   [ ] Install Laravel Filament

@@ -4,7 +4,7 @@
 
 | Layer             | Technology           | Purpose                    |
 | ----------------- | -------------------- | -------------------------- |
-| **Backend**       | Laravel 10           | PHP framework, API & logic |
+| **Backend**       | Laravel 11           | PHP framework, API & logic |
 | **Database**      | MySQL                | Data persistence           |
 | **Auth**          | Laravel Breeze       | Authentication scaffolding |
 | **Admin Panel**   | Laravel Filament     | CMS & admin dashboard      |
