@@ -18,7 +18,6 @@ return new class extends Migration
       $table->foreignId('category_id')
         ->constrained('categories')
         ->restrictOnDelete();
-      $table->string('isbn', 20)->nullable()->unique();
       $table->text('description')->nullable();
       $table->unsignedInteger('total_copies')->default(0);
       $table->unsignedInteger('available_copies')->default(0);

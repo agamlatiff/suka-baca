@@ -20,7 +20,6 @@ class Book extends Model
     'title',
     'author',
     'category_id',
-    'isbn',
     'description',
     'rental_fee',
     'total_copies',

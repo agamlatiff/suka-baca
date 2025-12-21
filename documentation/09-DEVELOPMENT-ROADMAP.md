@@ -4,172 +4,371 @@
 
 **Total Estimated Duration:** 13 working days (~2.5 weeks)
 
----
+## Language Convention
 
-## Phase 1: MVP Development
+| Area            | Language             | Example                                 |
+| --------------- | -------------------- | --------------------------------------- |
+| **Code**        | English              | `$book->title`, `function getLateFee()` |
+| **Database**    | English              | `books`, `category_id`, `borrowed_at`   |
+| **UI/Labels**   | **Bahasa Indonesia** | "Judul Buku", "Tanggal Pinjam", "Denda" |
+| **Messages**    | **Bahasa Indonesia** | "Buku berhasil dipinjam!"               |
+| **Admin Panel** | **Bahasa Indonesia** | Menu, form labels, notifications        |
 
-| Day   | Module             | Tasks                                               | Estimated Time |
-| ----- | ------------------ | --------------------------------------------------- | -------------- |
-| 1     | Setup              | Laravel install, Breeze, Filament, Database config  | 1 day          |
-| 2-3   | Books & Categories | CRUD books, categories, Filament resources          | 2 days         |
-| 4-5   | Book Copies        | Copy management, auto-generate IDs, status tracking | 1.5 days       |
-| 6     | User Catalog       | Book list, search, filter, detail page              | 1 day          |
-| 7-9   | Borrowing          | Borrow flow, return process, status management      | 3 days         |
-| 10    | Fees & Fines       | Rental fee, late fee calculation, payment marking   | 1 day          |
-| 11    | Admin Dashboard    | Statistics widgets, recent borrowings, top books    | 1 day          |
-| 12    | User Dashboard     | Active borrowings, history, fees display            | 1 day          |
-| 13-14 | Testing            | Manual testing, bug fixes, polish                   | 1.5 days       |
+> **Target Market:** Indonesia  
+> **Semua teks yang tampil ke pengguna harus dalam Bahasa Indonesia.**
 
 ---
 
-## Detailed Task Breakdown
+## Progress Overview
 
-### Day 1: Project Setup
+| Phase              | Status      | Days      |
+| ------------------ | ----------- | --------- |
+| Setup              | ✅ Complete | Day 1     |
+| Books & Categories | 🔲 Pending  | Day 2-3   |
+| Book Copies        | 🔲 Pending  | Day 4-5   |
+| User Catalog       | 🔲 Pending  | Day 6     |
+| Borrowing System   | 🔲 Pending  | Day 7-9   |
+| Fees & Fines       | 🔲 Pending  | Day 10    |
+| Admin Dashboard    | 🔲 Pending  | Day 11    |
+| User Dashboard     | 🔲 Pending  | Day 12    |
+| Testing & Polish   | 🔲 Pending  | Day 13-14 |
 
--   [ ] Install Laravel 11
--   [ ] Configure MySQL database
--   [ ] Install Laravel Breeze
--   [ ] Install Laravel Filament
--   [ ] Set up Tailwind CSS
--   [ ] Create initial migrations
--   [ ] Create admin seeder
+---
 
-### Day 2-3: Books & Categories
+## Day 1: Project Setup ✅
 
--   [ ] Create Category model, migration, seeder
--   [ ] Create Book model, migration
+-   [x] Install Laravel 11
+-   [x] Configure MySQL database
+-   [x] Install Laravel Breeze
+-   [x] Install Laravel Filament v4
+-   [x] Set up Tailwind CSS
+-   [x] Create initial migrations (users, categories, books, book_copies, borrowings)
+-   [x] Create Setting model and migration
+-   [x] Add rental_fee migration to books
+-   [x] Create all Eloquent models (User, Book, Category, BookCopy, Borrowing, Setting)
+
+**Files Created:**
+
+-   `database/migrations/` - 7 migration files
+-   `app/Models/` - 6 model files
+-   `app/Providers/Filament/AdminPanelProvider.php`
+
+---
+
+## Day 2-3: Books & Categories 🔲
+
+### Category Management
+
+-   [ ] Create CategorySeeder with sample data
 -   [ ] Create CategoryResource (Filament)
+    -   [ ] List: name, description, books count
+    -   [ ] Form: name (required), description (optional)
+    -   [ ] Actions: create, edit, delete
+
+### Book Management
+
 -   [ ] Create BookResource (Filament)
--   [ ] Implement book form with category dropdown
--   [ ] Add search and filter to book list
+    -   [ ] List: title, author, category, rental_fee, available/total copies
+    -   [ ] Form: title, author, category (dropdown), isbn, description, rental_fee, copies_count
+    -   [ ] Search: by title, author
+    -   [ ] Filter: by category, availability
+    -   [ ] Sort: by title, author, times_borrowed
 
-### Day 4-5: Book Copies
+**Files to Create:**
 
--   [ ] Create BookCopy model, migration
--   [ ] Implement copy auto-generation
--   [ ] Add copy code format (BK001-C01)
--   [ ] Create CopiesRelationManager
--   [ ] Track copy status (available/borrowed)
--   [ ] Update available_copies on book
+-   `app/Filament/Resources/CategoryResource.php`
+-   `app/Filament/Resources/BookResource.php`
+-   `database/seeders/CategorySeeder.php`
 
-### Day 6: User Catalog
+---
+
+## Day 4-5: Book Copies 🔲
+
+### Copy Management
+
+-   [ ] Implement auto-generate copy codes (format: BK001-C01, BK001-C02)
+-   [ ] Create CopiesRelationManager for BookResource
+    -   [ ] List: copy_code, status, notes
+    -   [ ] Actions: create, edit, update status
+-   [ ] Auto-create copies when book is created
+-   [ ] Update `available_copies` on Book when copy status changes
+-   [ ] Create BookCopyResource (optional, for standalone view)
+
+### Copy Status Logic
+
+-   [ ] Available → Borrowed (when borrowed)
+-   [ ] Borrowed → Available (when returned)
+-   [ ] Maintenance status (manual)
+-   [ ] Lost status (manual)
+
+**Files to Create:**
+
+-   `app/Filament/Resources/BookResource/RelationManagers/CopiesRelationManager.php`
+-   `app/Observers/BookCopyObserver.php` (for status sync)
+
+---
+
+## Day 6: User Catalog 🔲
+
+### Catalog Controller
 
 -   [ ] Create CatalogController
--   [ ] Create catalog index view
--   [ ] Implement search by title/author
--   [ ] Add category filter
--   [ ] Show availability status
--   [ ] Create book detail view
+    -   [ ] index() - list books with filters
+    -   [ ] show() - book detail
 
-### Day 7-9: Borrowing System
+### Catalog Views
 
--   [ ] Create Borrowing model, migration
--   [ ] Implement borrow action on catalog
--   [ ] Auto-assign available copy
--   [ ] Generate borrowing code
--   [ ] Calculate due date (7/14 days)
--   [ ] Create BorrowingResource (Filament)
--   [ ] Implement return action
--   [ ] Update copy status on return
--   [ ] Increment times_borrowed counter
--   [ ] Handle overdue detection
+-   [ ] Create `resources/views/catalog/index.blade.php`
+    -   [ ] Book grid/list view
+    -   [ ] Search input (title/author)
+    -   [ ] Category dropdown filter
+    -   [ ] Availability filter toggle
+    -   [ ] Pagination
+-   [ ] Create `resources/views/catalog/show.blade.php`
+    -   [ ] Book info (title, author, category, description)
+    -   [ ] Rental fee display
+    -   [ ] Availability badge
+    -   [ ] "Borrow" button (if available)
 
-### Day 10: Fees & Fines
+### Routes
 
--   [ ] Add fee columns to borrowings
--   [ ] Implement rental fee setting
--   [ ] Calculate late fee automatically
--   [ ] Display fees on user dashboard
--   [ ] Add "Mark as Paid" action
--   [ ] Show unpaid borrowings
+-   [ ] GET `/catalog` → catalog.index
+-   [ ] GET `/catalog/{book}` → catalog.show
 
-### Day 11: Admin Dashboard
+**Files to Create:**
+
+-   `app/Http/Controllers/CatalogController.php`
+-   `resources/views/catalog/index.blade.php`
+-   `resources/views/catalog/show.blade.php`
+
+---
+
+## Day 7-9: Borrowing System 🔲
+
+### Borrowing Controller
+
+-   [ ] Create BorrowingController
+    -   [ ] store() - create new borrowing
+    -   [ ] index() - user's borrowings
+-   [ ] Create BorrowBookRequest (form validation)
+
+### Borrow Flow (User)
+
+-   [ ] User clicks "Borrow" on book detail
+-   [ ] Select duration (7 or 14 days modal/form)
+-   [ ] System auto-assigns available copy
+-   [ ] Generate borrowing code (BRW-YYYYMMDD-XXX)
+-   [ ] Calculate due date
+-   [ ] Set rental_fee from book.rental_fee
+-   [ ] Update copy status to 'borrowed'
+-   [ ] Decrement book.available_copies
+-   [ ] Redirect to my-borrowings with success message
+
+### Borrowing Resource (Filament Admin)
+
+-   [ ] Create BorrowingResource
+    -   [ ] List: code, user, book, copy, dates, status, fees, is_paid
+    -   [ ] Filters: status (active/returned/overdue), is_paid
+    -   [ ] Actions: Return, Mark as Paid
+
+### Return Flow (Admin)
+
+-   [ ] Admin clicks "Return" action
+-   [ ] Calculate late_fee if overdue
+-   [ ] Update total_fee
+-   [ ] Set returned_at = today
+-   [ ] Set status = 'returned'
+-   [ ] Update copy status to 'available'
+-   [ ] Increment book.available_copies
+-   [ ] Increment book.times_borrowed
+
+### User Borrowings View
+
+-   [ ] Create `resources/views/borrowings/index.blade.php`
+    -   [ ] Active borrowings list
+    -   [ ] Status badge (Active/Returned/Overdue)
+    -   [ ] Days remaining display
+    -   [ ] Fee information
+    -   [ ] History tab/section
+
+**Files to Create:**
+
+-   `app/Http/Controllers/BorrowingController.php`
+-   `app/Http/Requests/BorrowBookRequest.php`
+-   `app/Filament/Resources/BorrowingResource.php`
+-   `resources/views/borrowings/index.blade.php`
+
+---
+
+## Day 10: Fees & Fines 🔲
+
+### Settings Resource (Filament)
+
+-   [ ] Create SettingResource
+    -   [ ] List: key, value, description
+    -   [ ] Form: key (readonly), value (editable)
+    -   [ ] Seed default values if not exist
+
+### Fee Calculation
+
+-   [ ] Implement LateFeeCalculator service/helper
+-   [ ] Auto-calculate on return:
+    -   `days_late = max(0, returned_at - due_date)`
+    -   `late_fee = days_late × Setting::getLateFeePerDay()`
+    -   `total_fee = rental_fee + late_fee`
+
+### Payment Marking
+
+-   [ ] "Mark as Paid" action in BorrowingResource
+-   [ ] Show unpaid count badge on dashboard
+-   [ ] Filter by payment status
+
+### Fee Display
+
+-   [ ] Show fees on user's borrowing list
+-   [ ] Show total outstanding fees on user dashboard
+
+**Files to Create:**
+
+-   `app/Filament/Resources/SettingResource.php`
+-   `database/seeders/SettingSeeder.php`
+
+---
+
+## Day 11: Admin Dashboard 🔲
+
+### Dashboard Widgets (Filament)
 
 -   [ ] Create StatsOverview widget
--   [ ] Show total books, copies, available
--   [ ] Show active borrowings count
--   [ ] Create RecentBorrowings widget
--   [ ] Create TopBooks widget
+    -   [ ] Total Books (titles)
+    -   [ ] Total Copies
+    -   [ ] Available Copies
+    -   [ ] Borrowed Copies
+    -   [ ] Total Users
+    -   [ ] Active Borrowings
+-   [ ] Create RecentBorrowingsTable widget
+    -   [ ] Last 10 borrowings
+    -   [ ] Quick actions
+-   [ ] Create TopBooksChart widget
+    -   [ ] Top 5 by times_borrowed
 -   [ ] Configure dashboard layout
 
-### Day 12: User Dashboard
+**Files to Create:**
 
--   [ ] Create user dashboard view
--   [ ] Display active borrowings
--   [ ] Show due dates and status
--   [ ] Calculate days remaining/overdue
--   [ ] Show total fees owed
--   [ ] Add borrowing history section
+-   `app/Filament/Widgets/StatsOverview.php`
+-   `app/Filament/Widgets/RecentBorrowingsTable.php`
+-   `app/Filament/Widgets/TopBooksChart.php`
 
-### Day 13-14: Testing & Polish
+---
 
--   [ ] Test registration flow
--   [ ] Test login/logout
+## Day 12: User Dashboard 🔲
+
+### Dashboard Controller
+
+-   [ ] Create DashboardController
+    -   [ ] index() - user dashboard data
+
+### Dashboard View
+
+-   [ ] Create `resources/views/dashboard.blade.php`
+    -   [ ] Active borrowings card
+    -   [ ] Due soon alert (< 3 days)
+    -   [ ] Overdue warning
+    -   [ ] Outstanding fees total
+    -   [ ] Recent borrowing history
+
+**Files to Create/Update:**
+
+-   `app/Http/Controllers/DashboardController.php`
+-   `resources/views/dashboard.blade.php`
+
+---
+
+## Day 13-14: Testing & Polish 🔲
+
+### Functional Testing
+
+-   [ ] Test user registration
+-   [ ] Test user login/logout
 -   [ ] Test catalog browsing
+-   [ ] Test search and filters
 -   [ ] Test borrowing flow
 -   [ ] Test return process
--   [ ] Test fee calculations
--   [ ] Fix any bugs found
--   [ ] Polish UI/UX
+-   [ ] Test fee calculation
+-   [ ] Test payment marking
+-   [ ] Test admin dashboard
+-   [ ] Test user dashboard
+
+### Bug Fixes
+
+-   [ ] Fix any issues found during testing
+-   [ ] Edge cases (no copies, overdue, etc.)
+
+### UI/UX Polish
+
+-   [ ] Consistent styling across pages
+-   [ ] Loading states
+-   [ ] Error messages
+-   [ ] Success notifications
 -   [ ] Mobile responsive check
+
+### Final Checks
+
+-   [ ] All routes working
+-   [ ] All Filament resources complete
+-   [ ] Database seeding works
+-   [ ] Documentation up to date
 
 ---
 
 ## Milestones
 
-| Milestone | Target | Deliverable                         |
-| --------- | ------ | ----------------------------------- |
-| M1        | Day 3  | Admin can manage books & categories |
-| M2        | Day 6  | Users can browse catalog            |
-| M3        | Day 9  | Full borrowing flow working         |
-| M4        | Day 12 | All dashboards complete             |
-| M5        | Day 14 | MVP ready for deployment            |
+| Milestone | Target | Deliverable                         | Status |
+| --------- | ------ | ----------------------------------- | ------ |
+| M1        | Day 1  | Project setup complete              | ✅     |
+| M2        | Day 3  | Admin can manage books & categories | 🔲     |
+| M3        | Day 6  | Users can browse catalog            | 🔲     |
+| M4        | Day 9  | Full borrowing flow working         | 🔲     |
+| M5        | Day 12 | All dashboards complete             | 🔲     |
+| M6        | Day 14 | MVP ready for deployment            | 🔲     |
 
 ---
 
-## Sprint Structure (Suggested)
+## Quick Reference: Files to Create
 
-### Sprint 1 (Day 1-5): Foundation
+### Controllers
 
--   Setup & configuration
--   Core data models
--   Book management
+-   `app/Http/Controllers/CatalogController.php`
+-   `app/Http/Controllers/BorrowingController.php`
+-   `app/Http/Controllers/DashboardController.php`
 
-### Sprint 2 (Day 6-10): Core Features
+### Form Requests
 
--   User catalog
--   Borrowing system
--   Fee management
+-   `app/Http/Requests/BorrowBookRequest.php`
 
-### Sprint 3 (Day 11-14): Polish
+### Filament Resources
 
--   Dashboards
--   Testing
--   Bug fixes
+-   `app/Filament/Resources/CategoryResource.php`
+-   `app/Filament/Resources/BookResource.php`
+-   `app/Filament/Resources/BorrowingResource.php`
+-   `app/Filament/Resources/UserResource.php`
+-   `app/Filament/Resources/SettingResource.php`
 
----
+### Filament Widgets
 
-## Risk Mitigation
+-   `app/Filament/Widgets/StatsOverview.php`
+-   `app/Filament/Widgets/RecentBorrowingsTable.php`
+-   `app/Filament/Widgets/TopBooksChart.php`
 
-| Risk                    | Mitigation                       |
-| ----------------------- | -------------------------------- |
-| Scope creep             | Stick to MVP features only       |
-| Complex borrowing logic | Break into small steps           |
-| Filament learning curve | Use official docs, copy examples |
-| Integration issues      | Test each module independently   |
+### Views
 
----
+-   `resources/views/catalog/index.blade.php`
+-   `resources/views/catalog/show.blade.php`
+-   `resources/views/borrowings/index.blade.php`
+-   `resources/views/dashboard.blade.php`
 
-## Post-MVP Support
+### Seeders
 
-**Included (2 weeks after delivery):**
-
--   Bug fixes for issues found
--   Minor adjustments
--   Deployment support
-
-**Not Included:**
-
--   New feature development
--   Major UI changes
--   Server/hosting management
+-   `database/seeders/CategorySeeder.php`
+-   `database/seeders/SettingSeeder.php`
+-   `database/seeders/AdminSeeder.php`
