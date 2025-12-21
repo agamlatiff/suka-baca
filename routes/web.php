@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,9 @@ Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index
 Route::get('/catalog/{book}', [CatalogController::class, 'show'])->name('catalog.show');
 
 // Dashboard (authenticated users)
-Route::get('/dashboard', function () {
-    return redirect()->route('borrowings.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Authenticated user routes
 Route::middleware('auth')->group(function () {

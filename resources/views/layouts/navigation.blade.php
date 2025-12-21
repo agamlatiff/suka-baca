@@ -16,6 +16,9 @@
                         Katalog
                     </x-nav-link>
                     @auth
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            Dashboard
+                        </x-nav-link>
                         <x-nav-link :href="route('borrowings.index')" :active="request()->routeIs('borrowings.*')">
                             Peminjaman Saya
                         </x-nav-link>
@@ -76,6 +79,9 @@
                 Katalog
             </x-responsive-nav-link>
             @auth
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    Dashboard
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('borrowings.index')" :active="request()->routeIs('borrowings.*')">
                     Peminjaman Saya
                 </x-responsive-nav-link>

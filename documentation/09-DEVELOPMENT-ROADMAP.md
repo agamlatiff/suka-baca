@@ -30,7 +30,7 @@
 | Borrowing System   | ✅ Complete | Day 7-9   |
 | Fees & Fines       | ✅ Complete | Day 10    |
 | Admin Dashboard    | ✅ Complete | Day 11    |
-| User Dashboard     | 🔲 Pending  | Day 12    |
+| User Dashboard     | ✅ Complete | Day 12    |
 | Testing & Polish   | 🔲 Pending  | Day 13-14 |
 
 ---
@@ -273,23 +273,29 @@
 
 ---
 
-## Day 12: User Dashboard 🔲
+## Day 12: User Dashboard ✅
 
 ### Dashboard Controller
 
--   [ ] Create DashboardController
-    -   [ ] index() - user dashboard data
+-   [x] Create DashboardController
+    -   [x] index() - user dashboard data with stats
 
 ### Dashboard View
 
--   [ ] Create `resources/views/dashboard.blade.php`
-    -   [ ] Active borrowings card
-    -   [ ] Due soon alert (< 3 days)
-    -   [ ] Overdue warning
-    -   [ ] Outstanding fees total
-    -   [ ] Recent borrowing history
+-   [x] Create enhanced `resources/views/dashboard.blade.php`
+    -   [x] Stats cards (active, due soon, overdue, fees)
+    -   [x] Overdue alert (red)
+    -   [x] Due soon alert (yellow)
+    -   [x] Active borrowings list with status badges
+    -   [x] Recent history
+    -   [x] Quick action: Jelajahi Katalog
 
-**Files to Create/Update:**
+### Navigation
+
+-   [x] Added Dashboard link for authenticated users
+-   [x] Updated desktop and responsive navigation
+
+**Files Created/Updated:**
 
 -   `app/Http/Controllers/DashboardController.php`
 -   `resources/views/dashboard.blade.php`
