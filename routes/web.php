@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,11 +15,16 @@ Route::get('/catalog/{book}', [CatalogController::class, 'show'])->name('catalog
 
 // Dashboard (authenticated users)
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('borrowings.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Profile routes
+// Authenticated user routes
 Route::middleware('auth')->group(function () {
+    // Borrowings
+    Route::get('/borrowings', [BorrowingController::class, 'index'])->name('borrowings.index');
+    Route::post('/borrowings', [BorrowingController::class, 'store'])->name('borrowings.store');
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

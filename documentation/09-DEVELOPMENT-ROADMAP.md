@@ -27,7 +27,7 @@
 | Books & Categories | ✅ Complete | Day 2-3   |
 | Book Copies        | ✅ Complete | Day 4-5   |
 | User Catalog       | ✅ Complete | Day 6     |
-| Borrowing System   | 🔲 Pending  | Day 7-9   |
+| Borrowing System   | ✅ Complete | Day 7-9   |
 | Fees & Fines       | 🔲 Pending  | Day 10    |
 | Admin Dashboard    | 🔲 Pending  | Day 11    |
 | User Dashboard     | 🔲 Pending  | Day 12    |
@@ -147,59 +147,63 @@
 
 ---
 
-## Day 7-9: Borrowing System 🔲
+## Day 7-9: Borrowing System ✅
 
 ### Borrowing Controller
 
--   [ ] Create BorrowingController
-    -   [ ] store() - create new borrowing
-    -   [ ] index() - user's borrowings
--   [ ] Create BorrowBookRequest (form validation)
+-   [x] Create BorrowingController
+    -   [x] store() - create new borrowing with auto-assign copy
+    -   [x] index() - user's borrowings (active + history)
+-   [x] Create BorrowBookRequest (form validation)
 
 ### Borrow Flow (User)
 
--   [ ] User clicks "Borrow" on book detail
--   [ ] Select duration (7 or 14 days modal/form)
--   [ ] System auto-assigns available copy
--   [ ] Generate borrowing code (BRW-YYYYMMDD-XXX)
--   [ ] Calculate due date
--   [ ] Set rental_fee from book.rental_fee
--   [ ] Update copy status to 'borrowed'
--   [ ] Decrement book.available_copies
--   [ ] Redirect to my-borrowings with success message
+-   [x] User clicks "Pinjam Buku Ini" on book detail
+-   [x] Select duration (7 or 14 days)
+-   [x] System auto-assigns available copy
+-   [x] Generate borrowing code (BRW-YYYYMMDD-XXX)
+-   [x] Calculate due date
+-   [x] Set rental_fee from book.rental_fee
+-   [x] Update copy status to 'borrowed'
+-   [x] Decrement book.available_copies
+-   [x] Redirect to /borrowings with success message
 
 ### Borrowing Resource (Filament Admin)
 
--   [ ] Create BorrowingResource
-    -   [ ] List: code, user, book, copy, dates, status, fees, is_paid
-    -   [ ] Filters: status (active/returned/overdue), is_paid
-    -   [ ] Actions: Return, Mark as Paid
+-   [x] Create BorrowingResource with Indonesian labels
+    -   [x] List: code, user, book, copy, dates, status, fees, is_paid
+    -   [x] Filters: status (active/returned/overdue), is_paid
+    -   [x] Return action with late fee calculation
+    -   [x] Mark as Paid action
 
 ### Return Flow (Admin)
 
--   [ ] Admin clicks "Return" action
--   [ ] Calculate late_fee if overdue
--   [ ] Update total_fee
--   [ ] Set returned_at = today
--   [ ] Set status = 'returned'
--   [ ] Update copy status to 'available'
--   [ ] Increment book.available_copies
--   [ ] Increment book.times_borrowed
+-   [x] Admin clicks "Kembalikan" action
+-   [x] Calculate late_fee if overdue (using Setting)
+-   [x] Update total_fee = rental_fee + late_fee
+-   [x] Set returned_at = today
+-   [x] Update copy status to 'available'
+-   [x] Increment book.available_copies
+-   [x] Increment book.times_borrowed
 
 ### User Borrowings View
 
--   [ ] Create `resources/views/borrowings/index.blade.php`
-    -   [ ] Active borrowings list
-    -   [ ] Status badge (Active/Returned/Overdue)
-    -   [ ] Days remaining display
-    -   [ ] Fee information
-    -   [ ] History tab/section
+-   [x] Create `resources/views/borrowings/index.blade.php`
+    -   [x] Active borrowings table with due date status
+    -   [x] Status badges (days remaining, overdue warning)
+    -   [x] History section with pagination
+    -   [x] Indonesian labels
 
-**Files to Create:**
+### Navigation
+
+-   [x] Added "Peminjaman Saya" link (authenticated users only)
+-   [x] Dashboard redirects to /borrowings
+
+**Files Created:**
 
 -   `app/Http/Controllers/BorrowingController.php`
 -   `app/Http/Requests/BorrowBookRequest.php`
--   `app/Filament/Resources/BorrowingResource.php`
+-   `app/Filament/Resources/Borrowings/` - BorrowingResource + pages
 -   `resources/views/borrowings/index.blade.php`
 
 ---
