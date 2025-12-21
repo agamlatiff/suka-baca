@@ -29,7 +29,7 @@
 | User Catalog       | ✅ Complete | Day 6     |
 | Borrowing System   | ✅ Complete | Day 7-9   |
 | Fees & Fines       | ✅ Complete | Day 10    |
-| Admin Dashboard    | 🔲 Pending  | Day 11    |
+| Admin Dashboard    | ✅ Complete | Day 11    |
 | User Dashboard     | 🔲 Pending  | Day 12    |
 | Testing & Polish   | 🔲 Pending  | Day 13-14 |
 
@@ -246,25 +246,26 @@
 
 ---
 
-## Day 11: Admin Dashboard 🔲
+## Day 11: Admin Dashboard ✅
 
 ### Dashboard Widgets (Filament)
 
--   [ ] Create StatsOverview widget
-    -   [ ] Total Books (titles)
-    -   [ ] Total Copies
-    -   [ ] Available Copies
-    -   [ ] Borrowed Copies
-    -   [ ] Total Users
-    -   [ ] Active Borrowings
--   [ ] Create RecentBorrowingsTable widget
-    -   [ ] Last 10 borrowings
-    -   [ ] Quick actions
--   [ ] Create TopBooksChart widget
-    -   [ ] Top 5 by times_borrowed
--   [ ] Configure dashboard layout
+-   [x] Create StatsOverview widget
+    -   [x] Total Buku (judul)
+    -   [x] Total Eksemplar / Tersedia
+    -   [x] Sedang Dipinjam
+    -   [x] Peminjaman Aktif (with overdue count)
+    -   [x] Total Anggota
+    -   [x] Belum Dibayar
+-   [x] Create RecentBorrowingsTable widget
+    -   [x] Last 10 borrowings
+    -   [x] Quick view action
+    -   [x] Status badges with Indonesian labels
+-   [x] Create TopBooksChart widget
+    -   [x] Horizontal bar chart
+    -   [x] Top 5 by times_borrowed
 
-**Files to Create:**
+**Files Created:**
 
 -   `app/Filament/Widgets/StatsOverview.php`
 -   `app/Filament/Widgets/RecentBorrowingsTable.php`
