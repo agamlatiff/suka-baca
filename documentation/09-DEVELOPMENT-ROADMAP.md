@@ -28,7 +28,7 @@
 | Book Copies        | ✅ Complete | Day 4-5   |
 | User Catalog       | ✅ Complete | Day 6     |
 | Borrowing System   | ✅ Complete | Day 7-9   |
-| Fees & Fines       | 🔲 Pending  | Day 10    |
+| Fees & Fines       | ✅ Complete | Day 10    |
 | Admin Dashboard    | 🔲 Pending  | Day 11    |
 | User Dashboard     | 🔲 Pending  | Day 12    |
 | Testing & Polish   | 🔲 Pending  | Day 13-14 |
@@ -208,37 +208,40 @@
 
 ---
 
-## Day 10: Fees & Fines 🔲
+## Day 10: Fees & Fines ✅
 
 ### Settings Resource (Filament)
 
--   [ ] Create SettingResource
-    -   [ ] List: key, value, description
-    -   [ ] Form: key (readonly), value (editable)
-    -   [ ] Seed default values if not exist
+-   [x] Create SettingResource with Indonesian labels
+    -   [x] List: key (human-readable), value, description
+    -   [x] Form: key (readonly), value (editable), description (readonly)
+-   [x] Create SettingSeeder with default values
+    -   [x] late_fee_per_day: 2000
+    -   [x] max_borrow_days: 14
+    -   [x] max_books_per_user: 3
+    -   [x] default_rental_fee: 5000
+    -   [x] library_name, library_address
 
 ### Fee Calculation
 
--   [ ] Implement LateFeeCalculator service/helper
--   [ ] Auto-calculate on return:
+-   [x] Already implemented in BorrowingResource Return action
     -   `days_late = max(0, returned_at - due_date)`
-    -   `late_fee = days_late × Setting::getLateFeePerDay()`
+    -   `late_fee = days_late × Setting::get('late_fee_per_day')`
     -   `total_fee = rental_fee + late_fee`
 
 ### Payment Marking
 
--   [ ] "Mark as Paid" action in BorrowingResource
--   [ ] Show unpaid count badge on dashboard
--   [ ] Filter by payment status
+-   [x] "Tandai Lunas" action in BorrowingResource
+-   [x] Filter by payment status (is_paid)
 
 ### Fee Display
 
--   [ ] Show fees on user's borrowing list
--   [ ] Show total outstanding fees on user dashboard
+-   [x] Show fees on user's borrowing list
+-   [x] Late fee breakdown on history
 
-**Files to Create:**
+**Files Created:**
 
--   `app/Filament/Resources/SettingResource.php`
+-   `app/Filament/Resources/Settings/` - SettingResource + pages
 -   `database/seeders/SettingSeeder.php`
 
 ---
