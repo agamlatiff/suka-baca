@@ -14,36 +14,64 @@ class CategorySeeder extends Seeder
   {
     $categories = [
       [
-        'name' => 'Fiction',
-        'description' => 'Novels, short stories, and literary fiction',
+        'name' => 'Fiksi',
+        'description' => 'Novel, cerita pendek, dan karya fiksi sastra',
       ],
       [
-        'name' => 'Non-Fiction',
-        'description' => 'Factual books including biographies, history, and science',
+        'name' => 'Non-Fiksi',
+        'description' => 'Buku fakta termasuk biografi, sejarah, dan sains',
       ],
       [
-        'name' => 'Children',
-        'description' => 'Books for children and young readers',
+        'name' => 'Anak-Anak',
+        'description' => 'Buku untuk anak-anak dan pembaca muda',
       ],
       [
-        'name' => 'Education',
-        'description' => 'Textbooks, study guides, and educational materials',
+        'name' => 'Pendidikan',
+        'description' => 'Buku teks, panduan belajar, dan materi pendidikan',
       ],
       [
-        'name' => 'Comics & Manga',
-        'description' => 'Comic books, graphic novels, and manga',
+        'name' => 'Komik & Manga',
+        'description' => 'Buku komik, novel grafis, dan manga',
       ],
       [
-        'name' => 'Religion',
-        'description' => 'Religious texts and spiritual books',
+        'name' => 'Agama',
+        'description' => 'Teks keagamaan dan buku spiritual',
       ],
       [
-        'name' => 'Self-Help',
-        'description' => 'Personal development and motivational books',
+        'name' => 'Pengembangan Diri',
+        'description' => 'Buku pengembangan pribadi dan motivasi',
       ],
       [
-        'name' => 'Business',
-        'description' => 'Business, finance, and entrepreneurship',
+        'name' => 'Bisnis',
+        'description' => 'Bisnis, keuangan, dan kewirausahaan',
+      ],
+      [
+        'name' => 'Sains & Teknologi',
+        'description' => 'Ilmu pengetahuan, teknologi, dan inovasi',
+      ],
+      [
+        'name' => 'Sejarah',
+        'description' => 'Buku sejarah Indonesia dan dunia',
+      ],
+      [
+        'name' => 'Kesehatan',
+        'description' => 'Kesehatan, kedokteran, dan gaya hidup sehat',
+      ],
+      [
+        'name' => 'Memasak',
+        'description' => 'Resep masakan, kuliner, dan tips dapur',
+      ],
+      [
+        'name' => 'Hobi & Kerajinan',
+        'description' => 'Hobi, kerajinan tangan, dan aktivitas kreatif',
+      ],
+      [
+        'name' => 'Perjalanan',
+        'description' => 'Panduan wisata, travel, dan petualangan',
+      ],
+      [
+        'name' => 'Sastra Klasik',
+        'description' => 'Karya sastra klasik Indonesia dan dunia',
       ],
     ];
 

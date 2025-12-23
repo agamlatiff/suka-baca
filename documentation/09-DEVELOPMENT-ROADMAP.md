@@ -2,7 +2,12 @@
 
 ## Project Timeline
 
-**Total Estimated Duration:** 13 working days (~2.5 weeks)
+**Phase 1 (Completed):** Laravel Backend + Filament - 13 working days  
+**Phase 2 (New):** React.js Frontend + Service Repository Pattern - 10 working days
+
+**Total Estimated Duration:** 23 working days (~4.5 weeks)
+
+---
 
 ## Language Convention
 
@@ -21,372 +26,267 @@
 
 ## Progress Overview
 
-| Phase              | Status      | Days      |
-| ------------------ | ----------- | --------- |
-| Setup              | ✅ Complete | Day 1     |
-| Books & Categories | ✅ Complete | Day 2-3   |
-| Book Copies        | ✅ Complete | Day 4-5   |
-| User Catalog       | ✅ Complete | Day 6     |
-| Borrowing System   | ✅ Complete | Day 7-9   |
-| Fees & Fines       | ✅ Complete | Day 10    |
-| Admin Dashboard    | ✅ Complete | Day 11    |
-| User Dashboard     | ✅ Complete | Day 12    |
-| Testing & Polish   | 🔲 Pending  | Day 13-14 |
+### Phase 1: Laravel Backend + Filament (Completed)
+
+| Phase              | Status      | Days    |
+| ------------------ | ----------- | ------- |
+| Setup              | ✅ Complete | Day 1   |
+| Books & Categories | ✅ Complete | Day 2-3 |
+| Book Copies        | ✅ Complete | Day 4-5 |
+| User Catalog       | ✅ Complete | Day 6   |
+| Borrowing System   | ✅ Complete | Day 7-9 |
+| Fees & Fines       | ✅ Complete | Day 10  |
+| Admin Dashboard    | ✅ Complete | Day 11  |
+| User Dashboard     | ✅ Complete | Day 12  |
+| Testing & Polish   | ✅ Complete | Day 13  |
+
+### Phase 2: React.js Frontend + Refactoring (New)
+
+| Phase                       | Status     | Days      |
+| --------------------------- | ---------- | --------- |
+| Backend Refactoring         | 🔲 Pending | Day 14-15 |
+| Frontend Setup              | 🔲 Pending | Day 16    |
+| Auth & Layout               | 🔲 Pending | Day 17    |
+| Catalog & Detail            | 🔲 Pending | Day 18    |
+| User Borrowings & Dashboard | 🔲 Pending | Day 19    |
+| Admin Dashboard             | 🔲 Pending | Day 20    |
+| Admin Books & Categories    | 🔲 Pending | Day 21    |
+| Admin Borrowings & Users    | 🔲 Pending | Day 22    |
+| Testing & Polish            | 🔲 Pending | Day 23    |
 
 ---
 
-## Day 1: Project Setup ✅
+## Phase 2 Detailed Roadmap
 
--   [x] Install Laravel 11
--   [x] Configure MySQL database
--   [x] Install Laravel Breeze
--   [x] Install Laravel Filament v4
--   [x] Set up Tailwind CSS
--   [x] Create initial migrations (users, categories, books, book_copies, borrowings)
--   [x] Create Setting model and migration
--   [x] Add rental_fee migration to books
--   [x] Create all Eloquent models (User, Book, Category, BookCopy, Borrowing, Setting)
+### Day 14-15: Backend Refactoring
 
-**Files Created:**
+#### Service Repository Pattern
 
--   `database/migrations/` - 7 migration files
--   `app/Models/` - 6 model files
--   `app/Providers/Filament/AdminPanelProvider.php`
+-   [ ] Create `app/Repositories/Contracts/` interfaces
+-   [ ] Create `app/Repositories/Eloquent/` implementations
+-   [ ] Create `app/Services/` business logic layer
+-   [ ] Create `RepositoryServiceProvider.php`
+-   [ ] Refactor existing controllers to use services
 
----
+#### Database Updates
 
-## Day 2-3: Books & Categories ✅
+-   [ ] Create migration: add `image` to books table
+-   [ ] Update Book model with image attribute
+-   [ ] Create BookImageSeeder with sample images
 
-### Category Management
+#### API Controllers
 
--   [x] Create CategorySeeder with sample data (8 categories)
--   [x] Create CategoryResource (Filament)
-    -   [x] List: name, description, books count
-    -   [x] Form: name (required), description (optional)
-    -   [x] Indonesian labels (Nama Kategori, Deskripsi)
+-   [ ] Create `app/Http/Controllers/Api/AuthController.php`
+-   [ ] Create `app/Http/Controllers/Api/BookController.php`
+-   [ ] Create `app/Http/Controllers/Api/CategoryController.php`
+-   [ ] Create `app/Http/Controllers/Api/BorrowingController.php`
+-   [ ] Create `app/Http/Controllers/Api/UserController.php`
+-   [ ] Create `app/Http/Controllers/Api/SettingController.php`
+-   [ ] Create `app/Http/Controllers/Api/DashboardController.php`
 
-### Book Management
+#### API Routes & Auth
 
--   [x] Create BookResource (Filament)
-    -   [x] List: title, author, category, rental_fee, available/total copies
-    -   [x] Form: title, author, category (dropdown), description, rental_fee, copies_count
-    -   [x] Search: by title, author
-    -   [x] Indonesian labels (Judul, Penulis, Kategori, Biaya Sewa, Eksemplar)
--   [x] Remove ISBN field (tidak diperlukan)
--   [x] Create AdminSeeder for default admin user
-
-**Files Created:**
-
--   `app/Filament/Resources/Categories/` - CategoryResource + pages
--   `app/Filament/Resources/Books/` - BookResource + pages
--   `database/seeders/CategorySeeder.php`
--   `database/seeders/AdminSeeder.php`
+-   [ ] Configure Laravel Sanctum for SPA
+-   [ ] Create admin middleware
+-   [ ] Define all API routes in `routes/api.php`
 
 ---
 
-## Day 4-5: Book Copies ✅
+### Day 16: Frontend Setup
 
-### Copy Management
-
--   [x] Implement auto-generate copy codes (format: BK001-C01, BK001-C02)
--   [x] Create CopiesRelationManager for BookResource
-    -   [x] List: copy_code, status, notes
-    -   [x] Actions: create, edit, delete
-    -   [x] Indonesian labels (Kode Eksemplar, Status, Catatan)
--   [x] Auto-create copies when book is created
--   [x] Update `available_copies` on Book when copy status changes
-
-### Copy Status Logic
-
--   [x] Status options: Tersedia, Dipinjam, Perawatan, Hilang
--   [x] Color badges for each status
--   [x] Sync counts on create/edit/delete
-
-**Files Created:**
-
--   `app/Filament/Resources/Books/RelationManagers/CopiesRelationManager.php`
--   Updated `app/Filament/Resources/Books/Pages/CreateBook.php` with afterCreate hook
+-   [ ] Create `frontend/` directory
+-   [ ] Initialize Vite + React + TypeScript
+-   [ ] Configure Tailwind CSS
+-   [ ] Setup folder structure
+-   [ ] Install dependencies:
+    -   react-router-dom
+    -   @tanstack/react-query
+    -   axios
+    -   zustand
+    -   zod
+-   [ ] Create Axios instance with interceptors
+-   [ ] Setup TanStack Query provider
+-   [ ] Create base TypeScript types
 
 ---
 
-## Day 6: User Catalog ✅
+### Day 17: Auth & Layout
 
-### Catalog Controller
+#### Authentication
 
--   [x] Create CatalogController
-    -   [x] index() - list books with search & filter
-    -   [x] show() - book detail with borrow form
+-   [ ] Create `authStore.ts` (Zustand)
+-   [ ] Create `authService.ts` (API)
+-   [ ] Create `LoginPage.tsx`
+-   [ ] Create `RegisterPage.tsx`
+-   [ ] Create `AuthGuard.tsx` component
+-   [ ] Create `AdminGuard.tsx` component
 
-### Catalog Views
+#### Layout Components
 
--   [x] Create `resources/views/catalog/index.blade.php`
-    -   [x] Book grid view with cards
-    -   [x] Search input (title/author)
-    -   [x] Category dropdown filter
-    -   [x] Show all toggle (including out of stock)
-    -   [x] Pagination
-    -   [x] Indonesian labels
--   [x] Create `resources/views/catalog/show.blade.php`
-    -   [x] Book info (title, author, category, description)
-    -   [x] Rental fee display
-    -   [x] Availability stats
-    -   [x] "Pinjam Buku" button with duration selector
-
-### Routes
-
--   [x] GET `/catalog` → catalog.index
--   [x] GET `/catalog/{book}` → catalog.show
--   [x] Home `/` redirects to catalog
--   [x] Updated navigation with "Katalog" link
-
-**Files Created:**
-
--   `app/Http/Controllers/CatalogController.php`
--   `resources/views/catalog/index.blade.php`
--   `resources/views/catalog/show.blade.php`
+-   [ ] Create `Navbar.tsx` (responsive)
+-   [ ] Create `Footer.tsx`
+-   [ ] Create `UserLayout.tsx`
+-   [ ] Create `AdminLayout.tsx` with sidebar
+-   [ ] Create `Sidebar.tsx` (admin)
 
 ---
 
-## Day 7-9: Borrowing System ✅
+### Day 18: Catalog & Detail
 
-### Borrowing Controller
-
--   [x] Create BorrowingController
-    -   [x] store() - create new borrowing with auto-assign copy
-    -   [x] index() - user's borrowings (active + history)
--   [x] Create BorrowBookRequest (form validation)
-
-### Borrow Flow (User)
-
--   [x] User clicks "Pinjam Buku Ini" on book detail
--   [x] Select duration (7 or 14 days)
--   [x] System auto-assigns available copy
--   [x] Generate borrowing code (BRW-YYYYMMDD-XXX)
--   [x] Calculate due date
--   [x] Set rental_fee from book.rental_fee
--   [x] Update copy status to 'borrowed'
--   [x] Decrement book.available_copies
--   [x] Redirect to /borrowings with success message
-
-### Borrowing Resource (Filament Admin)
-
--   [x] Create BorrowingResource with Indonesian labels
-    -   [x] List: code, user, book, copy, dates, status, fees, is_paid
-    -   [x] Filters: status (active/returned/overdue), is_paid
-    -   [x] Return action with late fee calculation
-    -   [x] Mark as Paid action
-
-### Return Flow (Admin)
-
--   [x] Admin clicks "Kembalikan" action
--   [x] Calculate late_fee if overdue (using Setting)
--   [x] Update total_fee = rental_fee + late_fee
--   [x] Set returned_at = today
--   [x] Update copy status to 'available'
--   [x] Increment book.available_copies
--   [x] Increment book.times_borrowed
-
-### User Borrowings View
-
--   [x] Create `resources/views/borrowings/index.blade.php`
-    -   [x] Active borrowings table with due date status
-    -   [x] Status badges (days remaining, overdue warning)
-    -   [x] History section with pagination
-    -   [x] Indonesian labels
-
-### Navigation
-
--   [x] Added "Peminjaman Saya" link (authenticated users only)
--   [x] Dashboard redirects to /borrowings
-
-**Files Created:**
-
--   `app/Http/Controllers/BorrowingController.php`
--   `app/Http/Requests/BorrowBookRequest.php`
--   `app/Filament/Resources/Borrowings/` - BorrowingResource + pages
--   `resources/views/borrowings/index.blade.php`
+-   [ ] Create UI components: `Button`, `Card`, `Input`, `Badge`
+-   [ ] Create `BookCard.tsx`
+-   [ ] Create `BookGrid.tsx`
+-   [ ] Create `SearchFilter.tsx`
+-   [ ] Create `CatalogPage.tsx`
+-   [ ] Create `BookDetailPage.tsx`
+-   [ ] Create `BorrowModal.tsx`
+-   [ ] Implement `useBooks()` hook
+-   [ ] Implement `useBook(id)` hook
+-   [ ] Implement borrow mutation
 
 ---
 
-## Day 10: Fees & Fines ✅
+### Day 19: User Borrowings & Dashboard
 
-### Settings Resource (Filament)
+#### Borrowings Page
 
--   [x] Create SettingResource with Indonesian labels
-    -   [x] List: key (human-readable), value, description
-    -   [x] Form: key (readonly), value (editable), description (readonly)
--   [x] Create SettingSeeder with default values
-    -   [x] late_fee_per_day: 2000
-    -   [x] max_borrow_days: 14
-    -   [x] max_books_per_user: 3
-    -   [x] default_rental_fee: 5000
-    -   [x] library_name, library_address
+-   [ ] Create `BorrowingCard.tsx`
+-   [ ] Create `BorrowingList.tsx`
+-   [ ] Create `BorrowingsPage.tsx`
+-   [ ] Implement `useBorrowings()` hook
 
-### Fee Calculation
+#### User Dashboard
 
--   [x] Already implemented in BorrowingResource Return action
-    -   `days_late = max(0, returned_at - due_date)`
-    -   `late_fee = days_late × Setting::get('late_fee_per_day')`
-    -   `total_fee = rental_fee + late_fee`
-
-### Payment Marking
-
--   [x] "Tandai Lunas" action in BorrowingResource
--   [x] Filter by payment status (is_paid)
-
-### Fee Display
-
--   [x] Show fees on user's borrowing list
--   [x] Late fee breakdown on history
-
-**Files Created:**
-
--   `app/Filament/Resources/Settings/` - SettingResource + pages
--   `database/seeders/SettingSeeder.php`
+-   [ ] Create `StatsCard.tsx`
+-   [ ] Create `DueAlert.tsx`
+-   [ ] Create `DashboardPage.tsx`
+-   [ ] Implement `useUserDashboard()` hook
 
 ---
 
-## Day 11: Admin Dashboard ✅
+### Day 20: Admin Dashboard
 
-### Dashboard Widgets (Filament)
-
--   [x] Create StatsOverview widget
-    -   [x] Total Buku (judul)
-    -   [x] Total Eksemplar / Tersedia
-    -   [x] Sedang Dipinjam
-    -   [x] Peminjaman Aktif (with overdue count)
-    -   [x] Total Anggota
-    -   [x] Belum Dibayar
--   [x] Create RecentBorrowingsTable widget
-    -   [x] Last 10 borrowings
-    -   [x] Quick view action
-    -   [x] Status badges with Indonesian labels
--   [x] Create TopBooksChart widget
-    -   [x] Horizontal bar chart
-    -   [x] Top 5 by times_borrowed
-
-**Files Created:**
-
--   `app/Filament/Widgets/StatsOverview.php`
--   `app/Filament/Widgets/RecentBorrowingsTable.php`
--   `app/Filament/Widgets/TopBooksChart.php`
+-   [ ] Create admin stats cards
+-   [ ] Create `RecentBorrowingsTable.tsx`
+-   [ ] Create `TopBooksChart.tsx` (using Recharts)
+-   [ ] Create `AdminDashboard.tsx`
+-   [ ] Implement `useAdminDashboard()` hook
 
 ---
 
-## Day 12: User Dashboard ✅
+### Day 21: Admin Books & Categories
 
-### Dashboard Controller
+#### Books Management
 
--   [x] Create DashboardController
-    -   [x] index() - user dashboard data with stats
+-   [ ] Create `Table` component (TanStack Table)
+-   [ ] Create `BooksPage.tsx` with CRUD
+-   [ ] Create `BookForm.tsx` with image upload
+-   [ ] Create `BookImageUpload.tsx`
+-   [ ] Implement book mutations (create, update, delete)
 
-### Dashboard View
+#### Categories Management
 
--   [x] Create enhanced `resources/views/dashboard.blade.php`
-    -   [x] Stats cards (active, due soon, overdue, fees)
-    -   [x] Overdue alert (red)
-    -   [x] Due soon alert (yellow)
-    -   [x] Active borrowings list with status badges
-    -   [x] Recent history
-    -   [x] Quick action: Jelajahi Katalog
-
-### Navigation
-
--   [x] Added Dashboard link for authenticated users
--   [x] Updated desktop and responsive navigation
-
-**Files Created/Updated:**
-
--   `app/Http/Controllers/DashboardController.php`
--   `resources/views/dashboard.blade.php`
+-   [ ] Create `CategoriesPage.tsx`
+-   [ ] Create `CategoryForm.tsx`
+-   [ ] Implement category mutations
 
 ---
 
-## Day 13-14: Testing & Polish 🔲
+### Day 22: Admin Borrowings & Users
 
-### Functional Testing
+#### Borrowings Management
 
--   [ ] Test user registration
--   [ ] Test user login/logout
--   [ ] Test catalog browsing
--   [ ] Test search and filters
--   [ ] Test borrowing flow
--   [ ] Test return process
--   [ ] Test fee calculation
--   [ ] Test payment marking
--   [ ] Test admin dashboard
--   [ ] Test user dashboard
+-   [ ] Create `AdminBorrowingsPage.tsx`
+-   [ ] Create `BorrowingActions.tsx` (return, mark paid)
+-   [ ] Implement return and markPaid mutations
 
-### Bug Fixes
+#### Users Management
 
--   [ ] Fix any issues found during testing
--   [ ] Edge cases (no copies, overdue, etc.)
+-   [ ] Create `UsersPage.tsx`
+-   [ ] Create `UserDetail.tsx`
 
-### UI/UX Polish
+#### Settings
 
--   [ ] Consistent styling across pages
--   [ ] Loading states
--   [ ] Error messages
--   [ ] Success notifications
--   [ ] Mobile responsive check
+-   [ ] Create `SettingsPage.tsx`
+-   [ ] Implement settings update mutation
 
-### Final Checks
+---
 
--   [ ] All routes working
--   [ ] All Filament resources complete
--   [ ] Database seeding works
--   [ ] Documentation up to date
+### Day 23: Testing & Polish
+
+-   [ ] Test all user flows
+-   [ ] Test all admin flows
+-   [ ] Fix bugs and edge cases
+-   [ ] Responsive testing
+-   [ ] Performance optimization
+-   [ ] Final code review
 
 ---
 
 ## Milestones
 
-| Milestone | Target | Deliverable                         | Status |
-| --------- | ------ | ----------------------------------- | ------ |
-| M1        | Day 1  | Project setup complete              | ✅     |
-| M2        | Day 3  | Admin can manage books & categories | 🔲     |
-| M3        | Day 6  | Users can browse catalog            | 🔲     |
-| M4        | Day 9  | Full borrowing flow working         | 🔲     |
-| M5        | Day 12 | All dashboards complete             | 🔲     |
-| M6        | Day 14 | MVP ready for deployment            | 🔲     |
+| Milestone | Target | Deliverable                             | Status |
+| --------- | ------ | --------------------------------------- | ------ |
+| M1        | Day 1  | Project setup complete                  | ✅     |
+| M2        | Day 3  | Admin can manage books & categories     | ✅     |
+| M3        | Day 6  | Users can browse catalog                | ✅     |
+| M4        | Day 9  | Full borrowing flow working             | ✅     |
+| M5        | Day 13 | Phase 1 MVP complete (Blade + Filament) | ✅     |
+| M6        | Day 15 | Backend refactored with Service Repo    | 🔲     |
+| M7        | Day 19 | User-facing React frontend complete     | 🔲     |
+| M8        | Day 22 | Admin React panel complete              | 🔲     |
+| M9        | Day 23 | Phase 2 complete, ready for deployment  | 🔲     |
 
 ---
 
-## Quick Reference: Files to Create
+## Tech Stack Summary
 
-### Controllers
+### Backend (Laravel 11)
 
--   `app/Http/Controllers/CatalogController.php`
--   `app/Http/Controllers/BorrowingController.php`
--   `app/Http/Controllers/DashboardController.php`
+```
+app/
+├── Http/Controllers/Api/      # API Controllers
+├── Models/                    # Eloquent Models
+├── Repositories/
+│   ├── Contracts/             # Interfaces
+│   └── Eloquent/              # Implementations
+├── Services/                  # Business Logic
+└── Providers/
+    └── RepositoryServiceProvider.php
+```
 
-### Form Requests
+### Frontend (React.js)
 
--   `app/Http/Requests/BorrowBookRequest.php`
+```
+frontend/
+├── src/
+│   ├── components/            # Reusable UI
+│   ├── pages/                 # Page components
+│   ├── hooks/                 # Custom hooks
+│   ├── stores/                # Zustand stores
+│   ├── services/              # API services
+│   ├── types/                 # TypeScript types
+│   └── schemas/               # Zod schemas
+└── package.json
+```
 
-### Filament Resources
+### Key Dependencies
 
--   `app/Filament/Resources/CategoryResource.php`
--   `app/Filament/Resources/BookResource.php`
--   `app/Filament/Resources/BorrowingResource.php`
--   `app/Filament/Resources/UserResource.php`
--   `app/Filament/Resources/SettingResource.php`
+| Package               | Purpose          |
+| --------------------- | ---------------- |
+| react                 | UI framework     |
+| react-router-dom      | Client routing   |
+| @tanstack/react-query | Server state     |
+| axios                 | HTTP client      |
+| zustand               | State management |
+| zod                   | Validation       |
+| tailwindcss           | Styling          |
 
-### Filament Widgets
+---
 
--   `app/Filament/Widgets/StatsOverview.php`
--   `app/Filament/Widgets/RecentBorrowingsTable.php`
--   `app/Filament/Widgets/TopBooksChart.php`
+## Notes
 
-### Views
-
--   `resources/views/catalog/index.blade.php`
--   `resources/views/catalog/show.blade.php`
--   `resources/views/borrowings/index.blade.php`
--   `resources/views/dashboard.blade.php`
-
-### Seeders
-
--   `database/seeders/CategorySeeder.php`
--   `database/seeders/SettingSeeder.php`
--   `database/seeders/AdminSeeder.php`
+-   **Design Reference**: Will be provided by user (HTML templates)
+-   **Image Storage**: Local storage (`storage/app/public/books/`)
+-   **Authentication**: Laravel Sanctum (SPA mode)
+-   **Admin Panel**: Custom React.js (replacing Filament)

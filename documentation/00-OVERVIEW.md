@@ -38,6 +38,35 @@ This is a **Minimum Viable Product** focusing on core functionality:
 | **Admin** | Library staff/owner | Full system access, manage books & borrowings |
 | **User**  | Library members     | Browse catalog, borrow books, view history    |
 
+## Pages Overview
+
+### 🌐 User/Member Pages (Frontend)
+
+| Page             | Route            | Description                                                |
+| ---------------- | ---------------- | ---------------------------------------------------------- |
+| Landing Page     | `/`              | Homepage with hero section, featured books, call-to-action |
+| Login            | `/login`         | User login form                                            |
+| Register         | `/register`      | New member registration form                               |
+| Book Catalog     | `/books`         | Browse all books with search & category filter             |
+| Book Detail      | `/books/{slug}`  | Book details + borrow button + availability status         |
+| User Dashboard   | `/dashboard`     | Overview: active borrowings, fees summary, quick stats     |
+| My Borrowings    | `/my-borrowings` | List of active & historical borrowings with status         |
+| Profile Settings | `/profile`       | Edit profile info, change password                         |
+
+### 🔒 Admin Pages (Filament Panel)
+
+| Page             | Route                | Description                                    |
+| ---------------- | -------------------- | ---------------------------------------------- |
+| Admin Dashboard  | `/admin`             | Stats cards, recent borrowings, popular books  |
+| Books Management | `/admin/books`       | CRUD books with copy management                |
+| Book Copies      | `/admin/book-copies` | Manage individual copies per book              |
+| Categories       | `/admin/categories`  | CRUD book categories                           |
+| Borrowings       | `/admin/borrowings`  | Process returns, mark payments, handle overdue |
+| Users            | `/admin/users`       | View & manage library members                  |
+| Settings         | `/admin/settings`    | Configure late fee rate, system preferences    |
+
+---
+
 ## Business Model
 
 -   **Rental Fee**: Dynamic per book (admin sets price for each book)

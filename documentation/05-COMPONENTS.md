@@ -1,11 +1,27 @@
-# Feature Modules
+# React Components & Pages
+
+## Frontend Structure
+
+```
+frontend/src/
+├── components/         # Reusable components
+├── pages/              # Page components
+├── hooks/              # Custom hooks
+├── stores/             # Zustand stores
+├── services/           # API services
+├── types/              # TypeScript types
+├── schemas/            # Zod schemas
+└── lib/                # Utilities
+```
+
+---
 
 ## Module Overview
 
 | Module          | Complexity | Admin | User | Key Functionality           |
 | --------------- | ---------- | ----- | ---- | --------------------------- |
 | Authentication  | Low        | ✅    | ✅   | Login, Register, Session    |
-| Book Management | Medium     | ✅    | ❌   | CRUD books, Copy tracking   |
+| Book Management | Medium     | ✅    | ❌   | CRUD books, Image upload    |
 | Catalog         | Low        | ❌    | ✅   | Browse, Search, Filter      |
 | Borrowing       | Medium     | ✅    | ✅   | Borrow, Return, Tracking    |
 | Fees & Fines    | Low        | ✅    | ✅   | Rental fees, Late penalties |
@@ -13,159 +29,302 @@
 
 ---
 
-## Module A: Authentication
+## Shared Components (ui/)
 
-### Features
-
--   Login (Admin/User)
--   Logout
--   User registration
--   Session management
-
-### Sub-features
-
-| Feature           | Description                             |
-| ----------------- | --------------------------------------- |
-| Register          | Name, email, password, phone (optional) |
-| Profile           | View/edit basic profile                 |
-| Role-based access | Admin vs User permissions               |
+| Component    | Props                            | Description           |
+| ------------ | -------------------------------- | --------------------- |
+| `Button`     | variant, size, loading, disabled | Primary action button |
+| `Card`       | title, children, footer          | Content container     |
+| `Input`      | label, error, type               | Form input field      |
+| `Select`     | options, value, onChange         | Dropdown select       |
+| `Modal`      | isOpen, onClose, title           | Dialog modal          |
+| `Table`      | columns, data, pagination        | Data table            |
+| `Badge`      | variant, children                | Status badge          |
+| `Spinner`    | size                             | Loading indicator     |
+| `Alert`      | type, message                    | Notification alert    |
+| `Pagination` | page, totalPages, onChange       | Page navigation       |
 
 ---
 
-## Module B: Book Management (Admin)
+## Layout Components
 
-### Features
+### Navbar.tsx
 
--   CRUD operations for books
--   Book copy tracking
--   Availability status
+-   Logo + app name
+-   Navigation links (Katalog, Peminjaman Saya)
+-   User menu (Profile, Logout)
+-   Responsive mobile menu
 
-### Sub-features
+### Sidebar.tsx (Admin)
 
-| Feature           | Description                                           |
-| ----------------- | ----------------------------------------------------- |
-| Add Book          | Title, Author, Category (dropdown), Number of copies  |
-| Auto-generate IDs | Each copy gets unique ID (e.g., BK001-C01, BK001-C02) |
-| Copy Status View  | ✅ Available, 📖 Borrowed (by whom, since when)       |
-| Edit/Delete       | Modify or remove books                                |
-| Search            | By title or author                                    |
+-   Admin navigation menu
+-   Collapsible sections
+-   Active state highlight
 
-### Book Form Fields
+### Footer.tsx
 
-```
-- Title (required)
-- Author (required)
-- Category (dropdown, required)
-- ISBN (optional)
-- Description (optional)
-- Rental Fee (required, dynamic per book)
-- Number of copies (required, default: 1)
-```
+-   Copyright text
+-   Library info from settings
 
 ---
 
-## Module C: Catalog (User)
+## Catalog Components
 
-### Features
+### BookCard.tsx
 
--   Browse available books
--   View book details
--   Borrow action
-
-### Sub-features
-
-| Feature         | Description                                     |
-| --------------- | ----------------------------------------------- |
-| Book List       | Title, Author, Category, Available/Total copies |
-| Availability    | "Available" or "Out of Stock" badge             |
-| Category Filter | Filter by category                              |
-| Search          | By title or author                              |
-| Book Detail     | Full info, borrow count, "Borrow" button        |
-
----
-
-## Module D: Borrowing
-
-### Features
-
--   User borrows book
--   Admin views all borrowings
--   Return process
-
-### Sub-features
-
-#### User Actions
-
-| Action           | Description                      |
-| ---------------- | -------------------------------- |
-| Borrow           | Click "Borrow" on available book |
-| Choose duration  | 7 or 14 days                     |
-| Get confirmation | Borrowing code + due date        |
-| View active      | List of current borrowings       |
-| View history     | Past borrowings                  |
-
-#### Admin Actions
-
-| Action         | Description                           |
-| -------------- | ------------------------------------- |
-| View all       | Table: Who, Book, Copy, Dates, Status |
-| Filter         | Active / Returned / Overdue           |
-| Process return | Click "Return" button                 |
-| Auto-update    | Copy → Available, Counter +1          |
-
----
-
-## Module E: Fees & Fines
-
-### Features
-
--   Dynamic rental fee per book (set by admin)
--   Admin-configurable late fee per day (system setting)
--   Automatic late fee calculation
-
-### Configuration
-
-| Setting          | Type    | Location        | Description                        |
-| ---------------- | ------- | --------------- | ---------------------------------- |
-| Rental fee       | Dynamic | Book form       | Each book has its own rental price |
-| Late fee per day | Global  | System Settings | Admin-configurable penalty rate    |
-
-### Fee Calculation
-
-```
-Rental Fee = book.rental_fee (dynamic per book)
-Late Fee = Days Late × settings.late_fee_per_day
-Total Fee = Rental Fee + Late Fee
+```typescript
+interface BookCardProps {
+    book: Book;
+    onBorrow?: () => void;
+}
 ```
 
-### Payment Process
+-   Book cover image
+-   Title, author, category
+-   Availability badge
+-   Rental fee
+-   "Pinjam" button
 
-1. User pays via cash/bank transfer
-2. Admin marks borrowing as "Paid"
-3. No payment gateway integration (manual)
+### BookGrid.tsx
+
+-   Responsive grid layout
+-   Pagination
+-   Loading skeleton
+
+### SearchFilter.tsx
+
+-   Search input (title/author)
+-   Category dropdown
+-   "Show all" toggle
 
 ---
 
-## Module F: Dashboard
+## Borrowing Components
 
-### Admin Dashboard
+### BorrowingCard.tsx
 
-| Widget             | Description                    |
-| ------------------ | ------------------------------ |
-| Total Books        | Number of unique titles        |
-| Total Copies       | All physical copies            |
-| Available          | Copies available for borrowing |
-| Currently Borrowed | Active borrowings              |
-| Total Users        | Registered members             |
-| Recent Borrowings  | Last 5-10 transactions         |
-| Top Books          | Top 5 most borrowed            |
+-   Book info
+-   Due date with status
+-   Days remaining/overdue
+-   Fee info
 
-### User Dashboard
+### BorrowingList.tsx
 
-| Widget            | Description              |
-| ----------------- | ------------------------ |
-| Active Borrowings | Currently borrowed books |
-| Due Soon          | Books due within 3 days  |
-| Overdue           | Late returns             |
-| Total Fees        | Current outstanding fees |
-| Borrowing History | Past transactions        |
+-   Active borrowings section
+-   History section
+-   Empty state
+
+### BorrowModal.tsx
+
+-   Duration selector (7/14 days)
+-   Fee preview
+-   Confirm button
+
+---
+
+## Dashboard Components
+
+### StatsCard.tsx
+
+```typescript
+interface StatsCardProps {
+    title: string;
+    value: number | string;
+    icon: ReactNode;
+    variant?: "default" | "warning" | "danger";
+}
+```
+
+### RecentBorrowings.tsx
+
+-   Table of recent transactions
+-   Status badges
+-   Quick actions
+
+### DueAlert.tsx
+
+-   Overdue alert (red)
+-   Due soon alert (yellow)
+
+---
+
+## Pages
+
+### Auth Pages
+
+| Page         | Route       | Features                     |
+| ------------ | ----------- | ---------------------------- |
+| LoginPage    | `/login`    | Email, password, remember me |
+| RegisterPage | `/register` | Name, email, password, phone |
+
+### User Pages
+
+| Page           | Route          | Features                    |
+| -------------- | -------------- | --------------------------- |
+| CatalogPage    | `/catalog`     | Book grid, search, filter   |
+| BookDetailPage | `/catalog/:id` | Book info, borrow action    |
+| DashboardPage  | `/dashboard`   | Stats, alerts, active loans |
+| BorrowingsPage | `/borrowings`  | Active + history list       |
+
+### Admin Pages
+
+| Page           | Route               | Features                |
+| -------------- | ------------------- | ----------------------- |
+| AdminDashboard | `/admin`            | Stats, charts, recent   |
+| BooksPage      | `/admin/books`      | CRUD table              |
+| CategoriesPage | `/admin/categories` | CRUD table              |
+| BorrowingsPage | `/admin/borrowings` | All borrowings, actions |
+| UsersPage      | `/admin/users`      | User list               |
+| SettingsPage   | `/admin/settings`   | System settings form    |
+
+---
+
+## Zustand Stores
+
+### authStore.ts
+
+```typescript
+interface AuthState {
+    user: User | null;
+    token: string | null;
+    isLoading: boolean;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    checkAuth: () => Promise<void>;
+}
+```
+
+### uiStore.ts
+
+```typescript
+interface UIState {
+    sidebarOpen: boolean;
+    borrowModalOpen: boolean;
+    selectedBook: Book | null;
+    toggleSidebar: () => void;
+    openBorrowModal: (book: Book) => void;
+    closeBorrowModal: () => void;
+}
+```
+
+---
+
+## TanStack Query Hooks
+
+### Books
+
+```typescript
+// hooks/useBooks.ts
+export function useBooks(params?: BookParams) {
+    return useQuery({
+        queryKey: ["books", params],
+        queryFn: () => bookService.getBooks(params),
+    });
+}
+
+export function useBook(id: number) {
+    return useQuery({
+        queryKey: ["books", id],
+        queryFn: () => bookService.getBook(id),
+    });
+}
+```
+
+### Borrowings
+
+```typescript
+// hooks/useBorrowings.ts
+export function useBorrowings() {
+    return useQuery({
+        queryKey: ["borrowings"],
+        queryFn: () => borrowingService.getBorrowings(),
+    });
+}
+
+export function useBorrowBook() {
+    return useMutation({
+        mutationFn: borrowingService.borrowBook,
+        onSuccess: () => queryClient.invalidateQueries(["borrowings"]),
+    });
+}
+```
+
+---
+
+## Zod Schemas
+
+### authSchema.ts
+
+```typescript
+export const loginSchema = z.object({
+    email: z.string().email("Email tidak valid"),
+    password: z.string().min(6, "Password minimal 6 karakter"),
+});
+
+export const registerSchema = z
+    .object({
+        name: z.string().min(2, "Nama minimal 2 karakter"),
+        email: z.string().email("Email tidak valid"),
+        password: z.string().min(6, "Password minimal 6 karakter"),
+        password_confirmation: z.string(),
+        phone: z.string().optional(),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+        message: "Password tidak cocok",
+        path: ["password_confirmation"],
+    });
+```
+
+### bookSchema.ts
+
+```typescript
+export const bookSchema = z.object({
+    title: z.string().min(1, "Judul wajib diisi"),
+    author: z.string().min(1, "Penulis wajib diisi"),
+    category_id: z.number().min(1, "Kategori wajib dipilih"),
+    description: z.string().optional(),
+    rental_fee: z.number().min(0, "Biaya sewa tidak boleh negatif"),
+    copies_count: z.number().min(1, "Minimal 1 eksemplar"),
+});
+```
+
+---
+
+## API Services
+
+### api.ts
+
+```typescript
+import axios from "axios";
+
+export const api = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+```
+
+### bookService.ts
+
+```typescript
+export const bookService = {
+    getBooks: (params?: BookParams) =>
+        api.get<PaginatedResponse<Book>>("/books", { params }),
+
+    getBook: (id: number) => api.get<Book>(`/books/${id}`),
+
+    createBook: (data: FormData) => api.post<Book>("/books", data),
+
+    updateBook: (id: number, data: FormData) =>
+        api.put<Book>(`/books/${id}`, data),
+
+    deleteBook: (id: number) => api.delete(`/books/${id}`),
+};
+```

@@ -33,7 +33,7 @@ erDiagram
         string title
         string author
         bigint category_id FK
-        string isbn UK
+        string image "Cover image path"
         text description
         decimal rental_fee
         int total_copies
@@ -115,22 +115,28 @@ erDiagram
 
 ### 3. `books` - Book master data
 
-| Column             | Type            | Constraints                 | Default | Description           |
-| ------------------ | --------------- | --------------------------- | ------- | --------------------- |
-| `id`               | BIGINT UNSIGNED | PRIMARY KEY, AUTO_INCREMENT | -       | Unique ID             |
-| `title`            | VARCHAR(255)    | NOT NULL                    | -       | Book title            |
-| `author`           | VARCHAR(255)    | NOT NULL                    | -       | Author name           |
-| `category_id`      | BIGINT UNSIGNED | NOT NULL, FK                | -       | Category ID           |
-| `isbn`             | VARCHAR(20)     | NULLABLE, UNIQUE            | NULL    | ISBN number           |
-| `description`      | TEXT            | NULLABLE                    | NULL    | Synopsis              |
-| `rental_fee`       | DECIMAL(10,2)   | NOT NULL                    | 0.00    | Rental fee per borrow |
-| `total_copies`     | INT UNSIGNED    | NOT NULL                    | 0       | Total copies          |
-| `available_copies` | INT UNSIGNED    | NOT NULL                    | 0       | Available copies      |
-| `times_borrowed`   | INT UNSIGNED    | NOT NULL                    | 0       | Borrow counter        |
-| `created_at`       | TIMESTAMP       | NULLABLE                    | NULL    | Created timestamp     |
-| `updated_at`       | TIMESTAMP       | NULLABLE                    | NULL    | Updated timestamp     |
+| Column             | Type            | Constraints                 | Default | Description                |
+| ------------------ | --------------- | --------------------------- | ------- | -------------------------- |
+| `id`               | BIGINT UNSIGNED | PRIMARY KEY, AUTO_INCREMENT | -       | Unique ID                  |
+| `title`            | VARCHAR(255)    | NOT NULL                    | -       | Book title                 |
+| `author`           | VARCHAR(255)    | NOT NULL                    | -       | Author name                |
+| `category_id`      | BIGINT UNSIGNED | NOT NULL, FK                | -       | Category ID                |
+| `image`            | VARCHAR(255)    | NULLABLE                    | NULL    | **Cover image path (NEW)** |
+| `description`      | TEXT            | NULLABLE                    | NULL    | Synopsis                   |
+| `rental_fee`       | DECIMAL(10,2)   | NOT NULL                    | 0.00    | Rental fee per borrow      |
+| `total_copies`     | INT UNSIGNED    | NOT NULL                    | 0       | Total copies               |
+| `available_copies` | INT UNSIGNED    | NOT NULL                    | 0       | Available copies           |
+| `times_borrowed`   | INT UNSIGNED    | NOT NULL                    | 0       | Borrow counter             |
+| `created_at`       | TIMESTAMP       | NULLABLE                    | NULL    | Created timestamp          |
+| `updated_at`       | TIMESTAMP       | NULLABLE                    | NULL    | Updated timestamp          |
 
 **Foreign Keys:** `category_id` → `categories(id)` ON DELETE RESTRICT
+
+**Image Storage:**
+
+-   Path format: `books/{book_id}_{timestamp}.{ext}`
+-   Storage: `storage/app/public/books/`
+-   URL: `{APP_URL}/storage/books/{filename}`
 
 ---
 
@@ -198,6 +204,28 @@ erDiagram
 
 ---
 
+## Migration: Add Image to Books
+
+```php
+// database/migrations/xxxx_add_image_to_books_table.php
+
+public function up(): void
+{
+    Schema::table('books', function (Blueprint $table) {
+        $table->string('image')->nullable()->after('category_id');
+    });
+}
+
+public function down(): void
+{
+    Schema::table('books', function (Blueprint $table) {
+        $table->dropColumn('image');
+    });
+}
+```
+
+---
+
 ## Recommended Indexes
 
 ### Unique Indexes
@@ -205,7 +233,6 @@ erDiagram
 ```sql
 ALTER TABLE users ADD UNIQUE INDEX idx_email (email);
 ALTER TABLE categories ADD UNIQUE INDEX idx_name (name);
-ALTER TABLE books ADD UNIQUE INDEX idx_isbn (isbn);
 ALTER TABLE book_copies ADD UNIQUE INDEX idx_copy_code (copy_code);
 ALTER TABLE borrowings ADD UNIQUE INDEX idx_borrowing_code (borrowing_code);
 ```
@@ -238,9 +265,10 @@ ALTER TABLE borrowings ADD INDEX idx_status_duedate (status, due_date);
 | --------------- | ------ | ------------ | ----------- |
 | users           | 100    | ~500 bytes   | 50 KB       |
 | categories      | 20     | ~200 bytes   | 4 KB        |
-| books           | 1,000  | ~800 bytes   | 800 KB      |
+| books           | 1,000  | ~1 KB        | 1 MB        |
 | book_copies     | 5,000  | ~300 bytes   | 1.5 MB      |
 | borrowings      | 10,000 | ~400 bytes   | 4 MB        |
 | **Total**       | -      | -            | **~6.5 MB** |
 | **+ Indexes**   | -      | -            | **~3 MB**   |
-| **Grand Total** | -      | -            | **~10 MB**  |
+| **+ Images**    | -      | ~100KB/image | **~100 MB** |
+| **Grand Total** | -      | -            | **~110 MB** |

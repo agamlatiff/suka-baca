@@ -1,373 +1,459 @@
-# Routes & Endpoints
+# API Endpoints
+
+## Overview
+
+All API endpoints are RESTful and return JSON responses. Authentication uses **Laravel Sanctum** tokens.
+
+**Base URL:** `/api`
+
+---
 
 ## Authentication
 
-All authenticated routes use **Laravel session-based authentication** (via Breeze).
-Admin panel uses **Filament's built-in auth**.
+### Headers
+
+All authenticated endpoints require:
+
+```
+Authorization: Bearer {token}
+```
+
+### Endpoints
+
+| Method | Endpoint             | Description           | Auth |
+| ------ | -------------------- | --------------------- | ---- |
+| POST   | `/api/auth/login`    | Login & get token     | ❌   |
+| POST   | `/api/auth/register` | Register new user     | ❌   |
+| POST   | `/api/auth/logout`   | Logout & revoke token | ✅   |
+| GET    | `/api/auth/user`     | Get current user      | ✅   |
+
+#### POST `/api/auth/login`
+
+**Request:**
+
+```json
+{
+    "email": "user@example.com",
+    "password": "password"
+}
+```
+
+**Response (200):**
+
+```json
+{
+    "user": {
+        "id": 1,
+        "name": "User Name",
+        "email": "user@example.com",
+        "role": "user",
+        "phone": "081234567890"
+    },
+    "token": "1|abc123..."
+}
+```
+
+#### POST `/api/auth/register`
+
+**Request:**
+
+```json
+{
+    "name": "New User",
+    "email": "newuser@example.com",
+    "password": "password",
+    "password_confirmation": "password",
+    "phone": "081234567890"
+}
+```
 
 ---
 
-## Route Overview
+## Books
 
-### Public Routes (Guest)
+| Method | Endpoint                 | Description            | Auth | Role  |
+| ------ | ------------------------ | ---------------------- | ---- | ----- |
+| GET    | `/api/books`             | List books (paginated) | ✅   | Any   |
+| GET    | `/api/books/{id}`        | Get book detail        | ✅   | Any   |
+| POST   | `/api/books`             | Create book            | ✅   | Admin |
+| PUT    | `/api/books/{id}`        | Update book            | ✅   | Admin |
+| DELETE | `/api/books/{id}`        | Delete book            | ✅   | Admin |
+| POST   | `/api/books/{id}/borrow` | Borrow book            | ✅   | User  |
 
-| Method | URI         | Name     | Description          |
-| ------ | ----------- | -------- | -------------------- |
-| GET    | `/`         | home     | Landing page         |
-| GET    | `/login`    | login    | Login form           |
-| POST   | `/login`    | -        | Process login        |
-| GET    | `/register` | register | Registration form    |
-| POST   | `/register` | -        | Process registration |
-| POST   | `/logout`   | logout   | Logout user          |
-
-### User Routes (Authenticated)
-
-| Method | URI                      | Name             | Description    |
-| ------ | ------------------------ | ---------------- | -------------- |
-| GET    | `/dashboard`             | dashboard        | User dashboard |
-| GET    | `/catalog`               | catalog.index    | Browse books   |
-| GET    | `/catalog/{book}`        | catalog.show     | Book detail    |
-| POST   | `/catalog/{book}/borrow` | catalog.borrow   | Borrow book    |
-| GET    | `/my-borrowings`         | borrowings.index | My borrowings  |
-
-### Admin Routes (Filament)
-
-| Method | URI                 | Description       |
-| ------ | ------------------- | ----------------- |
-| GET    | `/admin`            | Admin dashboard   |
-| GET    | `/admin/books`      | Manage books      |
-| GET    | `/admin/categories` | Manage categories |
-| GET    | `/admin/borrowings` | Manage borrowings |
-| GET    | `/admin/users`      | Manage users      |
-| GET    | `/admin/settings`   | System settings   |
-
----
-
-## Detailed Route Specifications
-
-### 1. GET `/catalog`
-
-**Description:** Browse all available books with search, filter, and pagination.
+#### GET `/api/books`
 
 **Query Parameters:**
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| search | string | null | Search title/author |
+| category_id | int | null | Filter by category |
+| available | bool | null | Only available books |
+| sort | string | title | Sort field |
+| order | string | asc | Sort order |
+| page | int | 1 | Page number |
+| per_page | int | 12 | Items per page |
 
-| Parameter   | Type   | Default | Description                            |
-| ----------- | ------ | ------- | -------------------------------------- |
-| `search`    | string | null    | Search by title or author              |
-| `category`  | int    | null    | Filter by category ID                  |
-| `available` | bool   | null    | Show only available (1) or all (null)  |
-| `sort`      | string | 'title' | Sort by: title, author, times_borrowed |
-| `order`     | string | 'asc'   | Order: asc, desc                       |
-| `page`      | int    | 1       | Page number                            |
-| `per_page`  | int    | 12      | Items per page (max: 50)               |
+**Response (200):**
 
-**Example Request:**
-
-```
-GET /catalog?search=harry&category=1&available=1&sort=title&order=asc&page=1
-```
-
-**Controller Logic:**
-
-```php
-public function index(Request $request)
+```json
 {
-    $books = Book::query()
-        ->when($request->search, fn($q, $search) =>
-            $q->where('title', 'like', "%{$search}%")
-              ->orWhere('author', 'like', "%{$search}%"))
-        ->when($request->category, fn($q, $cat) =>
-            $q->where('category_id', $cat))
-        ->when($request->available, fn($q) =>
-            $q->where('available_copies', '>', 0))
-        ->orderBy($request->get('sort', 'title'), $request->get('order', 'asc'))
-        ->paginate($request->get('per_page', 12));
+    "data": [
+        {
+            "id": 1,
+            "title": "Laskar Pelangi",
+            "author": "Andrea Hirata",
+            "image": "/storage/books/1_1703345678.jpg",
+            "category": {
+                "id": 1,
+                "name": "Fiksi"
+            },
+            "description": "Novel inspiratif...",
+            "rental_fee": 5000,
+            "total_copies": 3,
+            "available_copies": 2,
+            "times_borrowed": 25
+        }
+    ],
+    "meta": {
+        "current_page": 1,
+        "last_page": 5,
+        "per_page": 12,
+        "total": 60
+    }
+}
+```
 
-    return view('catalog.index', compact('books'));
+#### POST `/api/books` (Admin)
+
+**Request (multipart/form-data):**
+| Field | Type | Required |
+|-------|------|----------|
+| title | string | ✅ |
+| author | string | ✅ |
+| category_id | int | ✅ |
+| image | file | ❌ |
+| description | string | ❌ |
+| rental_fee | number | ✅ |
+| copies_count | int | ✅ |
+
+#### POST `/api/books/{id}/borrow`
+
+**Request:**
+
+```json
+{
+    "duration": 7
+}
+```
+
+**Response (201):**
+
+```json
+{
+    "message": "Buku berhasil dipinjam",
+    "borrowing": {
+        "id": 1,
+        "borrowing_code": "BRW-20241223-001",
+        "due_date": "2024-12-30",
+        "rental_fee": 5000
+    }
 }
 ```
 
 ---
 
-### 2. GET `/catalog/{book}`
+## Categories
 
-**Description:** View book details.
+| Method | Endpoint               | Description         | Auth | Role  |
+| ------ | ---------------------- | ------------------- | ---- | ----- |
+| GET    | `/api/categories`      | List all categories | ✅   | Any   |
+| POST   | `/api/categories`      | Create category     | ✅   | Admin |
+| PUT    | `/api/categories/{id}` | Update category     | ✅   | Admin |
+| DELETE | `/api/categories/{id}` | Delete category     | ✅   | Admin |
 
-**Route Parameter:**
+#### GET `/api/categories`
 
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `book`    | int  | Book ID     |
+**Response (200):**
 
-**Response Data (to View):**
-
-```php
-[
-    'book' => [
-        'id' => 1,
-        'title' => 'Harry Potter',
-        'author' => 'J.K. Rowling',
-        'category' => ['id' => 1, 'name' => 'Fiction'],
-        'description' => '...',
-        'rental_fee' => 5000.00,
-        'total_copies' => 5,
-        'available_copies' => 3,
-        'times_borrowed' => 150,
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Fiksi",
+            "description": "Novel, cerita pendek...",
+            "books_count": 15
+        }
     ]
-]
+}
 ```
 
 ---
 
-### 3. POST `/catalog/{book}/borrow`
+## Borrowings
 
-**Description:** Borrow a book.
+| Method | Endpoint                      | Description          | Auth | Role  |
+| ------ | ----------------------------- | -------------------- | ---- | ----- |
+| GET    | `/api/borrowings`             | List borrowings      | ✅   | Any\* |
+| GET    | `/api/borrowings/{id}`        | Get borrowing detail | ✅   | Any\* |
+| POST   | `/api/borrowings/{id}/return` | Process return       | ✅   | Admin |
+| PATCH  | `/api/borrowings/{id}/paid`   | Mark as paid         | ✅   | Admin |
 
-**Route Parameter:**
+\*User sees only own borrowings, Admin sees all.
 
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| `book`    | int  | Book ID     |
-
-**Request Body:**
-
-| Field      | Type | Required | Validation |
-| ---------- | ---- | -------- | ---------- |
-| `duration` | int  | Yes      | in:7,14    |
-
-**Validation Rules (Form Request):**
-
-```php
-// app/Http/Requests/BorrowBookRequest.php
-public function rules(): array
-{
-    return [
-        'duration' => ['required', 'integer', 'in:7,14'],
-    ];
-}
-
-public function authorize(): bool
-{
-    $book = $this->route('book');
-    return $book->available_copies > 0;
-}
-```
-
-**Success Response:**
-
--   Redirect to `/my-borrowings` with flash message
--   Creates borrowing record
--   Decrements `available_copies`
-
-**Error Response:**
-
--   Book not available: 403 with error message
--   Validation error: Back with errors
-
----
-
-### 4. GET `/my-borrowings`
-
-**Description:** List user's borrowings with filters.
+#### GET `/api/borrowings`
 
 **Query Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| status | string | active/returned/overdue |
+| is_paid | bool | Filter by payment |
+| page | int | Page number |
 
-| Parameter | Type   | Default | Description                       |
-| --------- | ------ | ------- | --------------------------------- |
-| `status`  | string | null    | Filter: active, returned, overdue |
-| `page`    | int    | 1       | Page number                       |
+**Response (200):**
 
-**Response Data (to View):**
-
-```php
-[
-    'borrowings' => [
-        [
-            'id' => 1,
-            'borrowing_code' => 'BRW-20241221-001',
-            'book_copy' => [
-                'copy_code' => 'BK001-C01',
-                'book' => ['title' => 'Harry Potter', ...]
-            ],
-            'borrowed_at' => '2024-12-21',
-            'due_date' => '2024-12-28',
-            'status' => 'active',
-            'rental_fee' => 5000.00,
-            'late_fee' => 0.00,
-            'total_fee' => 5000.00,
-            'is_paid' => false,
-            'days_remaining' => 7,
-        ]
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "borrowing_code": "BRW-20241223-001",
+            "user": {
+                "id": 1,
+                "name": "Budi Santoso"
+            },
+            "book_copy": {
+                "id": 1,
+                "copy_code": "BK001-C01",
+                "book": {
+                    "id": 1,
+                    "title": "Laskar Pelangi",
+                    "image": "/storage/books/1_1703345678.jpg"
+                }
+            },
+            "borrowed_at": "2024-12-23",
+            "due_date": "2024-12-30",
+            "returned_at": null,
+            "rental_fee": 5000,
+            "late_fee": 0,
+            "total_fee": 5000,
+            "is_paid": false,
+            "status": "active",
+            "days_remaining": 7
+        }
     ]
-]
-```
-
----
-
-## Form Request Validations
-
-### RegisterRequest
-
-```php
-public function rules(): array
-{
-    return [
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'phone' => ['nullable', 'string', 'max:20'],
-    ];
 }
 ```
 
-### LoginRequest
+#### POST `/api/borrowings/{id}/return`
 
-```php
-public function rules(): array
+**Response (200):**
+
+```json
 {
-    return [
-        'email' => ['required', 'string', 'email'],
-        'password' => ['required', 'string'],
-    ];
-}
-```
-
-### BorrowBookRequest
-
-```php
-public function rules(): array
-{
-    return [
-        'duration' => ['required', 'integer', 'in:7,14'],
-    ];
-}
-
-public function messages(): array
-{
-    return [
-        'duration.in' => 'Duration must be 7 or 14 days.',
-    ];
+    "message": "Buku berhasil dikembalikan",
+    "borrowing": {
+        "id": 1,
+        "returned_at": "2024-12-30",
+        "days_late": 0,
+        "late_fee": 0,
+        "total_fee": 5000,
+        "status": "returned"
+    }
 }
 ```
 
 ---
 
-## Soft Deletes
+## Users (Admin)
 
-Soft delete enabled for tables that need history preservation:
+| Method | Endpoint          | Description     | Auth | Role  |
+| ------ | ----------------- | --------------- | ---- | ----- |
+| GET    | `/api/users`      | List all users  | ✅   | Admin |
+| GET    | `/api/users/{id}` | Get user detail | ✅   | Admin |
+| PUT    | `/api/users/{id}` | Update user     | ✅   | Admin |
 
-| Table       | Soft Delete | Reason                          |
-| ----------- | ----------- | ------------------------------- |
-| users       | ❌ No       | Borrowings use restrictOnDelete |
-| categories  | ❌ No       | Books use restrictOnDelete      |
-| books       | ✅ Yes      | Keep borrowing history          |
-| book_copies | ✅ Yes      | Keep borrowing history          |
-| borrowings  | ❌ No       | Never delete, historical data   |
-| settings    | ❌ No       | System config                   |
+---
 
-**Implementation:**
+## Settings (Admin)
 
-```php
-// Add to Book and BookCopy models
-use Illuminate\Database\Eloquent\SoftDeletes;
+| Method | Endpoint              | Description      | Auth | Role  |
+| ------ | --------------------- | ---------------- | ---- | ----- |
+| GET    | `/api/settings`       | Get all settings | ✅   | Admin |
+| PUT    | `/api/settings/{key}` | Update setting   | ✅   | Admin |
 
-class Book extends Model
+#### GET `/api/settings`
+
+**Response (200):**
+
+```json
 {
-    use SoftDeletes;
+    "data": [
+        {
+            "key": "late_fee_per_day",
+            "value": "2000",
+            "description": "Denda keterlambatan per hari"
+        },
+        {
+            "key": "max_borrow_days",
+            "value": "14",
+            "description": "Maksimal hari peminjaman"
+        }
+    ]
 }
-```
-
-**Migration for soft deletes:**
-
-```php
-Schema::table('books', function (Blueprint $table) {
-    $table->softDeletes();
-});
 ```
 
 ---
 
-## Error Handling
+## Dashboard
 
-### Common Error Responses
+| Method | Endpoint               | Description           | Auth | Role  |
+| ------ | ---------------------- | --------------------- | ---- | ----- |
+| GET    | `/api/dashboard/user`  | User dashboard stats  | ✅   | User  |
+| GET    | `/api/dashboard/admin` | Admin dashboard stats | ✅   | Admin |
 
-| HTTP Code | Scenario           | User Experience            |
-| --------- | ------------------ | -------------------------- |
-| 401       | Not authenticated  | Redirect to login          |
-| 403       | Not authorized     | Error page / flash message |
-| 404       | Resource not found | 404 page                   |
-| 422       | Validation error   | Back with errors           |
-| 500       | Server error       | Error page                 |
+#### GET `/api/dashboard/user`
 
-### Flash Messages
+**Response (200):**
 
-```php
-// Success
-return redirect()->route('borrowings.index')
-    ->with('success', 'Book borrowed successfully!');
+```json
+{
+  "active_borrowings": 2,
+  "due_soon": 1,
+  "overdue": 0,
+  "total_fees_unpaid": 10000,
+  "recent_borrowings": [...]
+}
+```
 
-// Error
-return back()->with('error', 'Book is not available.');
+#### GET `/api/dashboard/admin`
+
+**Response (200):**
+
+```json
+{
+  "total_books": 100,
+  "total_copies": 350,
+  "available_copies": 280,
+  "borrowed_copies": 70,
+  "total_users": 50,
+  "active_borrowings": 25,
+  "overdue_borrowings": 3,
+  "unpaid_fees": 150000,
+  "recent_borrowings": [...],
+  "top_books": [...]
+}
+```
+
+---
+
+## Error Responses
+
+### Validation Error (422)
+
+```json
+{
+    "message": "The given data was invalid.",
+    "errors": {
+        "email": ["Email sudah terdaftar."],
+        "password": ["Password minimal 6 karakter."]
+    }
+}
+```
+
+### Unauthorized (401)
+
+```json
+{
+    "message": "Unauthenticated."
+}
+```
+
+### Forbidden (403)
+
+```json
+{
+    "message": "Akses ditolak."
+}
+```
+
+### Not Found (404)
+
+```json
+{
+    "message": "Data tidak ditemukan."
+}
 ```
 
 ---
 
 ## Route Definitions
 
-### routes/web.php
+### routes/api.php
 
 ```php
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\BorrowingController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\BorrowingController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\DashboardController;
 
-// Public
-Route::get('/', fn() => view('welcome'))->name('home');
+// Auth
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
 
-// Authenticated
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
+Route::middleware('auth:sanctum')->group(function () {
+    // Auth
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::get('/auth/user', [AuthController::class, 'user']);
 
-    Route::get('/catalog', [CatalogController::class, 'index'])
-        ->name('catalog.index');
-    Route::get('/catalog/{book}', [CatalogController::class, 'show'])
-        ->name('catalog.show');
-    Route::post('/catalog/{book}/borrow', [CatalogController::class, 'borrow'])
-        ->name('catalog.borrow');
+    // Books
+    Route::get('/books', [BookController::class, 'index']);
+    Route::get('/books/{book}', [BookController::class, 'show']);
+    Route::post('/books/{book}/borrow', [BookController::class, 'borrow']);
 
-    Route::get('/my-borrowings', [BorrowingController::class, 'index'])
-        ->name('borrowings.index');
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'index']);
+
+    // Borrowings
+    Route::get('/borrowings', [BorrowingController::class, 'index']);
+    Route::get('/borrowings/{borrowing}', [BorrowingController::class, 'show']);
+
+    // Dashboard
+    Route::get('/dashboard/user', [DashboardController::class, 'user']);
+
+    // Admin Routes
+    Route::middleware('admin')->group(function () {
+        // Books CRUD
+        Route::post('/books', [BookController::class, 'store']);
+        Route::put('/books/{book}', [BookController::class, 'update']);
+        Route::delete('/books/{book}', [BookController::class, 'destroy']);
+
+        // Categories CRUD
+        Route::post('/categories', [CategoryController::class, 'store']);
+        Route::put('/categories/{category}', [CategoryController::class, 'update']);
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+        // Borrowings Actions
+        Route::post('/borrowings/{borrowing}/return', [BorrowingController::class, 'return']);
+        Route::patch('/borrowings/{borrowing}/paid', [BorrowingController::class, 'markPaid']);
+
+        // Users
+        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/users/{user}', [UserController::class, 'show']);
+        Route::put('/users/{user}', [UserController::class, 'update']);
+
+        // Settings
+        Route::get('/settings', [SettingController::class, 'index']);
+        Route::put('/settings/{key}', [SettingController::class, 'update']);
+
+        // Dashboard
+        Route::get('/dashboard/admin', [DashboardController::class, 'admin']);
+    });
 });
-
-require __DIR__.'/auth.php';
 ```
-
----
-
-## Middleware
-
-| Middleware | Purpose                   | Applied To            |
-| ---------- | ------------------------- | --------------------- |
-| `auth`     | Requires login            | All user routes       |
-| `verified` | Email verified (optional) | Can be enabled        |
-| `guest`    | Guest only                | Login, Register pages |
-
----
-
-## Admin Panel (Filament)
-
-Admin CRUD operations are handled by Filament Resources.
-See [08-ADMIN-PANELS.md](./08-ADMIN-PANELS.md) for details.
-
-Filament automatically provides:
-
--   Pagination
--   Search
--   Filters
--   Sorting
--   Bulk actions
--   Form validation

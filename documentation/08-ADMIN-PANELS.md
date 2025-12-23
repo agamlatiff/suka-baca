@@ -1,304 +1,262 @@
-# Admin Panel (Laravel Filament)
+# Admin Panel (React.js)
 
 ## Overview
 
-The admin panel is built using **Laravel Filament v4**, providing a modern, feature-rich CMS out of the box.
+The admin panel is built using **React.js + TypeScript**, replacing Laravel Filament with a custom SPA admin interface.
 
-### Why Filament?
+### Why React.js Admin?
 
-| Benefit           | Description                           |
-| ----------------- | ------------------------------------- |
-| Rapid development | Auto-generates CRUD from models       |
-| Modern UI         | Beautiful, responsive design          |
-| Built-in features | Search, filters, bulk actions, export |
-| Customizable      | Easy to extend and customize          |
+| Benefit          | Description                           |
+| ---------------- | ------------------------------------- |
+| Consistent stack | Same tech as user-facing frontend     |
+| Full control     | Custom UI/UX based on provided design |
+| Better UX        | SPA experience, faster navigation     |
+| Type safety      | TypeScript end-to-end                 |
+| State management | Zustand for complex admin workflows   |
 
 ---
 
-## Installation
+## Tech Stack
 
-```bash
-# Install Filament
-composer require filament/filament
-
-# Install panel
-php artisan filament:install --panels
-
-# Create admin user
-php artisan make:filament-user
-```
+| Technology      | Purpose                  |
+| --------------- | ------------------------ |
+| React.js 18     | UI framework             |
+| TypeScript      | Type safety              |
+| React Router    | Client-side routing      |
+| TanStack Query  | Server state management  |
+| TanStack Table  | Data tables with sorting |
+| React Hook Form | Form handling            |
+| Zod             | Form validation          |
+| Zustand         | Global state             |
+| Tailwind CSS    | Styling                  |
+| Axios           | API calls                |
 
 ---
 
 ## Admin Panel Structure
 
 ```
-app/Filament/
-├── Resources/
-│   ├── BookResource.php
-│   ├── BookCopyResource.php
-│   ├── CategoryResource.php
-│   ├── BorrowingResource.php
-│   ├── UserResource.php
-│   └── SettingResource.php
-├── Widgets/
-│   ├── StatsOverview.php
-│   ├── RecentBorrowings.php
-│   └── TopBooks.php
-└── Pages/
-    └── Dashboard.php
+frontend/src/pages/admin/
+├── AdminLayout.tsx           # Admin layout wrapper
+├── AdminDashboard.tsx        # Dashboard with stats
+├── books/
+│   ├── BooksPage.tsx         # Books list + CRUD
+│   ├── BookForm.tsx          # Create/Edit form
+│   └── BookImageUpload.tsx   # Image upload component
+├── categories/
+│   ├── CategoriesPage.tsx    # Categories list
+│   └── CategoryForm.tsx      # Create/Edit form
+├── borrowings/
+│   ├── BorrowingsPage.tsx    # All borrowings
+│   └── BorrowingActions.tsx  # Return, Mark Paid
+├── users/
+│   ├── UsersPage.tsx         # Users list
+│   └── UserDetail.tsx        # User detail + borrowings
+└── settings/
+    └── SettingsPage.tsx      # System settings
 ```
 
 ---
 
-## Resources
+## Pages & Features
 
-### 1. BookResource
+### 1. Admin Dashboard
 
-Manages book master data.
+**Widgets/Stats:**
+| Widget | Description |
+|--------|-------------|
+| Total Buku | Number of unique titles |
+| Total Eksemplar | All physical copies |
+| Tersedia | Copies available |
+| Sedang Dipinjam | Active borrowings |
+| Total Anggota | Registered members |
+| Belum Dibayar | Unpaid fees count |
 
-**List Columns:**
-| Column | Type | Searchable | Sortable |
-|--------|------|------------|----------|
-| Title | Text | ✅ | ✅ |
-| Author | Text | ✅ | ✅ |
-| Category | Relationship | ✅ | ❌ |
-| Available/Total | Badge | ❌ | ✅ |
-| Times Borrowed | Number | ❌ | ✅ |
+**Components:**
+
+-   `StatsCards` - Grid of stat cards
+-   `RecentBorrowings` - Last 10 borrowings table
+-   `TopBooks` - Top 5 most borrowed (chart)
+
+---
+
+### 2. Books Management
+
+**Features:**
+| Feature | Description |
+|---------|-------------|
+| List | Paginated table with search & filter |
+| Create | Form with image upload |
+| Edit | Update book + replace image |
+| Delete | Soft confirmation modal |
+| Copies | Manage book copies inline |
+
+**Table Columns:**
+| Column | Sortable | Searchable |
+|--------|----------|------------|
+| Image | ❌ | ❌ |
+| Judul | ✅ | ✅ |
+| Penulis | ✅ | ✅ |
+| Kategori | ✅ | ✅ |
+| Tersedia/Total | ✅ | ❌ |
+| Biaya Sewa | ✅ | ❌ |
+| Actions | ❌ | ❌ |
 
 **Form Fields:**
 | Field | Type | Required |
 |-------|------|----------|
-| Title | TextInput | ✅ |
-| Author | TextInput | ✅ |
-| Category | Select | ✅ |
-| ISBN | TextInput | ❌ |
-| Description | Textarea | ❌ |
-| Rental Fee | MoneyInput | ✅ |
-| Copies Count | NumberInput | ✅ |
+| Gambar Cover | FileUpload | ❌ |
+| Judul | TextInput | ✅ |
+| Penulis | TextInput | ✅ |
+| Kategori | Select | ✅ |
+| Deskripsi | Textarea | ❌ |
+| Biaya Sewa | NumberInput | ✅ |
+| Jumlah Eksemplar | NumberInput | ✅ (create only) |
 
 ---
 
-### 2. CategoryResource
+### 3. Categories Management
 
-Manages book categories.
-
-**List Columns:**
-| Column | Type |
-|--------|------|
-| Name | Text |
-| Description | Text |
-| Books Count | Badge |
-
-**Form Fields:**
-| Field | Type | Required |
-|-------|------|----------|
-| Name | TextInput | ✅ |
-| Description | Textarea | ❌ |
+**Table Columns:**
+| Column | Description |
+|--------|-------------|
+| Nama | Category name |
+| Deskripsi | Description |
+| Jumlah Buku | Books count badge |
+| Actions | Edit, Delete |
 
 ---
 
-### 3. BorrowingResource
+### 4. Borrowings Management
 
-Manages all borrowing transactions.
-
-**List Columns:**
-| Column | Type |
-|--------|------|
-| Borrowing Code | Text |
-| User | Relationship |
-| Book Title | Relationship |
-| Copy Code | Relationship |
-| Borrowed At | Date |
-| Due Date | Date |
-| Status | Badge |
-| Is Paid | Icon |
+**Table Columns:**
+| Column | Description |
+|--------|-------------|
+| Kode | Borrowing code |
+| Anggota | User name |
+| Buku | Book title |
+| Kode Eksemplar | Copy code |
+| Tgl Pinjam | Borrowed date |
+| Jatuh Tempo | Due date |
+| Status | Badge (Aktif/Dikembalikan/Terlambat) |
+| Lunas | Icon (✅/❌) |
+| Actions | Return, Mark Paid |
 
 **Filters:**
 | Filter | Type |
 |--------|------|
-| Status | Select (Active/Returned/Overdue) |
-| Payment | Boolean (Paid/Unpaid) |
-| Date Range | DatePicker |
+| Status | Select (Semua/Aktif/Dikembalikan/Terlambat) |
+| Pembayaran | Select (Semua/Lunas/Belum Lunas) |
+| Tanggal | DateRange picker |
 
 **Actions:**
-| Action | Description |
+| Action | Visible When | Description |
+|--------|--------------|-------------|
+| Kembalikan | status = active | Process return, calculate late fee |
+| Tandai Lunas | is_paid = false | Mark as paid |
+
+---
+
+### 5. Users Management
+
+**Table Columns:**
+| Column | Description |
 |--------|-------------|
-| Return | Mark as returned, free up copy |
-| Mark Paid | Update payment status |
+| Nama | User name |
+| Email | Email address |
+| Telepon | Phone number |
+| Role | Badge (Admin/User) |
+| Peminjaman | Active borrowings count |
+| Actions | View Detail |
 
 ---
 
-### 4. UserResource
+### 6. Settings Page
 
-Manages user accounts.
-
-**List Columns:**
-| Column | Type |
-|--------|------|
-| Name | Text |
-| Email | Text |
-| Role | Badge |
-| Phone | Text |
-| Borrowings Count | Badge |
-
----
-
-### 5. SettingResource
-
-Manages system-wide settings like late fee.
-
-**List Columns:**
-| Column | Type |
-|--------|------|
-| Key | Text |
-| Value | Text |
-| Description | Text |
-
-**Form Fields:**
-| Field | Type | Required |
-|-------|------|----------|
-| Key | TextInput (readonly) | ✅ |
-| Value | TextInput | ✅ |
-| Description | TextInput | ❌ |
-
-**Default Settings:**
-| Key | Description |
-|-----|-------------|
-| late_fee_per_day | Late penalty per day (Rp) |
-| max_borrow_days | Maximum borrowing duration |
-| max_books_per_user | Max books per user at once |
-
-## Dashboard Widgets
-
-### StatsOverview Widget
-
-```php
-class StatsOverview extends Widget
-{
-    protected function getStats(): array
-    {
-        return [
-            Stat::make('Total Books', Book::count()),
-            Stat::make('Total Copies', BookCopy::count()),
-            Stat::make('Available', BookCopy::available()->count()),
-            Stat::make('Borrowed', BookCopy::borrowed()->count()),
-            Stat::make('Total Users', User::where('role', 'user')->count()),
-            Stat::make('Active Loans', Borrowing::active()->count()),
-        ];
-    }
-}
-```
-
-### RecentBorrowings Widget
-
-Displays a table of the 10 most recent borrowing transactions.
-
-### TopBooks Widget
-
-Shows top 5 most borrowed books as a list or chart.
-
----
-
-## Custom Actions
-
-### Return Book Action
-
-```php
-Tables\Actions\Action::make('return')
-    ->label('Return')
-    ->icon('heroicon-o-arrow-uturn-left')
-    ->requiresConfirmation()
-    ->visible(fn (Borrowing $record) => $record->status === 'active')
-    ->action(function (Borrowing $record) {
-        // Calculate late fee if overdue
-        $record->processReturn();
-    });
-```
-
-### Mark as Paid Action
-
-```php
-Tables\Actions\Action::make('markPaid')
-    ->label('Mark Paid')
-    ->icon('heroicon-o-check-circle')
-    ->visible(fn (Borrowing $record) => !$record->is_paid)
-    ->action(fn (Borrowing $record) => $record->update(['is_paid' => true]));
-```
-
----
-
-## Filament Configuration
-
-### Access Control
-
-Only allow admin users to access the panel:
-
-```php
-// app/Providers/Filament/AdminPanelProvider.php
-public function panel(Panel $panel): Panel
-{
-    return $panel
-        ->authMiddleware([
-            Authenticate::class,
-        ])
-        ->authGuard('web');
-}
-```
-
-### Model Policy (Optional)
-
-```php
-// app/Policies/BookPolicy.php
-public function viewAny(User $user): bool
-{
-    return $user->role === 'admin';
-}
-```
+**Editable Settings:**
+| Key | Label | Type |
+|-----|-------|------|
+| late_fee_per_day | Denda per Hari | Number (Rp) |
+| max_borrow_days | Maks Hari Pinjam | Number |
+| max_books_per_user | Maks Buku per User | Number |
+| library_name | Nama Perpustakaan | Text |
+| library_address | Alamat | Textarea |
 
 ---
 
 ## Admin Routes
 
-| URI                 | Description          |
-| ------------------- | -------------------- |
-| `/admin`            | Dashboard            |
-| `/admin/books`      | Book management      |
-| `/admin/categories` | Category management  |
-| `/admin/borrowings` | Borrowing management |
-| `/admin/users`      | User management      |
+| Route                   | Component      | Description          |
+| ----------------------- | -------------- | -------------------- |
+| `/admin`                | AdminDashboard | Dashboard overview   |
+| `/admin/books`          | BooksPage      | Book management      |
+| `/admin/books/create`   | BookForm       | Create book          |
+| `/admin/books/:id/edit` | BookForm       | Edit book            |
+| `/admin/categories`     | CategoriesPage | Category management  |
+| `/admin/borrowings`     | BorrowingsPage | Borrowing management |
+| `/admin/users`          | UsersPage      | User management      |
+| `/admin/users/:id`      | UserDetail     | User detail          |
+| `/admin/settings`       | SettingsPage   | System settings      |
 
 ---
 
-## Customization Tips
+## Access Control
 
-### Adding Book Copies Inline
+Admin routes are protected by:
 
-Use `RelationManager` to manage copies within the Book resource:
+1. **Laravel Sanctum** - API authentication
+2. **Role Middleware** - Check `user.role === 'admin'`
+3. **React Router Guard** - Redirect if not admin
 
-```php
-class CopiesRelationManager extends RelationManager
-{
-    protected static string $relationship = 'copies';
+```typescript
+// frontend/src/guards/AdminGuard.tsx
+export function AdminGuard({ children }: { children: React.ReactNode }) {
+    const { user, isLoading } = useAuth();
 
-    // Table and form configuration
+    if (isLoading) return <LoadingSpinner />;
+    if (!user || user.role !== "admin") {
+        return <Navigate to="/login" replace />;
+    }
+
+    return <>{children}</>;
 }
 ```
 
-### Custom Dashboard
+---
 
-Create a custom dashboard page with specific widgets:
+## API Endpoints for Admin
 
-```php
-class Dashboard extends BaseDashboard
-{
-    protected function getWidgets(): array
-    {
-        return [
-            StatsOverview::class,
-            RecentBorrowings::class,
-            TopBooks::class,
-        ];
-    }
-}
+```
+# Books (Admin)
+GET    /api/books              # List with pagination
+POST   /api/books              # Create with image upload
+PUT    /api/books/{id}         # Update
+DELETE /api/books/{id}         # Delete
+POST   /api/books/{id}/image   # Upload/replace image
+
+# Book Copies
+GET    /api/books/{id}/copies
+POST   /api/books/{id}/copies
+PUT    /api/copies/{id}
+DELETE /api/copies/{id}
+
+# Categories
+POST   /api/categories
+PUT    /api/categories/{id}
+DELETE /api/categories/{id}
+
+# Borrowings
+POST   /api/borrowings/{id}/return    # Process return
+PATCH  /api/borrowings/{id}/paid      # Mark as paid
+
+# Users
+GET    /api/users
+GET    /api/users/{id}
+
+# Settings
+GET    /api/settings
+PUT    /api/settings/{key}
+
+# Dashboard
+GET    /api/admin/dashboard    # Admin stats
 ```
