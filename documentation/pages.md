@@ -80,12 +80,12 @@
 
 #### Sections:
 
-  | Section            | Deskripsi    | Komponen                                                          |
-  | ------------------ | ------------ | ----------------------------------------------------------------- |
-  | **Page Layout**    | Split layout | Ilustrasi/branding (kiri), Form (kanan)                           |
-  | **Login Form**     | Form login   | Email input, Password input, Remember me checkbox, Tombol "Masuk" |
-  | **Links**          | Navigasi     | Link "Lupa Password?", Link "Belum punya akun? Daftar"            |
-  | **Error Messages** | Validasi     | Alert untuk email/password salah                                  |
+    | Section            | Deskripsi    | Komponen                                                          |
+    | ------------------ | ------------ | ----------------------------------------------------------------- |
+    | **Page Layout**    | Split layout | Ilustrasi/branding (kiri), Form (kanan)                           |
+    | **Login Form**     | Form login   | Email input, Password input, Remember me checkbox, Tombol "Masuk" |
+    | **Links**          | Navigasi     | Link "Lupa Password?", Link "Belum punya akun? Daftar"            |
+    | **Error Messages** | Validasi     | Alert untuk email/password salah                                  |
 
 ---
 
@@ -93,14 +93,14 @@
 
 **Purpose:** Halaman registrasi member baru.
 
-#### Sections:
+  #### Sections:
 
-| Section           | Deskripsi    | Komponen                                                                                       |
-| ----------------- | ------------ | ---------------------------------------------------------------------------------------------- |
-| **Page Layout**   | Split layout | Ilustrasi/branding (kiri), Form (kanan)                                                        |
-| **Register Form** | Form daftar  | Nama lengkap, Email, No. HP, Alamat (opsional), Password, Konfirmasi password, Tombol "Daftar" |
-| **Links**         | Navigasi     | Link "Sudah punya akun? Masuk"                                                                 |
-| **Validation**    | Validasi     | Error messages per field                                                                       |
+  | Section           | Deskripsi    | Komponen                                                                                       |
+  | ----------------- | ------------ | ---------------------------------------------------------------------------------------------- |
+  | **Page Layout**   | Split layout | Ilustrasi/branding (kiri), Form (kanan)                                                        |
+  | **Register Form** | Form daftar  | Nama lengkap, Email, No. HP, Alamat (opsional), Password, Konfirmasi password, Tombol "Daftar" |
+  | **Links**         | Navigasi     | Link "Sudah punya akun? Masuk"                                                                 |
+  | **Validation**    | Validasi     | Error messages per field                                                                       |
 
 ---
 
@@ -137,15 +137,15 @@
 
 #### Sections:
 
-| Section                 | Deskripsi          | Komponen                                                                                       |
-| ----------------------- | ------------------ | ---------------------------------------------------------------------------------------------- |
-| **Welcome Header**      | Greeting           | "Selamat datang, [Nama]", Tanggal hari ini                                                     |
-| **Alert (jika ada)**    | Notifikasi penting | Alert merah: buku terlambat, Alert kuning: tagihan belum lunas, Alert info: H-2 jatuh tempo    |
-| **Stats Cards**         | Statistik cepat    | 4 card: Sedang dipinjam, Total dipinjam, Wishlist, Outstanding tagihan                         |
-| **Pinjaman Aktif**      | Buku dipinjam      | List: Cover, Judul, Jatuh tempo, Countdown, Status, Biaya, Tombol "Perpanjang" (jika eligible) |
-| **Request Pending**     | Menunggu approval  | List request yang masih pending verifikasi pembayaran                                          |
-| **Outstanding Payment** | Tagihan            | Alert + total tagihan + link ke detail payment                                                 |
-| **Quick Actions**       | Aksi cepat         | Tombol ke Katalog, Tombol ke Wishlist                                                          |
+  | Section                 | Deskripsi          | Komponen                                                                                       |
+  | ----------------------- | ------------------ | ---------------------------------------------------------------------------------------------- |
+  | **Welcome Header**      | Greeting           | "Selamat datang, [Nama]", Tanggal hari ini                                                     |
+  | **Alert (jika ada)**    | Notifikasi penting | Alert merah: buku terlambat, Alert kuning: tagihan belum lunas, Alert info: H-2 jatuh tempo    |
+  | **Stats Cards**         | Statistik cepat    | 4 card: Sedang dipinjam, Total dipinjam, Wishlist, Outstanding tagihan                         |
+  | **Pinjaman Aktif**      | Buku dipinjam      | List: Cover, Judul, Jatuh tempo, Countdown, Status, Biaya, Tombol "Perpanjang" (jika eligible) |
+  | **Request Pending**     | Menunggu approval  | List request yang masih pending verifikasi pembayaran                                          |
+  | **Outstanding Payment** | Tagihan            | Alert + total tagihan + link ke detail payment                                                 |
+  | **Quick Actions**       | Aksi cepat         | Tombol ke Katalog, Tombol ke Wishlist                                                          |
 
 ---
 
@@ -202,13 +202,13 @@
 
 #### Steps:
 
-| Step                     | Deskripsi               | Komponen                                                              |
-| ------------------------ | ----------------------- | --------------------------------------------------------------------- |
-| **Step 1: Konfirmasi**   | Konfirmasi buku & harga | Info buku, Harga sewa 7 hari, Total yang harus dibayar                |
-| **Step 2: Metode Bayar** | Pilih metode            | Pilihan: Cash / Transfer QRIS                                         |
-| **Step 3: Upload Bukti** | Upload bukti transfer   | FileUpload untuk bukti transfer, Info rekening tujuan (jika transfer) |
-| **Step 4: Submit**       | Kirim request           | Tombol "Kirim Request Peminjaman"                                     |
-| **Step 5: Pending**      | Konfirmasi              | Pesan "Request dikirim, menunggu verifikasi admin", Kode request      |
+  | Step                     | Deskripsi               | Komponen                                                              |
+  | ------------------------ | ----------------------- | --------------------------------------------------------------------- |
+  | **Step 1: Konfirmasi**   | Konfirmasi buku & harga | Info buku, Harga sewa 7 hari, Total yang harus dibayar                |
+  | **Step 2: Metode Bayar** | Pilih metode            | Pilihan: Cash / Transfer QRIS                                         |
+  | **Step 3: Upload Bukti** | Upload bukti transfer   | FileUpload untuk bukti transfer, Info rekening tujuan (jika transfer) |
+  | **Step 4: Submit**       | Kirim request           | Tombol "Kirim Request Peminjaman"                                     |
+  | **Step 5: Pending**      | Konfirmasi              | Pesan "Request dikirim, menunggu verifikasi admin", Kode request      |
 
 ---
 

@@ -124,6 +124,31 @@ class CopiesRelationManager extends RelationManager
       ])
       ->bulkActions([
         BulkActionGroup::make([
+          \Filament\Actions\BulkAction::make('updateStatus')
+            ->label('Ubah Status')
+            ->icon('heroicon-o-arrow-path')
+            ->form([
+              Select::make('status')
+                ->label('Status Baru')
+                ->options([
+                  'available' => 'Tersedia',
+                  'borrowed' => 'Dipinjam',
+                  'maintenance' => 'Perawatan',
+                  'lost' => 'Hilang',
+                  'damaged' => 'Rusak',
+                ])
+                ->required(),
+            ])
+            ->action(function (array $data, $records) {
+              $records->each(function ($record) use ($data) {
+                $record->update(['status' => $data['status']]);
+              });
+              $this->syncBookCopyCounts();
+            })
+            ->deselectRecordsAfterCompletion()
+            ->requiresConfirmation()
+            ->modalHeading('Ubah Status Eksemplar')
+            ->modalDescription('Apakah Anda yakin ingin mengubah status eksemplar yang dipilih?'),
           DeleteBulkAction::make()
             ->label('Hapus')
             ->after(function () {

@@ -15,38 +15,43 @@ class SettingSeeder extends Seeder
     $settings = [
       [
         'key' => 'late_fee_per_day',
-        'value' => '2000',
-        'description' => 'Denda keterlambatan per hari (dalam Rupiah)',
+        'value' => '1000',
+        'description' => 'Denda keterlambatan per hari (Rp)',
       ],
       [
-        'key' => 'max_borrow_days',
-        'value' => '14',
-        'description' => 'Maksimal durasi peminjaman (dalam hari)',
+        'key' => 'rental_duration_days',
+        'value' => '7',
+        'description' => 'Durasi peminjaman standar (hari)',
       ],
       [
         'key' => 'max_books_per_user',
         'value' => '3',
-        'description' => 'Maksimal buku yang bisa dipinjam sekaligus per user',
+        'description' => 'Maksimal buku yang bisa dipinjam per user',
       ],
       [
-        'key' => 'default_rental_fee',
-        'value' => '5000',
-        'description' => 'Biaya sewa default untuk buku baru (dalam Rupiah)',
+        'key' => 'bank_name',
+        'value' => 'BCA',
+        'description' => 'Nama Bank Pembayaran',
       ],
       [
-        'key' => 'library_name',
-        'value' => 'Perpustakaan Sukabaca',
-        'description' => 'Nama perpustakaan',
+        'key' => 'account_number',
+        'value' => '1234567890',
+        'description' => 'Nomor Rekening',
       ],
       [
-        'key' => 'library_address',
-        'value' => 'Jl. Contoh No. 123, Jakarta',
-        'description' => 'Alamat perpustakaan',
+        'key' => 'account_name',
+        'value' => 'Perpustakaan Suka Baca',
+        'description' => 'Nama Pemilik Rekening',
+      ],
+      [
+        'key' => 'damage_fee_percentage',
+        'value' => '50',
+        'description' => 'Denda kerusakan (% dari harga buku)',
       ],
     ];
 
     foreach ($settings as $setting) {
-      Setting::firstOrCreate(
+      Setting::updateOrCreate(
         ['key' => $setting['key']],
         $setting
       );

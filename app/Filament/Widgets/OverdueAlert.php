@@ -9,7 +9,7 @@ use Filament\Widgets\Widget;
 
 class OverdueAlert extends Widget
 {
-  protected static string $view = 'filament.widgets.overdue-alert';
+  protected string $view = 'filament.widgets.overdue-alert';
 
   protected static ?int $sort = 0;
 

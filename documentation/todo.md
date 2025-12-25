@@ -92,10 +92,10 @@
 
 ### 2.2 Categories Resource
 
--   [x] Table: nama, deskripsi, jumlah buku
+-   [x] Table: icon, nama, deskripsi, jumlah buku
 -   [x] Form: nama, deskripsi
 -   [x] Delete protection (jika ada buku)
--   [ ] Add icon picker field
+-   [x] Add icon picker field
 
 ### 2.3 Books Resource
 
@@ -103,7 +103,8 @@
 -   [x] Form: cover upload, judul, penulis, kategori, sinopsis, harga, jumlah eksemplar
 -   [x] Relation manager: Book Copies
 -   [x] Auto-generate copy codes saat create
--   [ ] Add penerbit, tahun, ISBN fields
+-   [x] Add penerbit, tahun, ISBN, book_price fields
+-   [x] Add slug auto-generate from title
 -   [ ] Header action: Import Excel
 -   [ ] Header action: Export Excel
 
@@ -111,15 +112,15 @@
 
 -   [x] Table: kode, status, notes
 -   [x] Form: status, notes
--   [ ] Bulk status update
+-   [x] Bulk status update
 
 ### 2.5 Users Resource
 
--   [ ] Table: nama, email, phone, status, pinjaman aktif
--   [ ] Form: nama, phone, status toggle
--   [ ] Action: Suspend user
--   [ ] Action: Activate user
--   [ ] Relation manager: User borrowings
+-   [x] Table: nama, email, phone, status, pinjaman aktif
+-   [x] Form: nama, phone, status toggle
+-   [x] Action: Suspend user
+-   [x] Action: Activate user
+-   [x] Relation manager: User borrowings
 
 ### 2.6 Borrowings Resource
 
@@ -127,26 +128,26 @@
 -   [x] Action: Kembalikan
 -   [x] Action: Tandai lunas
 -   [ ] Filters: status, pembayaran, tanggal
--   [ ] Action: Approve (pending → aktif)
--   [ ] Action: Reject (dengan notes)
--   [ ] Action: Approve perpanjangan
--   [ ] View detail + bukti transfer
--   [ ] Modal kondisi buku (rusak/hilang)
+-   [x] Action: Approve (pending -> aktif)
+-   [x] Action: Reject (dengan notes)
+-   [x] Action: Approve perpanjangan
+-   [x] View detail + bukti transfer
+-   [x] Modal kondisi buku (rusak/hilang)
 
 ### 2.7 Settings Resource
 
 -   [x] Table & Form settings
--   [ ] Section: Pengaturan Peminjaman (denda, maks hari, maks buku)
--   [ ] Section: Denda kondisi (rusak/hilang %)
--   [ ] Section: Rekening Pembayaran (bank, no rek, QRIS)
+-   [x] Section: Pengaturan Peminjaman (denda, maks hari, maks buku)
+-   [x] Section: Denda kondisi (rusak/hilang %)
+-   [x] Section: Rekening Pembayaran (bank, no rek, QRIS)
 
 ### 2.8 Payments Resource
 
--   [ ] Create PaymentResource
--   [ ] Table: tanggal, member, kode pinjam, jenis, jumlah, bukti, status
--   [ ] Filters: status, jenis
--   [ ] Action: Verify payment
--   [ ] Action: Reject payment (dengan notes)
+-   [x] Create PaymentResource
+-   [x] Table: tanggal, member, kode pinjam, jenis, jumlah, bukti, status
+-   [x] Filters: status, jenis
+-   [x] Action: Verify payment
+-   [x] Action: Reject payment (dengan notes)
 -   [ ] Modal view bukti transfer
 
 ### 2.9 Reports Page

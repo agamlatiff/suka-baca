@@ -14,6 +14,11 @@ class CategoriesTable
     {
         return $table
             ->columns([
+                TextColumn::make('icon')
+                    ->label('Icon')
+                    ->icon(fn(string $state): string => $state ?: 'heroicon-o-tag')
+                    ->iconColor('primary')
+                    ->width(50),
                 TextColumn::make('name')
                     ->label('Nama Kategori')
                     ->searchable()
