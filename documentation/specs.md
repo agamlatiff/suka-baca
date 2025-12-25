@@ -184,15 +184,50 @@ Visit Register → Fill Form → Submit
 
 ### Business Rules
 
-| Rule                | Description                        |
-| ------------------- | ---------------------------------- |
-| One copy per borrow | User borrows a specific copy       |
-| Auto-assign         | System picks first available copy  |
-| Duration options    | 7 days or 14 days                  |
-| Late fee daily      | Calculated from day after due date |
-| Manual payment      | Admin confirms payment receipt     |
-| No reservations     | Cannot reserve out-of-stock books  |
-| Single category     | Each book has one category only    |
+| Rule                | Description                       |
+| ------------------- | --------------------------------- |
+| One copy per borrow | User borrows a specific copy      |
+| Auto-assign         | System picks first available copy |
+| Duration options    | 7 days default                    |
+| Late fee daily      | 10% × hari × harga sewa           |
+| Manual payment      | Admin confirms payment receipt    |
+| No reservations     | Cannot reserve out-of-stock books |
+| Single category     | Each book has one category only   |
+
+### Fee Calculations (dari Brief)
+
+| Jenis Denda   | Perhitungan                       |
+| ------------- | --------------------------------- |
+| Keterlambatan | 10% × hari terlambat × harga sewa |
+| Rusak         | 50% × harga buku                  |
+| Hilang        | 75% × harga buku                  |
+
+### Perpanjangan Rules
+
+| Rule                  | Value                                 |
+| --------------------- | ------------------------------------- |
+| Maksimal perpanjangan | 1x per peminjaman                     |
+| Biaya perpanjangan    | Sama dengan harga sewa awal           |
+| Syarat perpanjangan   | Tidak terlambat, di hari H (deadline) |
+
+### Borrowing Validation
+
+| Validasi         | Kondisi Block              |
+| ---------------- | -------------------------- |
+| Limit buku aktif | Max 2 buku aktif per user  |
+| Tunggakan        | Ada pembayaran belum lunas |
+| Status user      | User suspended             |
+| Ketersediaan     | Tidak ada copy available   |
+
+### SEO & Performance
+
+| Item               | Requirement                    |
+| ------------------ | ------------------------------ |
+| Meta tags          | Title, description per halaman |
+| Sitemap            | Auto-generate sitemap.xml      |
+| Responsive         | Mobile, tablet, desktop        |
+| Loading states     | Skeleton/spinner saat loading  |
+| Image optimization | Lazy loading, proper sizing    |
 
 ---
 
