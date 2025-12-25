@@ -16,14 +16,15 @@
 
 ## Progress Summary
 
-| Phase                           | Status        | Estimasi |
-| ------------------------------- | ------------- | -------- |
-| Phase 1: Setup & Foundation     | ✅ Complete   | 2 hari   |
-| Phase 2: Admin Panel (Filament) | � In Progress | 4 hari   |
-| Phase 3: User Frontend          | � In Progress | 5 hari   |
-| Phase 4: Payment & Approval     | 🔲 Pending    | 3 hari   |
-| Phase 5: Reports & Analytics    | 🔲 Pending    | 2 hari   |
-| Phase 6: Testing & Polish       | 🔲 Pending    | 2 hari   |
+| Phase                           | Status         | Estimasi |
+| ------------------------------- | -------------- | -------- |
+| Phase 1: Setup & Foundation     | ✅ Complete    | 2 hari   |
+| Phase 2: Admin Panel (Filament) | ✅ Complete    | 4 hari   |
+| Phase 2.10: Service Repository  | 🔄 In Progress | 2 hari   |
+| Phase 3: User Frontend          | 🔲 Pending     | 5 hari   |
+| Phase 4: Payment & Approval     | 🔲 Pending     | 3 hari   |
+| Phase 5: Reports & Analytics    | 🔲 Pending     | 2 hari   |
+| Phase 6: Testing & Polish       | 🔲 Pending     | 2 hari   |
 
 **Total Estimasi:** 18 hari kerja
 
@@ -158,6 +159,34 @@
 -   [x] Tab: Laporan Peminjaman (detail table)
 -   [x] Filter periode untuk semua report
 -   [x] Export Excel untuk semua report
+
+### 2.10 Service Repository Pattern
+
+-   [ ] Create Contracts/Interfaces folder structure
+    -   [ ] `App\Contracts\Repositories\BookRepositoryInterface`
+    -   [ ] `App\Contracts\Repositories\CategoryRepositoryInterface`
+    -   [ ] `App\Contracts\Repositories\BorrowingRepositoryInterface`
+    -   [ ] `App\Contracts\Repositories\UserRepositoryInterface`
+    -   [ ] `App\Contracts\Repositories\PaymentRepositoryInterface`
+-   [ ] Create Repository Implementations
+    -   [ ] `App\Repositories\Eloquent\BookRepository`
+    -   [ ] `App\Repositories\Eloquent\CategoryRepository`
+    -   [ ] `App\Repositories\Eloquent\BorrowingRepository`
+    -   [ ] `App\Repositories\Eloquent\UserRepository`
+    -   [ ] `App\Repositories\Eloquent\PaymentRepository`
+-   [ ] Create Service Classes
+    -   [ ] `App\Services\BookService`
+    -   [ ] `App\Services\CategoryService`
+    -   [ ] `App\Services\BorrowingService`
+    -   [ ] `App\Services\UserService`
+    -   [ ] `App\Services\PaymentService`
+    -   [ ] `App\Services\DashboardService`
+-   [ ] Create Service Provider for binding
+    -   [ ] `App\Providers\RepositoryServiceProvider`
+-   [ ] Refactor existing code to use Services
+    -   [ ] Update Controllers to use Services
+    -   [ ] Update Livewire components to use Services
+    -   [ ] Update Filament Resources to use Services (optional)
 
 ---
 

@@ -72,6 +72,27 @@
 
 ```
 app/
+├── Contracts/                  # Interfaces
+│   └── Repositories/
+│       ├── BookRepositoryInterface.php
+│       ├── CategoryRepositoryInterface.php
+│       ├── BorrowingRepositoryInterface.php
+│       ├── UserRepositoryInterface.php
+│       └── PaymentRepositoryInterface.php
+├── Repositories/               # Data access layer
+│   └── Eloquent/
+│       ├── BookRepository.php
+│       ├── CategoryRepository.php
+│       ├── BorrowingRepository.php
+│       ├── UserRepository.php
+│       └── PaymentRepository.php
+├── Services/                   # Business logic
+│   ├── BookService.php
+│   ├── CategoryService.php
+│   ├── BorrowingService.php
+│   ├── UserService.php
+│   ├── PaymentService.php
+│   └── DashboardService.php
 ├── Http/
 │   ├── Controllers/
 │   │   ├── AuthController.php
@@ -99,8 +120,10 @@ app/
 │   └── Pages/
 │       └── Settings.php
 ├── Models/                     # Eloquent models
-├── Services/                   # Business logic
+├── Exports/                    # Excel exports
+├── Imports/                    # Excel imports
 └── Providers/
+    └── RepositoryServiceProvider.php
 
 resources/
 ├── views/
