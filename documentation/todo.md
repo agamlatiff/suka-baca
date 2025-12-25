@@ -162,27 +162,27 @@
 
 ### 2.10 Service Repository Pattern
 
--   [ ] Create Contracts/Interfaces folder structure
-    -   [ ] `App\Contracts\Repositories\BookRepositoryInterface`
-    -   [ ] `App\Contracts\Repositories\CategoryRepositoryInterface`
-    -   [ ] `App\Contracts\Repositories\BorrowingRepositoryInterface`
-    -   [ ] `App\Contracts\Repositories\UserRepositoryInterface`
-    -   [ ] `App\Contracts\Repositories\PaymentRepositoryInterface`
--   [ ] Create Repository Implementations
-    -   [ ] `App\Repositories\Eloquent\BookRepository`
-    -   [ ] `App\Repositories\Eloquent\CategoryRepository`
-    -   [ ] `App\Repositories\Eloquent\BorrowingRepository`
-    -   [ ] `App\Repositories\Eloquent\UserRepository`
-    -   [ ] `App\Repositories\Eloquent\PaymentRepository`
--   [ ] Create Service Classes
-    -   [ ] `App\Services\BookService`
-    -   [ ] `App\Services\CategoryService`
-    -   [ ] `App\Services\BorrowingService`
-    -   [ ] `App\Services\UserService`
-    -   [ ] `App\Services\PaymentService`
-    -   [ ] `App\Services\DashboardService`
--   [ ] Create Service Provider for binding
-    -   [ ] `App\Providers\RepositoryServiceProvider`
+-   [x] Create Contracts/Interfaces folder structure
+    -   [x] `App\Contracts\Repositories\BookRepositoryInterface`
+    -   [x] `App\Contracts\Repositories\CategoryRepositoryInterface`
+    -   [x] `App\Contracts\Repositories\BorrowingRepositoryInterface`
+    -   [x] `App\Contracts\Repositories\UserRepositoryInterface`
+    -   [x] `App\Contracts\Repositories\PaymentRepositoryInterface`
+-   [x] Create Repository Implementations
+    -   [x] `App\Repositories\Eloquent\BookRepository`
+    -   [x] `App\Repositories\Eloquent\CategoryRepository`
+    -   [x] `App\Repositories\Eloquent\BorrowingRepository`
+    -   [x] `App\Repositories\Eloquent\UserRepository`
+    -   [x] `App\Repositories\Eloquent\PaymentRepository`
+-   [x] Create Service Classes
+    -   [x] `App\Services\BookService`
+    -   [x] `App\Services\CategoryService`
+    -   [x] `App\Services\BorrowingService`
+    -   [x] `App\Services\UserService`
+    -   [x] `App\Services\PaymentService`
+    -   [x] `App\Services\DashboardService`
+-   [x] Create Service Provider for binding
+    -   [x] `App\Providers\RepositoryServiceProvider`
 -   [ ] Refactor existing code to use Services
     -   [ ] Update Controllers to use Services
     -   [ ] Update Livewire components to use Services
