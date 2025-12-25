@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BorrowBookRequest;
-use App\Models\BookCopy;
 use App\Services\BorrowingService;
+use App\Services\BorrowingValidationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +13,8 @@ use Illuminate\View\View;
 class BorrowingController extends Controller
 {
   public function __construct(
-    protected BorrowingService $borrowingService
+    protected BorrowingService $borrowingService,
+    protected BorrowingValidationService $validationService
   ) {}
 
   /**
@@ -31,9 +32,13 @@ class BorrowingController extends Controller
 
     $history = $borrowings;
 
+    // Get borrowing summary for display
+    $summary = $this->validationService->getUserBorrowingSummary($userId);
+
     return view('borrowings.index', [
       'activeBorrowings' => $activeBorrowings,
       'history' => $history,
+      'summary' => $summary,
     ]);
   }
 
@@ -44,24 +49,25 @@ class BorrowingController extends Controller
   {
     $userId = Auth::id();
 
-    // Check if user can borrow more books
-    if (!$this->borrowingService->canUserBorrow($userId)) {
-      return back()->with('error', 'Anda sudah mencapai batas maksimal peminjaman.');
+    // Full validation using validation service
+    $validation = $this->validationService->canBorrow($userId, $request->book_id);
+
+    if (!$validation['valid']) {
+      $firstError = $validation['errors'][0] ?? ['message' => 'Tidak dapat meminjam.'];
+      return back()->with('error', $firstError['message']);
     }
 
-    // Find an available copy
-    $availableCopy = BookCopy::where('book_id', $request->book_id)
-      ->where('status', 'available')
-      ->first();
+    // Get available copy from validation
+    $availability = $this->validationService->checkBookAvailability($request->book_id);
 
-    if (!$availableCopy) {
+    if (!$availability['valid'] || !isset($availability['available_copy_id'])) {
       return back()->with('error', 'Maaf, tidak ada eksemplar yang tersedia.');
     }
 
     try {
       $borrowing = $this->borrowingService->createBorrowing(
         $userId,
-        $availableCopy->id,
+        $availability['available_copy_id'],
         $request->book_id
       );
 
@@ -70,5 +76,23 @@ class BorrowingController extends Controller
     } catch (\Exception $e) {
       return back()->with('error', 'Gagal memproses peminjaman. Silakan coba lagi.');
     }
+  }
+
+  /**
+   * Check if user can borrow (API endpoint).
+   */
+  public function checkEligibility(Request $request)
+  {
+    $userId = Auth::id();
+    $bookId = $request->input('book_id');
+
+    $validation = $this->validationService->canBorrow($userId, $bookId);
+    $summary = $this->validationService->getUserBorrowingSummary($userId);
+
+    return response()->json([
+      'can_borrow' => $validation['valid'],
+      'errors' => $validation['errors'],
+      'summary' => $summary,
+    ]);
   }
 }

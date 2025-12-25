@@ -280,10 +280,10 @@
 
 ### 4.2 Validasi Peminjaman
 
--   [ ] Cek limit 2 buku aktif
--   [ ] Cek tunggakan belum bayar
--   [ ] Cek status user (suspended?)
--   [ ] Cek ketersediaan buku
+-   [x] Cek limit 2 buku aktif
+-   [x] Cek tunggakan belum bayar
+-   [x] Cek status user (suspended?)
+-   [x] Cek ketersediaan buku
 
 ### 4.3 Perpanjangan Flow
 
