@@ -201,8 +201,8 @@
 -   [x] guest.blade.php layout
 -   [x] Navbar component
 -   [x] Footer component
--   [ ] **Slicing:** Update navbar sesuai design
--   [ ] **Slicing:** Update footer sesuai design
+-   [x] **Slicing:** Update navbar sesuai design
+-   [x] **Slicing:** Update footer sesuai design
 -   [ ] Book card component
 -   [ ] Stats card component
 -   [ ] Badge component
