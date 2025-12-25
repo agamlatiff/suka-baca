@@ -191,14 +191,18 @@
 
 ---
 
-## Phase 3: User Frontend 🔄
+## Phase 3: User Frontend (Slicing) 🔄
 
-### 3.1 Layout & Components
+> Design files: `design-website/` folder (20 pages)
+
+### 3.1 Layout & Base Components
 
 -   [x] app.blade.php layout
 -   [x] guest.blade.php layout
 -   [x] Navbar component
--   [x] Footer component (in welcome)
+-   [x] Footer component
+-   [ ] **Slicing:** Update navbar sesuai design
+-   [ ] **Slicing:** Update footer sesuai design
 -   [ ] Book card component
 -   [ ] Stats card component
 -   [ ] Badge component
@@ -206,7 +210,7 @@
 -   [ ] Modal component
 -   [ ] Wishlist badge notifikasi di navbar
 
-### 3.2 Landing Page
+### 3.2 Homepage (home-page)
 
 -   [x] Hero section
 -   [x] Buku terbaru section
@@ -216,42 +220,46 @@
 -   [x] Kenapa pilih kami section
 -   [x] Contact section
 -   [x] Footer
+-   [ ] **Slicing:** Update sesuai `design-website/home-page/`
 -   [ ] Add icon per kategori
 -   [ ] SEO optimization (meta tags, sitemap)
--   [ ] Responsive design testing (mobile, tablet, desktop)
+-   [ ] Responsive design testing
 
-### 3.3 Authentication
+### 3.3 Authentication Pages
 
--   [x] Login page
--   [x] Register page
+-   [x] Login page (existing)
+-   [x] Register page (existing)
 -   [x] Logout functionality
--   [ ] Forgot password page
--   [ ] Reset password page
+-   [ ] **Slicing:** Login page → `design-website/login-page/`
+-   [ ] **Slicing:** Register page → `design-website/register-page/`
+-   [ ] **Slicing:** Forgot password → `design-website/forgot-password-page/`
+-   [ ] **Slicing:** Reset password → `design-website/reset-password-page/`
 
 ### 3.4 Katalog & Detail Buku
 
--   [x] Katalog page (Livewire)
+-   [x] Katalog page (existing)
 -   [x] Search functionality
 -   [x] Filter kategori
 -   [x] Pagination
--   [x] Book detail page
+-   [x] Book detail page (existing)
+-   [ ] **Slicing:** Katalog → `design-website/katalog-page/`
+-   [ ] **Slicing:** Detail buku → `design-website/detail-buku-page/`
 -   [ ] Filter ketersediaan
 -   [ ] Sort (A-Z, terbaru, harga)
 -   [ ] Related books section
 
-### 3.5 Wishlist
+### 3.5 Wishlist Page
 
+-   [ ] **Slicing:** Wishlist → `design-website/wishlist-page/`
 -   [ ] Add to wishlist (dari katalog & detail)
--   [ ] Wishlist page
 -   [ ] Remove from wishlist
 -   [ ] Quick borrow dari wishlist
--   [ ] Badge notifikasi jumlah item wishlist
+-   [ ] Badge notifikasi jumlah item
 
 ### 3.6 User Dashboard
 
--   [x] Welcome header
--   [x] Stats cards
--   [x] Pinjaman aktif list
+-   [x] Dashboard page (existing)
+-   [ ] **Slicing:** Dashboard → `design-website/dashboard-user-page/`
 -   [ ] Alert notifikasi (terlambat, jatuh tempo, tagihan)
 -   [ ] Countdown hari tersisa per buku
 -   [ ] Badge warning H-2 sebelum deadline
@@ -259,18 +267,47 @@
 -   [ ] Outstanding payment alert
 -   [ ] Quick actions
 
-### 3.7 My Borrowings
+### 3.7 Riwayat Peminjaman
 
--   [x] Borrowing list
+-   [x] Borrowing list (existing)
+-   [ ] **Slicing:** Riwayat → `design-website/riwayat-peminjaman-user-page/`
 -   [ ] Filter tabs (semua, pending, aktif, dikembalikan, terlambat)
 -   [ ] Pagination
 -   [ ] Empty state
 
-### 3.8 Profile Settings
+### 3.8 Riwayat Pembayaran
 
--   [x] Edit profile form
+-   [ ] **Slicing:** Pembayaran → `design-website/riwayat-pembayaran-user-page/`
+-   [ ] Payment history list
+-   [ ] Filter status pembayaran
+-   [ ] Outstanding payment summary
+
+### 3.9 Profile Page
+
+-   [x] Edit profile form (existing)
 -   [x] Change password form
--   [x] Delete account
+-   [ ] **Slicing:** Profile → `design-website/profile-page/`
+
+### 3.10 Request Peminjaman Flow (4 steps)
+
+-   [ ] **Slicing:** Step 1 → `design-website/request-peminjaman-step-1-page/`
+-   [ ] **Slicing:** Step 2 → `design-website/request-peminjaman-step-2-page/`
+-   [ ] **Slicing:** Step 3 → `design-website/request-peminjaman-step-3-page/`
+-   [ ] **Slicing:** Step 4 → `design-website/request-peminjaman-step-4-page/`
+-   [ ] Konfirmasi buku & harga
+-   [ ] Pilih metode bayar
+-   [ ] Upload bukti transfer
+-   [ ] Status pending notification
+
+### 3.11 Perpanjangan Buku Flow (4 steps)
+
+-   [ ] **Slicing:** Step 1 → `design-website/perpanjangan-buku-step-1-page/`
+-   [ ] **Slicing:** Step 2 → `design-website/perpanjangan-buku-step-2-page/`
+-   [ ] **Slicing:** Step 3 → `design-website/perpanjangan-buku-step-3-page/`
+-   [ ] **Slicing:** Step 4 → `design-website/perpanjangan-buku-step-4-page/`
+-   [ ] Validasi perpanjangan (maks 1x, tidak terlambat)
+-   [ ] Upload bukti bayar perpanjangan
+-   [ ] Konfirmasi perpanjangan
 
 ---
 
