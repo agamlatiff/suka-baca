@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Borrowing;
-use App\Models\User;
+use App\Services\BorrowingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
+  public function __construct(
+    protected BorrowingService $borrowingService
+  ) {}
+
   /**
    * Display the user dashboard.
    */
   public function index(): View
   {
-    /** @var User $user */
-    $user = Auth::user();
+    $userId = Auth::id();
 
     // Get active borrowings
-    $activeBorrowings = Borrowing::with(['book', 'bookCopy'])
-      ->where('user_id', $user->id)
+    $activeBorrowings = $this->borrowingService->getUserBorrowings($userId)
       ->whereNull('returned_at')
-      ->orderBy('due_date', 'asc')
-      ->get();
+      ->sortBy('due_date');
 
     // Calculate stats
     $now = Carbon::now();
@@ -36,18 +36,16 @@ class DashboardController extends Controller
       'overdue_count' => $activeBorrowings->filter(function ($b) use ($now) {
         return Carbon::parse($b->due_date)->lt($now);
       })->count(),
-      'outstanding_fees' => Borrowing::where('user_id', $user->id)
+      'outstanding_fees' => $this->borrowingService->getUserBorrowings($userId)
         ->where('is_paid', false)
         ->sum('total_fee'),
     ];
 
     // Get recent history
-    $recentHistory = Borrowing::with(['book'])
-      ->where('user_id', $user->id)
+    $recentHistory = $this->borrowingService->getUserBorrowings($userId)
       ->whereNotNull('returned_at')
-      ->orderBy('returned_at', 'desc')
-      ->limit(5)
-      ->get();
+      ->sortByDesc('returned_at')
+      ->take(5);
 
     return view('dashboard', [
       'activeBorrowings' => $activeBorrowings,

@@ -2,52 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use App\Models\Category;
+use App\Services\BookService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CatalogController extends Controller
 {
+  public function __construct(
+    protected BookService $bookService
+  ) {}
+
   /**
    * Display catalog listing with search and filters.
    */
   public function index(Request $request): View
   {
-    $query = Book::with('category')
-      ->where('available_copies', '>', 0);
+    $filters = [
+      'search' => $request->get('search'),
+      'category_id' => $request->get('category'),
+      'available_only' => $request->get('show_all') !== '1',
+      'sort_by' => $request->get('sort', 'latest'),
+    ];
 
-    // Search by title or author
-    if ($search = $request->get('search')) {
-      $query->where(function ($q) use ($search) {
-        $q->where('title', 'like', "%{$search}%")
-          ->orWhere('author', 'like', "%{$search}%");
-      });
-    }
-
-    // Filter by category
-    if ($categoryId = $request->get('category')) {
-      $query->where('category_id', $categoryId);
-    }
-
-    // Show all books (including out of stock) if requested
-    if ($request->get('show_all') === '1') {
-      $query = Book::with('category');
-
-      if ($search = $request->get('search')) {
-        $query->where(function ($q) use ($search) {
-          $q->where('title', 'like', "%{$search}%")
-            ->orWhere('author', 'like', "%{$search}%");
-        });
-      }
-
-      if ($categoryId = $request->get('category')) {
-        $query->where('category_id', $categoryId);
-      }
-    }
-
-    $books = $query->orderBy('title')->paginate(12)->withQueryString();
-    $categories = Category::orderBy('name')->get();
+    $books = $this->bookService->getCatalog($filters, 12);
+    $categories = $this->bookService->getCategories();
 
     return view('catalog.index', [
       'books' => $books,
@@ -63,8 +41,14 @@ class CatalogController extends Controller
   /**
    * Display book detail page.
    */
-  public function show(Book $book): View
+  public function show(string $slug): View
   {
+    $book = $this->bookService->getBookBySlug($slug);
+
+    if (!$book) {
+      abort(404);
+    }
+
     $book->load(['category', 'copies' => function ($query) {
       $query->where('status', 'available')->limit(5);
     }]);

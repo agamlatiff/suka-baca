@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BorrowBookRequest;
-use App\Models\Book;
 use App\Models\BookCopy;
-use App\Models\Borrowing;
-use App\Models\Setting;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Services\BorrowingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,27 +12,24 @@ use Illuminate\View\View;
 
 class BorrowingController extends Controller
 {
+  public function __construct(
+    protected BorrowingService $borrowingService
+  ) {}
+
   /**
    * Display user's borrowings.
    */
   public function index(Request $request): View
   {
-    /** @var User $user */
-    $user = Auth::user();
+    $userId = Auth::id();
 
-    // Get active borrowings
-    $activeBorrowings = Borrowing::with(['book', 'bookCopy'])
-      ->where('user_id', $user->id)
-      ->whereNull('returned_at')
-      ->orderBy('due_date', 'asc')
-      ->get();
+    $borrowings = $this->borrowingService->getUserBorrowingsPaginated($userId, 10);
 
-    // Get borrowing history
-    $history = Borrowing::with(['book', 'bookCopy'])
-      ->where('user_id', $user->id)
-      ->whereNotNull('returned_at')
-      ->orderBy('returned_at', 'desc')
-      ->paginate(10);
+    // Separate active and returned
+    $activeBorrowings = $this->borrowingService->getUserBorrowings($userId)
+      ->whereNull('returned_at');
+
+    $history = $borrowings;
 
     return view('borrowings.index', [
       'activeBorrowings' => $activeBorrowings,
@@ -49,13 +42,15 @@ class BorrowingController extends Controller
    */
   public function store(BorrowBookRequest $request): RedirectResponse
   {
-    /** @var User $user */
-    $user = Auth::user();
-    $book = Book::findOrFail($request->book_id);
-    $duration = (int) $request->duration;
+    $userId = Auth::id();
+
+    // Check if user can borrow more books
+    if (!$this->borrowingService->canUserBorrow($userId)) {
+      return back()->with('error', 'Anda sudah mencapai batas maksimal peminjaman.');
+    }
 
     // Find an available copy
-    $availableCopy = BookCopy::where('book_id', $book->id)
+    $availableCopy = BookCopy::where('book_id', $request->book_id)
       ->where('status', 'available')
       ->first();
 
@@ -63,58 +58,17 @@ class BorrowingController extends Controller
       return back()->with('error', 'Maaf, tidak ada eksemplar yang tersedia.');
     }
 
-    // Generate borrowing code
-    $borrowingCode = $this->generateBorrowingCode();
+    try {
+      $borrowing = $this->borrowingService->createBorrowing(
+        $userId,
+        $availableCopy->id,
+        $request->book_id
+      );
 
-    // Calculate dates
-    $borrowedAt = Carbon::now();
-    $dueDate = $borrowedAt->copy()->addDays($duration);
-
-    // Create borrowing record
-    $borrowing = Borrowing::create([
-      'code' => $borrowingCode,
-      'user_id' => $user->id,
-      'book_id' => $book->id,
-      'book_copy_id' => $availableCopy->id,
-      'borrowed_at' => $borrowedAt,
-      'due_date' => $dueDate,
-      'rental_fee' => $book->rental_fee,
-      'late_fee' => 0,
-      'total_fee' => $book->rental_fee,
-      'is_paid' => false,
-    ]);
-
-    // Update copy status
-    $availableCopy->update(['status' => 'borrowed']);
-
-    // Update book available copies
-    $book->decrement('available_copies');
-
-    return redirect()->route('borrowings.index')
-      ->with('success', "Buku \"{$book->title}\" berhasil dipinjam! Kode peminjaman: {$borrowingCode}");
-  }
-
-  /**
-   * Generate a unique borrowing code.
-   * Format: BRW-YYYYMMDD-XXX
-   */
-  private function generateBorrowingCode(): string
-  {
-    $date = Carbon::now()->format('Ymd');
-    $prefix = "BRW-{$date}-";
-
-    // Get the last borrowing code for today
-    $lastBorrowing = Borrowing::where('code', 'like', $prefix . '%')
-      ->orderBy('code', 'desc')
-      ->first();
-
-    if ($lastBorrowing) {
-      $lastNumber = (int) substr($lastBorrowing->code, -3);
-      $newNumber = $lastNumber + 1;
-    } else {
-      $newNumber = 1;
+      return redirect()->route('borrowings.index')
+        ->with('success', "Buku berhasil dipinjam! Kode peminjaman: {$borrowing->borrowing_code}");
+    } catch (\Exception $e) {
+      return back()->with('error', 'Gagal memproses peminjaman. Silakan coba lagi.');
     }
-
-    return $prefix . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
   }
 }

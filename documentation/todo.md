@@ -183,8 +183,8 @@
     -   [x] `App\Services\DashboardService`
 -   [x] Create Service Provider for binding
     -   [x] `App\Providers\RepositoryServiceProvider`
--   [ ] Refactor existing code to use Services
-    -   [ ] Update Controllers to use Services
+-   [x] Refactor existing code to use Services
+    -   [x] Update Controllers to use Services
     -   [ ] Update Livewire components to use Services
     -   [ ] Update Filament Resources to use Services (optional)
 

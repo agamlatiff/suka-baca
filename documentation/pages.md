@@ -218,12 +218,12 @@
 
 #### Sections:
 
-| Section             | Deskripsi      | Komponen                                               |
-| ------------------- | -------------- | ------------------------------------------------------ |
-| **Info Peminjaman** | Detail current | Buku, Jatuh tempo sekarang, Jatuh tempo baru (+7 hari) |
-| **Biaya**           | Harga          | Biaya perpanjangan = sama dengan harga sewa awal       |
-| **Upload Bukti**    | Bukti bayar    | FileUpload untuk bukti transfer                        |
-| **Submit**          | Tombol         | "Kirim Request Perpanjangan"                           |
+  | Section             | Deskripsi      | Komponen                                               |
+  | ------------------- | -------------- | ------------------------------------------------------ |
+  | **Info Peminjaman** | Detail current | Buku, Jatuh tempo sekarang, Jatuh tempo baru (+7 hari) |
+  | **Biaya**           | Harga          | Biaya perpanjangan = sama dengan harga sewa awal       |
+  | **Upload Bukti**    | Bukti bayar    | FileUpload untuk bukti transfer                        |
+  | **Submit**          | Tombol         | "Kirim Request Perpanjangan"                           |
 
 **Rules:**
 
