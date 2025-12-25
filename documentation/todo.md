@@ -105,8 +105,8 @@
 -   [x] Auto-generate copy codes saat create
 -   [x] Add penerbit, tahun, ISBN, book_price fields
 -   [x] Add slug auto-generate from title
--   [ ] Header action: Import Excel (deferred)
--   [ ] Header action: Export Excel (deferred)
+-   [x] Header action: Import Excel
+-   [x] Header action: Export Excel
 
 ### 2.4 Book Copies Management
 
@@ -152,12 +152,12 @@
 
 ### 2.9 Reports Page
 
--   [ ] Tab: Buku Terpopuler (ranking + chart)
--   [ ] Tab: Peminjam Teraktif (ranking)
--   [ ] Tab: Revenue (line chart 12 bulan)
--   [ ] Tab: Laporan Peminjaman (detail table)
--   [ ] Filter periode untuk semua report
--   [ ] Export Excel untuk semua report
+-   [x] Tab: Buku Terpopuler (ranking + chart)
+-   [x] Tab: Peminjam Teraktif (ranking)
+-   [x] Tab: Revenue (line chart 12 bulan)
+-   [x] Tab: Laporan Peminjaman (detail table)
+-   [x] Filter periode untuk semua report
+-   [x] Export Excel untuk semua report
 
 ---
 
