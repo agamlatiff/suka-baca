@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
+        'address',
+        'status',
     ];
 
     /**
@@ -79,5 +81,45 @@ class User extends Authenticatable
     public function scopeUsers($query)
     {
         return $query->where('role', 'user');
+    }
+
+    /**
+     * Get the wishlists for this user.
+     */
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    /**
+     * Get the payments for this user.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Check if user is suspended.
+     */
+    public function isSuspended(): bool
+    {
+        return $this->status === 'suspended';
+    }
+
+    /**
+     * Check if user is active.
+     */
+    public function isActive(): bool
+    {
+        return $this->status === 'active';
+    }
+
+    /**
+     * Scope to get only active users.
+     */
+    public function scopeActiveUsers($query)
+    {
+        return $query->where('status', 'active');
     }
 }

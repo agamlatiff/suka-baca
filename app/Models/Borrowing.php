@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Carbon\Carbon;
 
 class Borrowing extends Model
@@ -25,10 +26,15 @@ class Borrowing extends Model
     'returned_at',
     'rental_fee',
     'late_fee',
+    'damage_fee',
     'total_fee',
     'is_paid',
     'status',
+    'return_condition',
     'days_late',
+    'is_extended',
+    'extension_date',
+    'notes',
   ];
 
   /**
@@ -40,10 +46,13 @@ class Borrowing extends Model
     'borrowed_at' => 'date',
     'due_date' => 'date',
     'returned_at' => 'date',
+    'extension_date' => 'date',
     'rental_fee' => 'decimal:2',
     'late_fee' => 'decimal:2',
+    'damage_fee' => 'decimal:2',
     'total_fee' => 'decimal:2',
     'is_paid' => 'boolean',
+    'is_extended' => 'boolean',
     'days_late' => 'integer',
   ];
 
@@ -85,6 +94,22 @@ class Borrowing extends Model
   public function scopeReturned($query)
   {
     return $query->where('status', 'returned');
+  }
+
+  /**
+   * Scope to get only pending borrowings.
+   */
+  public function scopePending($query)
+  {
+    return $query->where('status', 'pending');
+  }
+
+  /**
+   * Get the payments for this borrowing.
+   */
+  public function payments(): HasMany
+  {
+    return $this->hasMany(Payment::class);
   }
 
   /**

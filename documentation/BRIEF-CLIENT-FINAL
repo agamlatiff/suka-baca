@@ -1,0 +1,365 @@
+
+**Masa Berlaku:** 31 December 2025
+
+---
+
+## PLATFORM: Web Application (Laravel Full-Stack)
+
+### FITUR UTAMA & DETAIL
+
+### 1. SISTEM AUTENTIKASI (Estimasi: 16 jam)
+
+**Fitur Utama:**
+
+- Halaman login dan register User
+- Berisi tombol "Reset Password" untuk mereset password pengguna
+- Admin bisa melihat daftar semua user
+- Admin bisa mengedit profil user basic
+- Admin bisa menonaktifkan/mengaktifkan user
+- Admin bisa melihat semua kategori
+- Admin bisa menambahkan kategori baru
+- Admin bisa mengedit kategori
+- Admin bisa menghapus kategori
+
+---
+
+### 2. USER MANAGEMENT (Estimasi: 32 jam)
+
+**Fitur untuk Admin:**
+
+- Admin bisa melihat daftar semua user/peminjam
+- Admin bisa mengedit profil user basic
+- Admin bisa menonaktifkan/mengaktifkan user
+- Admin bisa melihat history peminjaman per user
+- Admin bisa suspend user yang bermasalah
+
+**Fitur untuk Member/Peminjam:**
+
+- Member bisa edit profil sendiri (nama, email, no HP, alamat)
+- Member bisa ganti password
+- Member bisa lihat history peminjaman sendiri
+
+---
+
+### 3. MANAJEMEN KATEGORI BUKU (Estimasi: 32 jam)
+
+**Fitur Detail:**
+
+- Admin bisa melihat semua kategori
+- Admin bisa menambahkan kategori baru
+- Admin bisa mengedit kategori
+- Admin bisa menghapus kategori
+- Hierarki kategori (parent-child) sederhana
+- Admin bisa pilih icon untuk setiap kategori
+- Tampilan kategori dengan icon di halaman public
+
+---
+
+### 4. MANAJEMEN BUKU (Estimasi: 64 jam)
+
+**Fitur untuk Admin:**
+
+- Admin bisa melihat semua daftar buku
+- Admin bisa membuat buku baru dengan data:
+    - Judul, Penulis, Penerbit, ISBN, Tahun Terbit
+    - Kategori, Sinopsis/Deskripsi
+    - Cover buku (upload gambar)
+    - Harga sewa
+    - Jumlah total copy/eksemplar
+- Admin bisa mengedit data buku
+- Admin bisa menghapus buku
+- Admin bisa import data buku massal dari file Excel
+- Admin bisa export daftar buku ke Excel
+- Sistem otomatis track jumlah copy tersedia vs dipinjam
+
+**Fitur untuk Public/Member:**
+
+- Halaman katalog buku dengan tampilan grid/card
+- Search buku (judul, penulis, ISBN)
+- Filter buku by kategori
+- Filter buku by ketersediaan (tersedia/dipinjam)
+- Sorting (terbaru, A-Z, harga)
+- Pagination
+- Halaman detail buku lengkap dengan:
+    - Cover besar
+    - Semua informasi buku
+    - Sinopsis
+    - Stok tersedia
+    - Tombol "Pinjam" (jika login & tersedia)
+    - Tombol "Tambah ke Wishlist"
+
+---
+
+### 5. WISHLIST (Estimasi: 16 jam)
+
+**Fitur Detail:**
+
+- Member bisa tambah buku ke wishlist dari halaman detail
+- Member bisa lihat daftar wishlist sendiri
+- Member bisa hapus buku dari wishlist
+- Tombol quick action "Pinjam" dari halaman wishlist
+- Badge notifikasi jumlah item di wishlist
+
+---
+
+### 6. SISTEM SEWA BUKU (Estimasi: 96 jam)
+
+**Fitur Request Peminjaman:**
+
+- Member pilih buku → klik "Pinjam"
+- Sistem validasi otomatis:
+    - Cek apakah sudah pinjam 2 buku aktif (limit)
+    - Cek apakah ada tunggakan belum dibayar
+    - Cek apakah user di-suspend
+- Form peminjaman:
+    - Konfirmasi buku & harga sewa (7 hari)
+    - Upload bukti transfer (Cash/QRIS)
+    - Submit request
+- Status peminjaman: "Pending Payment Verification"
+- Member bisa lihat list request pending
+
+**Fitur Approval (Admin):**
+
+- Admin lihat list request pending (dengan badge notif)
+- Admin lihat detail request & bukti transfer
+- Admin bisa Approve atau Reject request
+- Jika Approve:
+    - Status berubah "Active Rental"
+    - Due date otomatis set 7 hari dari approve
+    - Stock buku berkurang
+- Jika Reject:
+    - Admin bisa tulis notes alasan reject
+    - Member terima notifikasi in-app
+
+**Fitur Perpanjangan:**
+
+- Member bisa request perpanjangan maksimal di hari H (deadline)
+- Maksimal perpanjangan: 1x (tambah 7 hari)
+- Biaya perpanjangan = sama dengan harga sewa awal
+- Flow perpanjangan:
+    - Member klik "Perpanjang"
+    - Upload bukti bayar baru
+    - Admin approve perpanjangan
+    - Due date bertambah 7 hari
+
+**Fitur Pengembalian (Admin):**
+
+- Admin konfirmasi pengembalian buku
+- Admin input tanggal pengembalian aktual
+- Admin pilih kondisi buku:
+    - Baik (tidak ada denda)
+    - Rusak (denda 50% dari harga buku)
+    - Hilang (denda 75% dari harga buku)
+- Sistem otomatis hitung:
+    - Denda keterlambatan: 10% per hari × hari terlambat × harga sewa
+    - Denda kondisi: sesuai pilihan admin
+    - Total tagihan
+- Stock buku bertambah lagi (jika tidak hilang)
+
+**Fitur Tracking & Reminder:**
+
+- Dashboard member: countdown hari tersisa per buku
+- Badge warning jika H-2 sebelum deadline
+- Alert overdue di dashboard admin & member
+
+---
+
+### 7. SISTEM PEMBAYARAN & TAGIHAN (Estimasi: 40 jam)
+
+**Fitur Detail:**
+
+- List semua transaksi pembayaran (sewa + denda)
+- Detail pembayaran per transaksi:
+    - Tanggal transaksi
+    - Jenis (sewa/perpanjangan/denda)
+    - Jumlah
+    - Bukti transfer (bisa di-view/download)
+    - Status (pending/verified/rejected)
+- Admin bisa verifikasi pembayaran
+- Admin bisa reject pembayaran dengan notes
+- Perhitungan denda otomatis:
+    - Keterlambatan: 10% × hari × harga sewa
+    - Rusak: 50% × harga buku
+    - Hilang: 75% × harga buku
+- Track status payment: paid/unpaid
+- Member tidak bisa pinjam lagi jika ada outstanding payment
+
+---
+
+### 8. DASHBOARD (Estimasi: 48 jam)
+
+**Dashboard Admin:**
+
+- Statistics Cards:
+    - Total buku dalam sistem
+    - Total copy/eksemplar
+    - Copy tersedia saat ini
+    - Pending verifications (badge)
+    - Active rentals
+    - Overdue rentals (alert merah)
+- Revenue Summary:
+    - Revenue hari ini
+    - Revenue minggu ini
+    - Revenue bulan ini
+- Quick Actions:
+    - Tombol ke pending requests
+    - Tombol ke overdue rentals
+- Recent Activities (10 aktivitas terakhir)
+- Grafik singkat (optional)
+
+**Dashboard Member:**
+
+- Active Rentals:
+    - List buku yang sedang dipinjam
+    - Countdown hari tersisa
+    - Tombol "Perpanjang" (jika eligible)
+- Pending Requests:
+    - List request yang menunggu approval
+    - Status upload bukti bayar
+- Quick Stats:
+    - Total buku pernah dipinjam
+    - Jumlah wishlist
+- Outstanding Payment (jika ada):
+    - Alert merah ada tunggakan
+    - Total tagihan
+    - Link ke detail payment
+
+---
+
+### 9. LAPORAN & ANALYTICS (Estimasi: 64 jam)
+
+**A. Laporan Buku Terpopuler:**
+
+- Ranking buku berdasarkan total peminjaman
+- Filter by periode:
+    - Bulan ini
+    - 3 bulan terakhir
+    - 6 bulan terakhir
+    - Tahun ini
+    - Custom date range
+- Tampilan:
+    - Ranking number
+    - Cover buku (thumbnail)
+    - Judul, Penulis
+    - Total peminjaman
+    - Grafik bar chart
+- Export to Excel
+
+**B. Laporan Peminjam Teraktif:**
+
+- Ranking member berdasarkan frekuensi peminjaman
+- Data per member:
+    - Nama, Email
+    - Total peminjaman
+    - Total transaksi (Rp)
+    - Status (active/suspended)
+- Filter by periode (sama seperti laporan buku)
+- Export to Excel
+
+**C. Laporan Revenue:**
+
+- Grafik line chart revenue per bulan (12 bulan terakhir)
+- Breakdown revenue:
+    - Pendapatan dari sewa buku
+    - Pendapatan dari denda keterlambatan
+    - Pendapatan dari denda rusak
+    - Pendapatan dari denda hilang
+- Total revenue per kategori breakdown
+- Filter by periode
+- Summary statistics:
+    - Total revenue
+    - Average revenue per bulan
+    - Highest revenue month
+    - Growth percentage
+- Export to Excel & PDF
+
+**D. Laporan Peminjaman:**
+
+- List semua transaksi peminjaman
+- Filter by:
+    - Status (pending/active/returned/overdue)
+    - Date range
+    - Member
+    - Buku
+    - Kategori
+- Columns:
+    - ID transaksi
+    - Member
+    - Buku
+    - Tanggal pinjam
+    - Due date
+    - Tanggal kembali
+    - Status
+    - Total biaya (sewa + denda)
+- Export to Excel
+
+---
+
+### 10. HOMEPAGE & LANDING (Estimasi: 40 jam)
+
+**Fitur Detail:**
+
+- Hero section dengan:
+    - Tagline/welcome text
+    - Call-to-action button (Login/Register/Browse Books)
+    - Background image/illustration
+- Section "Buku Terbaru" (latest 8 books)
+- Section "Buku Terpopuler" (top 8 most rented)
+- Section "Kategori Populer" (dengan icon)
+- Section "Cara Sewa Buku" (3-4 steps visual)
+- Section "Kenapa Pilih Kami" (3-4 benefit points)
+- Contact section (alamat, email, no HP, jam operasional)
+- Footer dengan link ke halaman penting
+- Responsive design (mobile, tablet, desktop)
+- SEO optimization basic (meta tags, sitemap)
+
+---
+
+## PENAWARAN
+
+**Teknologi:** Laravel 11 + Blade + Alpine.js + Tailwind CSS + Livewire
+
+**Durasi Kerja (hari):** 7 hari kerja (1 minggu)
+
+## SYARAT & KETENTUAN
+
+**Yang Client Perlu Siapkan:**
+
+1. Data buku (jika ada) - bisa dalam Excel
+2. Logo perpustakaan (jika ada)
+3. Akses hosting & domain (atau saya bantu sediakan)
+4. Content untuk homepage (text, foto)
+5. Nomor kontak/WA untuk ditampilkan di website
+
+**Lingkup Pekerjaan (In Scope):**
+
+- Semua fitur yang tercantum di quotation ini
+- Responsive design (desktop, tablet, mobile)
+- Deployment ke 1 hosting
+- 1 bulan support bug fixing gratis
+
+**Di Luar Lingkup (Out of Scope):**
+
+- Maintenance bulanan setelah periode support (bisa dibicarakan terpisah)
+- Perubahan fitur major setelah development dimulai
+- Integrasi payment gateway otomatis (Midtrans/Xendit)
+- Mobile app native (Android/iOS)
+- Barcode/QR scanner
+- WhatsApp notification otomatis
+- API untuk sistem eksternal
+
+*Fitur tambahan out of scope bisa dibicarakan dengan additional cost*
+
+**Revisi Policy:**
+
+- Major revision: Maksimal 2x selama development
+- Minor revision: Unlimited untuk UI/UX adjustment
+- Bug fixing: Gratis selama periode support (1 bulan)
+
+**Quotation ini berlaku hingga: 31 December 2025**
+
+---
+
+## APPROVAL
+
+Dengan menandatangani quotation ini, client menyetujui semua scope, harga, timeline, dan syarat & ketentuan yang tertera.

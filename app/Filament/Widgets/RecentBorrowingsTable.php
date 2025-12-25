@@ -27,7 +27,7 @@ class RecentBorrowingsTable extends TableWidget
           ->limit(10)
       )
       ->columns([
-        TextColumn::make('code')
+        TextColumn::make('borrowing_code')
           ->label('Kode')
           ->searchable(),
         TextColumn::make('user.name')
@@ -51,15 +51,19 @@ class RecentBorrowingsTable extends TableWidget
           ->label('Status')
           ->badge()
           ->color(fn(string $state): string => match ($state) {
+            'pending' => 'warning',
             'active' => 'info',
             'returned' => 'success',
             'overdue' => 'danger',
+            'rejected' => 'gray',
             default => 'gray',
           })
           ->formatStateUsing(fn(string $state): string => match ($state) {
+            'pending' => 'Pending',
             'active' => 'Aktif',
             'returned' => 'Dikembalikan',
             'overdue' => 'Terlambat',
+            'rejected' => 'Ditolak',
             default => $state,
           }),
         IconColumn::make('is_paid')

@@ -18,10 +18,16 @@ class Book extends Model
    */
   protected $fillable = [
     'title',
+    'slug',
     'author',
+    'publisher',
+    'year',
     'category_id',
+    'isbn',
+    'image',
     'description',
     'rental_fee',
+    'book_price',
     'total_copies',
     'available_copies',
     'times_borrowed',
@@ -34,6 +40,8 @@ class Book extends Model
    */
   protected $casts = [
     'rental_fee' => 'decimal:2',
+    'book_price' => 'decimal:2',
+    'year' => 'integer',
     'total_copies' => 'integer',
     'available_copies' => 'integer',
     'times_borrowed' => 'integer',
@@ -69,5 +77,21 @@ class Book extends Model
   public function scopeAvailable($query)
   {
     return $query->where('available_copies', '>', 0);
+  }
+
+  /**
+   * Get the wishlists for this book.
+   */
+  public function wishlists(): HasMany
+  {
+    return $this->hasMany(Wishlist::class);
+  }
+
+  /**
+   * Get cover image URL.
+   */
+  public function getImageUrlAttribute(): ?string
+  {
+    return $this->image ? asset('storage/' . $this->image) : null;
   }
 }
