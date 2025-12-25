@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sukabaca - User Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2F483A", // Desaturated Deep Green
+                        "primary-light": "#466555", // Lighter muted green
+                        secondary: "#3B5C56", // Desaturated Teal
+                        "secondary-accent": "#E6A838", // Warmer Yellow/Gold for CTA
+                        "background-light": "#F5F7F6", // Very light grey-green tint
+                        "background-dark": "#161D1A", // Very dark desaturated green
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E2623",
+                        "text-light": "#242E29",
+                        "text-dark": "#E3E8E6",
+                        "accent-purple": "#8b5cf6",
+                        "accent-orange": "#f97316",
+                        "accent-teal": "#2D8A82",
+                    },
+                    fontFamily: {
+                        sans: ["Poppins", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                        '3xl': "2rem",
+                        '4xl': "2.5rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(47, 72, 58, 0.08)',
+                        'glow': '0 0 20px rgba(230, 168, 56, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(47, 72, 58, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(47, 72, 58, 0.03) 1px, transparent 1px);
+        }
+        .dark .bg-grid-pattern {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-300 font-sans bg-grid-pattern">
+<nav class="fixed w-full z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/10 dark:border-white/5">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white">
+<span class="material-symbols-rounded text-2xl">menu_book</span>
+</div>
+<span class="font-bold text-2xl tracking-tight text-primary dark:text-white">Sukabaca.</span>
+</div>
+<div class="hidden md:flex space-x-10 items-center">
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="#">
+                    Beranda
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="text-primary dark:text-white font-semibold relative group" href="#">
+                    Dashboard
+                    <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary transition-all"></span>
+</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="#">
+                    Katalog
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="#">
+                    Wishlist
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+</a>
+</div>
+<div class="flex items-center space-x-3">
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-colors text-gray-600 dark:text-gray-300 mr-2" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-rounded block dark:hidden">dark_mode</span>
+<span class="material-symbols-rounded hidden dark:block">light_mode</span>
+</button>
+<div class="hidden md:flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+<div class="text-right hidden lg:block">
+<p class="text-sm font-bold text-primary dark:text-white">Budi Santoso</p>
+<p class="text-xs text-gray-500">Member Premium</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-secondary-accent text-primary font-bold flex items-center justify-center text-lg">
+                        B
+                    </div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-28 pb-20 min-h-screen">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4 animate-fade-in-up">
+<div>
+<h1 class="text-3xl md:text-4xl font-bold text-primary dark:text-white leading-tight">
+                    Selamat datang, Budi! <span class="inline-block animate-bounce">👋</span>
+</h1>
+<p class="text-gray-500 mt-2 flex items-center gap-2">
+<span class="material-symbols-rounded text-lg text-secondary-accent">calendar_month</span>
+                    Kamis, 24 Oktober 2023
+                </p>
+</div>
+<div class="hidden md:block">
+<button class="text-sm text-primary dark:text-white font-medium hover:underline flex items-center gap-1">
+<span class="material-symbols-rounded">settings</span> Pengaturan Akun
+                </button>
+</div>
+</div>
+<div class="space-y-4 mb-10">
+<div class="bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-2xl p-4 flex items-start gap-4 shadow-sm">
+<div class="p-2 bg-red-100 dark:bg-red-900/30 rounded-xl text-red-600 shrink-0">
+<span class="material-symbols-rounded">warning</span>
+</div>
+<div>
+<h3 class="font-bold text-red-800 dark:text-red-300">Keterlambatan Pengembalian</h3>
+<p class="text-sm text-red-600 dark:text-red-400 mt-1">Buku "Start With Why" terlambat 2 hari. Denda berjalan saat ini: <span class="font-bold">Rp 4.000</span>. Mohon segera dikembalikan atau diperpanjang.</p>
+</div>
+</div>
+<div class="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 rounded-2xl p-4 flex items-start gap-4 shadow-sm">
+<div class="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl text-yellow-700 shrink-0">
+<span class="material-symbols-rounded">receipt_long</span>
+</div>
+<div class="flex-1 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h3 class="font-bold text-yellow-800 dark:text-yellow-300">Tagihan Pending</h3>
+<p class="text-sm text-yellow-700 dark:text-yellow-400 mt-1">Anda memiliki tagihan sewa yang belum dibayar sebesar Rp 15.000.</p>
+</div>
+<button class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-bold rounded-lg transition-colors whitespace-nowrap">
+                        Bayar Sekarang
+                    </button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-white/5 flex items-center gap-4 hover:translate-y-[-2px] transition-transform duration-300">
+<div class="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/20 text-green-600 flex items-center justify-center shrink-0">
+<span class="material-symbols-rounded text-2xl">menu_book</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Sedang Dipinjam</p>
+<p class="text-2xl font-bold text-primary dark:text-white">3 <span class="text-sm font-normal text-gray-400">Buku</span></p>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-white/5 flex items-center gap-4 hover:translate-y-[-2px] transition-transform duration-300">
+<div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center shrink-0">
+<span class="material-symbols-rounded text-2xl">history_edu</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Dipinjam</p>
+<p class="text-2xl font-bold text-primary dark:text-white">42</p>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-white/5 flex items-center gap-4 hover:translate-y-[-2px] transition-transform duration-300">
+<div class="w-14 h-14 rounded-2xl bg-pink-50 dark:bg-pink-900/20 text-pink-600 flex items-center justify-center shrink-0">
+<span class="material-symbols-rounded text-2xl">favorite</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Wishlist</p>
+<p class="text-2xl font-bold text-primary dark:text-white">12</p>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-white/5 flex items-center gap-4 relative overflow-hidden hover:translate-y-[-2px] transition-transform duration-300">
+<div class="absolute right-0 top-0 w-20 h-20 bg-orange-500/5 rounded-bl-[3rem]"></div>
+<div class="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 flex items-center justify-center shrink-0 relative z-10">
+<span class="material-symbols-rounded text-2xl">account_balance_wallet</span>
+</div>
+<div class="relative z-10">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Tagihan</p>
+<p class="text-2xl font-bold text-red-600">Rp 19.000</p>
+</div>
+</div>
+</div>
+<div class="grid lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-white dark:bg-surface-dark rounded-3xl p-6 md:p-8 shadow-soft border border-gray-100 dark:border-white/5">
+<div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+<h2 class="text-xl font-bold text-primary dark:text-white flex items-center gap-2">
+<span class="material-symbols-rounded text-secondary-accent">auto_stories</span>
+                            Pinjaman Aktif
+                        </h2>
+<a class="text-sm font-semibold text-primary dark:text-white hover:text-secondary-accent transition-colors flex items-center gap-1" href="#">
+                            Lihat Semua <span class="material-symbols-rounded text-lg">arrow_forward</span>
+</a>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col sm:flex-row gap-5 p-4 rounded-2xl border border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 transition-colors group">
+<div class="w-full sm:w-24 h-36 shrink-0 rounded-xl overflow-hidden shadow-md relative">
+<img alt="Cover" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3le0wUmrq30pU8-oKZZZ2cpM6JYsbXr04Jiq1xzmQreXFklEmXS8EhQP_bQf_JR-II6u5s4n7RsMNooCVMHiHaaOMQpI1gHDFRFEGJLO-CNk994wwJAi8pY0k9dfJrnc5FXw1ebVc_U96VQmfODHRtDLQryVttPLGCpfhSVWvLXgBnazADj9UwhNzMdWZ_eBpekY3TJ1RSLVXbFKuImqEOSNUawslWfa6fmmTOMTtUzU767a1QUN50NGxA81hcdea4T95kdMkC1Q"/>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-bold text-lg text-gray-900 dark:text-white truncate pr-2">Hooked</h3>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                                            Aktif
+                                        </span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Nir Eyal</p>
+<div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-rounded text-lg text-gray-400">event</span>
+<span>Jatuh Tempo: <span class="font-semibold text-primary dark:text-white">28 Okt 2023</span></span>
+</div>
+<div class="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-medium">
+<span class="material-symbols-rounded text-lg">timer</span>
+<span>Sisa 4 Hari</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-gray-100 dark:border-white/5 pt-3 mt-1">
+<span class="text-xs text-gray-400">Biaya: Rp 7.000 /minggu</span>
+<button class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/10 hover:border-secondary-accent text-primary dark:text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow-sm hover:shadow flex items-center gap-1">
+<span class="material-symbols-rounded text-sm text-secondary-accent">update</span>
+                                        Perpanjang
+                                    </button>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-5 p-4 rounded-2xl border border-red-100 dark:border-red-900/30 bg-red-50/40 dark:bg-red-900/10 hover:bg-red-50/80 dark:hover:bg-red-900/20 transition-colors group">
+<div class="w-full sm:w-24 h-36 shrink-0 rounded-xl overflow-hidden shadow-md relative">
+<img alt="Cover" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoZX4ApZ2tFnYJ8hyvArRcH8Ht7nOPmWMYawZuvoWkPNjMu0PgfgQL-ZoijqMlRnkYf4wYQ4wg60z2I7Vao7FrTjALo8dNDYT3jP1ArDIf_Z7ZEIB5vOBjrJhSU9KMmMko-7jpCVVAzwRzcqJSp1vrhKW0MA5i2KPOY-_uIEFiFDQWa7UKArdXOfpQd4SfpYvurFBVNTXCFHDQAR66o4j9FBVH2wvx-KxVHLSGeOFU2AjoPFFzLCquXFwHC0TColAvzJB5nlierww"/>
+<div class="absolute inset-0 bg-red-500/10 mix-blend-multiply"></div>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-bold text-lg text-gray-900 dark:text-white truncate pr-2">Start With Why</h3>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800">
+                                            Terlambat
+                                        </span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Simon Sinek</p>
+<div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
+<div class="flex items-center gap-1.5 text-red-600 dark:text-red-400 font-semibold">
+<span class="material-symbols-rounded text-lg">warning</span>
+<span>Telat 2 Hari</span>
+</div>
+<div class="flex items-center gap-1.5 text-gray-500">
+<span class="material-symbols-rounded text-lg">event_busy</span>
+<span>Harus Kembali: 22 Okt 2023</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-red-200/50 dark:border-red-800/30 pt-3 mt-1">
+<span class="text-xs font-bold text-red-600 dark:text-red-400">Denda: Rp 4.000</span>
+<button class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition-all shadow-sm shadow-red-200 dark:shadow-none flex items-center gap-1">
+                                        Bayar &amp; Kembalikan
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-3xl p-6 md:p-8 shadow-soft border border-gray-100 dark:border-white/5">
+<h2 class="text-xl font-bold text-primary dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-rounded text-gray-400">pending_actions</span>
+                        Request Pending
+                    </h2>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-dashed border-gray-300 dark:border-white/10">
+<div class="w-12 h-16 rounded bg-gray-200 shrink-0 overflow-hidden opacity-80">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDugAICYf-ablU2qGPMqtNyN1sQxVYSOlKTRrF50hRsG6VR2yoyX0uzrd6rn-Zd8Op7bP6ml4jeJdauoltjBi3qBGRriSl649ad4dbIb3pgSaBTtj4owqFErwHPCb4gtrL6q32lUjCxcnE5o7ljQBrRf_IMURLHMmtqhtGF7SEPjA6UxRURgpbuPsvnKar7cKIbSkW9tEwz-gbMcbH79CZBV3BNC6IhSXC-wfetrGRTf-vsVsyWt471Zd3rkteliknuH7W5wmKhA1c"/>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-bold text-gray-900 dark:text-white">$100 Startup</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">ID: #REQ-8823 • Menunggu pembayaran</p>
+</div>
+<div class="text-right">
+<span class="inline-block text-xs font-bold text-yellow-600 bg-yellow-100 dark:bg-yellow-900/30 dark:text-yellow-400 px-3 py-1.5 rounded-lg">
+                                    Verifikasi
+                                </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-1 space-y-8">
+<div class="bg-primary dark:bg-[#1a2e24] rounded-3xl p-6 text-white relative overflow-hidden shadow-xl shadow-primary/20 group">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary-accent/20 rounded-full blur-3xl group-hover:bg-secondary-accent/30 transition-colors"></div>
+<div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/20 to-transparent"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-6 opacity-90">
+<span class="material-symbols-rounded bg-white/20 p-1.5 rounded-lg">account_balance_wallet</span>
+<span class="text-sm font-bold tracking-wide">TOTAL TAGIHAN</span>
+</div>
+<div class="mb-8">
+<h3 class="text-4xl font-extrabold mb-1 tracking-tight">Rp 19.000</h3>
+<div class="flex items-center gap-2 text-xs text-white/70">
+<span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+                                Belum dibayar
+                            </div>
+</div>
+<button class="w-full bg-secondary-accent hover:bg-yellow-400 text-primary-dark font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-black/20 flex items-center justify-center gap-2 group-hover:scale-[1.02]">
+                            Bayar Sekarang
+                            <span class="material-symbols-rounded text-lg">arrow_forward</span>
+</button>
+<div class="mt-4 text-center">
+<a class="text-xs text-white/60 hover:text-white underline decoration-white/30 transition-colors" href="#">Lihat rincian tagihan</a>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-3xl p-6 shadow-soft border border-gray-100 dark:border-white/5">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-5">Aksi Cepat</h3>
+<div class="grid grid-cols-2 gap-4">
+<a class="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-900/10 border border-transparent hover:border-green-200 dark:hover:border-green-900/30 transition-all group h-32" href="#">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-surface-dark text-green-600 shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-rounded">search</span>
+</div>
+<span class="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover:text-green-700 dark:group-hover:text-green-400">Katalog</span>
+</a>
+<a class="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-pink-50 dark:hover:bg-pink-900/10 border border-transparent hover:border-pink-200 dark:hover:border-pink-900/30 transition-all group h-32" href="#">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-surface-dark text-pink-600 shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-rounded">favorite</span>
+</div>
+<span class="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover:text-pink-700 dark:group-hover:text-pink-400">Wishlist</span>
+</a>
+<a class="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-blue-50 dark:hover:bg-blue-900/10 border border-transparent hover:border-blue-200 dark:hover:border-blue-900/30 transition-all group h-32" href="#">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-surface-dark text-blue-600 shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-rounded">history</span>
+</div>
+<span class="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover:text-blue-700 dark:group-hover:text-blue-400">Riwayat</span>
+</a>
+<a class="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-white/5 hover:bg-orange-50 dark:hover:bg-orange-900/10 border border-transparent hover:border-orange-200 dark:hover:border-orange-900/30 transition-all group h-32" href="#">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-surface-dark text-orange-600 shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-rounded">support_agent</span>
+</div>
+<span class="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover:text-orange-700 dark:group-hover:text-orange-400">Bantuan</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-white/5 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+<div class="lg:col-span-2">
+<div class="flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-rounded text-lg">menu_book</span>
+</div>
+<span class="font-bold text-xl text-primary dark:text-white">Sukabaca.</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-8 max-w-sm">
+                    Sukabaca adalah platform peminjaman buku modern yang menghubungkan pembaca dengan ribuan koleksi berkualitas. Baca lebih banyak, bayar lebih hemat.
+                </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/10 hover:border-primary text-gray-500 hover:text-primary transition-all" href="#">
+<i class="material-symbols-rounded">facebook</i>
+</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/10 hover:border-primary text-gray-500 hover:text-primary transition-all" href="#">
+<i class="material-symbols-rounded">photo_camera</i>
+</a>
+<a class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/10 hover:border-primary text-gray-500 hover:text-primary transition-all" href="#">
+<i class="material-symbols-rounded">alternate_email</i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 dark:text-white mb-6">Navigasi</h4>
+<ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Beranda</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Katalog Buku</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Wishlist</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Artikel</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 dark:text-white mb-6">Dukungan</h4>
+<ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Pusat Bantuan</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Syarat &amp; Ketentuan</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Kebijakan Privasi</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Cara Pengembalian</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 dark:text-white mb-6">Kontak</h4>
+<ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Hubungi Kami</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Karir</a></li>
+<li><a class="hover:text-primary dark:hover:text-white transition-colors" href="#">Partnership</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
+<p>© 2023 Sukabaca Indonesia. Hak cipta dilindungi.</p>
+<p>Dibuat dengan ❤️ untuk pembaca Indonesia.</p>
+</div>
+</div>
+</footer>
+
+</body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sukabaca - Daftar Akun</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2F483A", // Desaturated Deep Green
+                        "primary-light": "#466555", // Lighter muted green
+                        secondary: "#3B5C56", // Desaturated Teal
+                        "secondary-accent": "#E6A838", // Warmer Yellow/Gold for CTA
+                        "background-light": "#F5F7F6", // Very light grey-green tint
+                        "background-dark": "#161D1A", // Very dark desaturated green
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E2623",
+                        "text-light": "#242E29",
+                        "text-dark": "#E3E8E6",
+                        "accent-purple": "#8b5cf6",
+                        "accent-orange": "#f97316",
+                        "accent-teal": "#2D8A82",
+                    },
+                    fontFamily: {
+                        sans: ["Poppins", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                        '3xl': "2rem",
+                        '4xl': "2.5rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(47, 72, 58, 0.08)',
+                        'glow': '0 0 20px rgba(230, 168, 56, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(47, 72, 58, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(47, 72, 58, 0.03) 1px, transparent 1px);
+        }
+        .dark .bg-grid-pattern {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-300 font-sans min-h-screen flex">
+<div class="hidden lg:flex w-1/2 bg-primary relative overflow-hidden flex-col justify-between p-12 xl:p-20">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] bg-cover bg-center mix-blend-overlay opacity-20"></div>
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary-accent/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/30 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-10">
+<div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 text-secondary-accent shadow-lg">
+<span class="material-symbols-rounded text-3xl">menu_book</span>
+</div>
+<span class="font-bold text-3xl text-white tracking-tight">Sukabaca.</span>
+</div>
+<h1 class="text-5xl xl:text-6xl font-bold text-white mb-8 leading-tight">
+                Mulai Petualangan Membaca Anda.
+            </h1>
+<p class="text-lg text-white/80 max-w-lg leading-relaxed font-light">
+                Daftarkan diri Anda hari ini dan akses koleksi buku terbaik kami. Jelajahi pengetahuan tanpa batas bersama komunitas Sukabaca.
+            </p>
+</div>
+<div class="relative z-10 mt-12">
+<div class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-6 max-w-md shadow-2xl">
+<div class="flex items-center gap-1 text-secondary-accent mb-3">
+<span class="material-symbols-rounded text-sm">star</span>
+<span class="material-symbols-rounded text-sm">star</span>
+<span class="material-symbols-rounded text-sm">star</span>
+<span class="material-symbols-rounded text-sm">star</span>
+<span class="material-symbols-rounded text-sm">star</span>
+</div>
+<p class="text-white text-sm italic mb-4">"Akhirnya menemukan tempat peminjaman buku yang modern dan lengkap. Proses daftarnya cepat!"</p>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-secondary-accent to-orange-400 flex items-center justify-center text-primary font-bold text-sm">RB</div>
+<div>
+<p class="text-white text-sm font-bold">Raka Budi</p>
+<p class="text-white/60 text-xs">Mahasiswa Sastra</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-1/2 flex flex-col items-center p-6 sm:p-12 lg:p-16 relative overflow-y-auto bg-grid-pattern">
+<div class="lg:hidden w-full flex items-center justify-between mb-8">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-rounded text-2xl">menu_book</span>
+</div>
+<span class="font-bold text-2xl text-primary dark:text-white">Sukabaca.</span>
+</div>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-colors text-gray-500 dark:text-gray-400" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-rounded block dark:hidden">dark_mode</span>
+<span class="material-symbols-rounded hidden dark:block">light_mode</span>
+</button>
+</div>
+<button class="hidden lg:block absolute top-8 right-8 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-colors text-gray-500 dark:text-gray-400" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-rounded block dark:hidden">dark_mode</span>
+<span class="material-symbols-rounded hidden dark:block">light_mode</span>
+</button>
+<div class="w-full max-w-md space-y-6 mt-4 lg:mt-8">
+<div class="text-center lg:text-left">
+<h2 class="text-3xl md:text-4xl font-extrabold text-primary dark:text-white mb-3">Buat Akun Baru</h2>
+<p class="text-gray-500 dark:text-gray-400">Lengkapi data diri di bawah ini untuk bergabung.</p>
+</div>
+<form action="#" class="space-y-5" method="POST">
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5" for="fullname">
+                        Nama Lengkap
+                    </label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-rounded text-gray-400 group-focus-within:text-primary transition-colors">person</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" id="fullname" name="fullname" placeholder="Masukkan nama lengkap" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5" for="email">
+                        Alamat Email
+                    </label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-rounded text-gray-400 group-focus-within:text-primary transition-colors">mail</span>
+</div>
+<input autocomplete="email" class="block w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" id="email" name="email" placeholder="nama@email.com" required="" type="email"/>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-5">
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5" for="phone">
+                            No. Handphone
+                        </label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-rounded text-gray-400 group-focus-within:text-primary transition-colors">call</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" id="phone" name="phone" placeholder="0812xxxx" required="" type="tel"/>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-1.5">
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300" for="address">
+                                Alamat
+                            </label>
+<span class="text-xs text-gray-400 italic">Opsional</span>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-rounded text-gray-400 group-focus-within:text-primary transition-colors">home</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" id="address" name="address" placeholder="Kota atau domisili" type="text"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5" for="password">
+                            Password
+                        </label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-rounded text-gray-400 group-focus-within:text-primary transition-colors">lock</span>
+</div>
+<input autocomplete="new-password" class="block w-full pl-11 pr-10 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5" for="confirm-password">
+                            Konfirmasi Password
+                        </label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-rounded text-gray-400 group-focus-within:text-red-500 transition-colors">lock_reset</span>
+</div>
+<input autocomplete="new-password" class="block w-full pl-11 pr-10 py-3.5 rounded-xl border border-red-300 dark:border-red-900/50 bg-red-50 dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all shadow-sm" id="confirm-password" name="confirm-password" placeholder="••••••••" required="" type="password"/>
+</div>
+<p class="mt-1.5 text-xs text-red-500 font-medium flex items-center gap-1">
+<span class="material-symbols-rounded text-[14px]">error</span>
+                            Password tidak cocok
+                        </p>
+</div>
+</div>
+<div class="pt-2">
+<button class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-primary-dark bg-secondary-accent hover:bg-[#eeb64f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-accent shadow-glow transition-all duration-300 hover:-translate-y-1" type="submit">
+<span class="absolute right-4 inset-y-0 flex items-center pl-3">
+<span class="material-symbols-rounded group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</span>
+                        Daftar Sekarang
+                    </button>
+</div>
+</form>
+<div class="relative my-8">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-gray-200 dark:border-white/10"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-4 bg-background-light dark:bg-background-dark text-gray-500 dark:text-gray-400">Atau daftar dengan</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center px-4 py-3 border border-gray-200 dark:border-white/10 rounded-xl shadow-sm bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-all hover:border-gray-300 dark:hover:border-white/20">
+<img alt="Google Logo" class="h-5 w-5 mr-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbbIo3ZTMKAQeW0Y685YRNItFZKXl-IHgfpxJUGNkTY8AY4XIKEbwBLvj1R_20TZcIBV6gWKeU8GANx1Obx5FwSkQVnaCtVYATo1hJYr-x5NFG86sf_PqsUSrFk2twVpFQ2-s5REKZru82GdVL4_Jzs2mgTv2gVzd-B_NDEa3U41NMkySGWzuwxS7vDB9VarWP5RpSkoCKgyiCF71ZRUNtx8jVjxYvowgnyH7ou5ihmtPdHUP6WmSh9ijh_FCFm3zBDyOUdbcECjA"/>
+<span class="text-sm font-bold text-gray-700 dark:text-gray-300">Google</span>
+</button>
+<button class="flex items-center justify-center px-4 py-3 border border-gray-200 dark:border-white/10 rounded-xl shadow-sm bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-all hover:border-gray-300 dark:hover:border-white/20">
+<img alt="Facebook Logo" class="h-5 w-5 mr-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClVBzG2JdOQ7LzGKvZOxAHn2a_sruQsvGz7iR6lv56_ee-aKtq3Np1XkQIT0nPJRi7qH3dTHZWZmiMFEHdznZKwkdkodvpYa5oAjD8Ten7AvNpcqH75uNC7d17RKnTO3QRikzK_jb4qtvHKc-3iT2WxqtNDtLJ76YVknKe1MaIx4V-vU5Nd4Ui8ccH0UY5w3UWEkGi7vzuj9wOCzKPMjVjVSSNgsN2HNRmMtMFcKGU0G4v9zJK6WnraMRvtnI2-yjn8CokJkom3TE"/>
+<span class="text-sm font-bold text-gray-700 dark:text-gray-300">Facebook</span>
+</button>
+</div>
+<p class="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+                Sudah punya akun?
+                <a class="font-bold text-primary dark:text-white hover:text-secondary-accent transition-colors" href="#">
+                    Masuk di sini
+                </a>
+</p>
+<div class="mt-8 text-center lg:text-left w-full">
+<p class="text-xs text-gray-400 dark:text-gray-600">© 2023 Sukabaca. Hak cipta dilindungi.</p>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -97,6 +97,7 @@
 -   [x] Form: nama, deskripsi
 -   [x] Delete protection (jika ada buku)
 -   [x] Add icon picker field
+-   [ ] Parent-child kategori hierarchy (opsional)
 
 ### 2.3 Books Resource
 
@@ -203,6 +204,7 @@
 -   [ ] Badge component
 -   [ ] Alert component
 -   [ ] Modal component
+-   [ ] Wishlist badge notifikasi di navbar
 
 ### 3.2 Landing Page
 
@@ -215,6 +217,8 @@
 -   [x] Contact section
 -   [x] Footer
 -   [ ] Add icon per kategori
+-   [ ] SEO optimization (meta tags, sitemap)
+-   [ ] Responsive design testing (mobile, tablet, desktop)
 
 ### 3.3 Authentication
 
@@ -241,6 +245,7 @@
 -   [ ] Wishlist page
 -   [ ] Remove from wishlist
 -   [ ] Quick borrow dari wishlist
+-   [ ] Badge notifikasi jumlah item wishlist
 
 ### 3.6 User Dashboard
 
@@ -248,7 +253,8 @@
 -   [x] Stats cards
 -   [x] Pinjaman aktif list
 -   [ ] Alert notifikasi (terlambat, jatuh tempo, tagihan)
--   [ ] Countdown hari tersisa
+-   [ ] Countdown hari tersisa per buku
+-   [ ] Badge warning H-2 sebelum deadline
 -   [ ] Request pending list
 -   [ ] Outstanding payment alert
 -   [ ] Quick actions
@@ -312,23 +318,30 @@
 
 ### 5.1 Data Aggregation
 
--   [ ] Service: Buku terpopuler query
--   [ ] Service: Peminjam teraktif query
--   [ ] Service: Revenue calculation
--   [ ] Service: Borrowing summary
+-   [x] Service: Buku terpopuler query
+-   [x] Service: Peminjam teraktif query
+-   [x] Service: Revenue calculation
+-   [x] Service: Borrowing summary
 
 ### 5.2 Charts
 
--   [ ] Revenue line chart
+-   [x] Revenue bar chart (12 bulan)
 -   [ ] Top books bar chart
 -   [ ] Category distribution pie chart (opsional)
+-   [ ] Revenue breakdown by kategori
 
 ### 5.3 Export
 
+-   [x] Export laporan peminjaman ke Excel
 -   [ ] Export buku terpopuler ke Excel
 -   [ ] Export peminjam teraktif ke Excel
 -   [ ] Export revenue ke Excel
--   [ ] Export laporan peminjaman ke Excel
+-   [ ] Export revenue ke PDF
+
+### 5.4 Recent Activities (Admin)
+
+-   [ ] Widget 10 aktivitas terakhir
+-   [ ] Log system untuk tracking
 
 ---
 
