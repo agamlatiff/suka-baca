@@ -230,10 +230,10 @@
 -   [x] Login page (existing)
 -   [x] Register page (existing)
 -   [x] Logout functionality
--   [ ] **Slicing:** Login page → `design-website/login-page/`
--   [ ] **Slicing:** Register page → `design-website/register-page/`
--   [ ] **Slicing:** Forgot password → `design-website/forgot-password-page/`
--   [ ] **Slicing:** Reset password → `design-website/reset-password-page/`
+-   [x] **Slicing:** Login page → `design-website/login-page/`
+-   [x] **Slicing:** Register page → `design-website/register-page/`
+-   [x] **Slicing:** Forgot password → `design-website/forgot-password-page/`
+-   [x] **Slicing:** Reset password → `design-website/reset-password-page/`
 
 ### 3.4 Katalog & Detail Buku
 
@@ -242,15 +242,15 @@
 -   [x] Filter kategori
 -   [x] Pagination
 -   [x] Book detail page (existing)
--   [ ] **Slicing:** Katalog → `design-website/katalog-page/`
--   [ ] **Slicing:** Detail buku → `design-website/detail-buku-page/`
+-   [x] **Slicing:** Katalog → `design-website/katalog-page/`
+-   [x] **Slicing:** Detail buku → `design-website/detail-buku-page/`
 -   [ ] Filter ketersediaan
 -   [ ] Sort (A-Z, terbaru, harga)
 -   [ ] Related books section
 
 ### 3.5 Wishlist Page
 
--   [ ] **Slicing:** Wishlist → `design-website/wishlist-page/`
+-   [x] **Slicing:** Wishlist → `design-website/wishlist-page/`
 -   [ ] Add to wishlist (dari katalog & detail)
 -   [ ] Remove from wishlist
 -   [ ] Quick borrow dari wishlist

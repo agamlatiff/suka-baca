@@ -18,39 +18,49 @@ class DashboardController extends Controller
    */
   public function index(): View
   {
-    $userId = Auth::id();
+    $user = Auth::user();
 
-    // Get active borrowings
-    $activeBorrowings = $this->borrowingService->getUserBorrowings($userId)
-      ->whereNull('returned_at')
-      ->sortBy('due_date');
+    // Get active borrowings (including overdue ones that are still active/not returned)
+    $activeBorrowings = $user->borrowings()
+      ->with(['bookCopy.book' => function ($query) {
+        $query->select('id', 'title', 'author', 'image', 'slug');
+      }])
+      ->whereIn('status', ['active', 'overdue'])
+      ->orderBy('due_date', 'asc')
+      ->get();
 
-    // Calculate stats
-    $now = Carbon::now();
+    // Pending borrowings (requests)
+    $pendingBorrowings = $user->borrowings()
+      ->with(['bookCopy.book'])
+      ->where('status', 'pending')
+      ->latest()
+      ->get();
+
+    // Overdue borrowings for alert
+    $overdueBorrowings = $activeBorrowings->filter(function ($borrowing) {
+      return $borrowing->is_overdue || ($borrowing->status === 'active' && $borrowing->due_date < now());
+    });
+
+    // Unpaid bills
+    $unpaidBorrowings = $user->borrowings()
+      ->where('is_paid', false)
+      ->where('total_fee', '>', 0)
+      ->get();
+
     $stats = [
       'active_count' => $activeBorrowings->count(),
-      'due_soon_count' => $activeBorrowings->filter(function ($b) use ($now) {
-        $daysLeft = $now->diffInDays(Carbon::parse($b->due_date), false);
-        return $daysLeft >= 0 && $daysLeft <= 3;
-      })->count(),
-      'overdue_count' => $activeBorrowings->filter(function ($b) use ($now) {
-        return Carbon::parse($b->due_date)->lt($now);
-      })->count(),
-      'outstanding_fees' => $this->borrowingService->getUserBorrowings($userId)
-        ->where('is_paid', false)
-        ->sum('total_fee'),
+      'total_borrowed' => $user->borrowings()->count(),
+      'wishlist_count' => $user->wishlists()->count(),
+      'total_outstanding_fees' => $unpaidBorrowings->sum('total_fee'),
     ];
 
-    // Get recent history
-    $recentHistory = $this->borrowingService->getUserBorrowings($userId)
-      ->whereNotNull('returned_at')
-      ->sortByDesc('returned_at')
-      ->take(5);
-
     return view('dashboard', [
+      'user' => $user,
       'activeBorrowings' => $activeBorrowings,
+      'pendingBorrowings' => $pendingBorrowings,
+      'overdueBorrowings' => $overdueBorrowings,
+      'unpaidBorrowings' => $unpaidBorrowings,
       'stats' => $stats,
-      'recentHistory' => $recentHistory,
     ]);
   }
 }
