@@ -220,7 +220,7 @@
 -   [x] Kenapa pilih kami section
 -   [x] Contact section
 -   [x] Footer
--   [ ] **Slicing:** Update sesuai `design-website/home-page/`
+-   [x] **Slicing:** Update sesuai `design-website/home-page/`
 -   [ ] Add icon per kategori
 -   [ ] SEO optimization (meta tags, sitemap)
 -   [ ] Responsive design testing
