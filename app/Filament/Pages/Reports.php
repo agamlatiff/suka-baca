@@ -2,25 +2,21 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Book;
 use App\Models\Borrowing;
-use App\Models\Payment;
-use App\Models\User;
+use App\Services\BookService;
+use App\Services\BorrowingService;
+use App\Services\DashboardService;
+use App\Services\PaymentService;
+use App\Services\UserService;
 use BackedEnum;
-use Carbon\Carbon;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\DB;
 
 class Reports extends Page implements HasForms, HasTable
 {
@@ -45,6 +41,26 @@ class Reports extends Page implements HasForms, HasTable
 
     public ?string $endDate = null;
 
+    protected BookService $bookService;
+    protected UserService $userService;
+    protected PaymentService $paymentService;
+    protected BorrowingService $borrowingService;
+    protected DashboardService $dashboardService;
+
+    public function boot(
+        BookService $bookService,
+        UserService $userService,
+        PaymentService $paymentService,
+        BorrowingService $borrowingService,
+        DashboardService $dashboardService
+    ): void {
+        $this->bookService = $bookService;
+        $this->userService = $userService;
+        $this->paymentService = $paymentService;
+        $this->borrowingService = $borrowingService;
+        $this->dashboardService = $dashboardService;
+    }
+
     public function mount(): void
     {
         $this->startDate = now()->startOfMonth()->format('Y-m-d');
@@ -53,31 +69,18 @@ class Reports extends Page implements HasForms, HasTable
 
     public function getPopularBooks(): array
     {
-        return Book::select('books.*')
-            ->withCount(['borrowings' => function ($query) {
-                $query->whereBetween('borrowed_at', [$this->startDate, $this->endDate]);
-            }])
-            ->orderByDesc('borrowings_count')
-            ->limit(10)
-            ->get()
+        return $this->bookService->getPopularBooks(10)
             ->map(fn($book) => [
                 'title' => $book->title,
                 'author' => $book->author,
-                'count' => $book->borrowings_count,
+                'count' => $book->times_borrowed,
             ])
             ->toArray();
     }
 
     public function getActiveBorrowers(): array
     {
-        return User::select('users.*')
-            ->withCount(['borrowings' => function ($query) {
-                $query->whereBetween('borrowed_at', [$this->startDate, $this->endDate]);
-            }])
-            ->where('role', 'user')
-            ->orderByDesc('borrowings_count')
-            ->limit(10)
-            ->get()
+        return $this->userService->getTopBorrowers(10, $this->startDate, $this->endDate)
             ->map(fn($user) => [
                 'name' => $user->name,
                 'email' => $user->email,
@@ -88,61 +91,17 @@ class Reports extends Page implements HasForms, HasTable
 
     public function getRevenueData(): array
     {
-        $months = [];
-        for ($i = 11; $i >= 0; $i--) {
-            $date = now()->subMonths($i);
-            $month = $date->format('Y-m');
-            $monthLabel = $date->translatedFormat('M Y');
-
-            $revenue = Payment::where('status', 'verified')
-                ->whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
-                ->sum('amount');
-
-            $months[] = [
-                'month' => $monthLabel,
-                'revenue' => (int) $revenue,
-            ];
-        }
-
-        return $months;
+        return $this->dashboardService->getMonthlyRevenue(12);
     }
 
     public function getRevenueStats(): array
     {
-        $today = Payment::where('status', 'verified')
-            ->whereDate('created_at', today())
-            ->sum('amount');
-
-        $thisWeek = Payment::where('status', 'verified')
-            ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
-            ->sum('amount');
-
-        $thisMonth = Payment::where('status', 'verified')
-            ->whereMonth('created_at', now()->month)
-            ->whereYear('created_at', now()->year)
-            ->sum('amount');
-
-        return [
-            'today' => $today,
-            'week' => $thisWeek,
-            'month' => $thisMonth,
-        ];
+        return $this->paymentService->getRevenueStats();
     }
 
     public function getBorrowingStats(): array
     {
-        $query = Borrowing::query()
-            ->whereBetween('borrowed_at', [$this->startDate, $this->endDate]);
-
-        return [
-            'total' => (clone $query)->count(),
-            'active' => (clone $query)->where('status', 'active')->count(),
-            'returned' => (clone $query)->where('status', 'returned')->count(),
-            'overdue' => (clone $query)->where('status', 'overdue')->count(),
-            'total_revenue' => (clone $query)->sum('total_fee'),
-            'total_late_fee' => (clone $query)->sum('late_fee'),
-        ];
+        return $this->borrowingService->getBorrowingStats($this->startDate, $this->endDate);
     }
 
     public function table(Table $table): Table

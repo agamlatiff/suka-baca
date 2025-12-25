@@ -16,15 +16,15 @@
 
 ## Progress Summary
 
-| Phase                           | Status         | Estimasi |
-| ------------------------------- | -------------- | -------- |
-| Phase 1: Setup & Foundation     | ✅ Complete    | 2 hari   |
-| Phase 2: Admin Panel (Filament) | ✅ Complete    | 4 hari   |
-| Phase 2.10: Service Repository  | 🔄 In Progress | 2 hari   |
-| Phase 3: User Frontend          | 🔲 Pending     | 5 hari   |
-| Phase 4: Payment & Approval     | 🔲 Pending     | 3 hari   |
-| Phase 5: Reports & Analytics    | 🔲 Pending     | 2 hari   |
-| Phase 6: Testing & Polish       | 🔲 Pending     | 2 hari   |
+| Phase                           | Status      | Estimasi |
+| ------------------------------- | ----------- | -------- |
+| Phase 1: Setup & Foundation     | ✅ Complete | 2 hari   |
+| Phase 2: Admin Panel (Filament) | ✅ Complete | 4 hari   |
+| Phase 2.10: Service Repository  | ✅ Complete | 2 hari   |
+| Phase 3: User Frontend          | 🔲 Pending  | 5 hari   |
+| Phase 4: Payment & Approval     | 🔲 Pending  | 3 hari   |
+| Phase 5: Reports & Analytics    | 🔲 Pending  | 2 hari   |
+| Phase 6: Testing & Polish       | 🔲 Pending  | 2 hari   |
 
 **Total Estimasi:** 18 hari kerja
 
@@ -185,8 +185,8 @@
     -   [x] `App\Providers\RepositoryServiceProvider`
 -   [x] Refactor existing code to use Services
     -   [x] Update Controllers to use Services
-    -   [ ] Update Livewire components to use Services
-    -   [ ] Update Filament Resources to use Services (optional)
+    -   [x] Update Livewire components to use Services (N/A - none exist yet)
+    -   [x] Update Filament Resources to use Services (Reports page)
 
 ---
 
