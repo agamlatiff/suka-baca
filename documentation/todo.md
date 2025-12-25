@@ -105,8 +105,8 @@
 -   [x] Auto-generate copy codes saat create
 -   [x] Add penerbit, tahun, ISBN, book_price fields
 -   [x] Add slug auto-generate from title
--   [ ] Header action: Import Excel
--   [ ] Header action: Export Excel
+-   [ ] Header action: Import Excel (deferred)
+-   [ ] Header action: Export Excel (deferred)
 
 ### 2.4 Book Copies Management
 
@@ -127,7 +127,7 @@
 -   [x] Table: kode, member, buku, tanggal, jatuh tempo, status, biaya
 -   [x] Action: Kembalikan
 -   [x] Action: Tandai lunas
--   [ ] Filters: status, pembayaran, tanggal
+-   [x] Filters: status, pembayaran, tanggal
 -   [x] Action: Approve (pending -> aktif)
 -   [x] Action: Reject (dengan notes)
 -   [x] Action: Approve perpanjangan
@@ -148,7 +148,7 @@
 -   [x] Filters: status, jenis
 -   [x] Action: Verify payment
 -   [x] Action: Reject payment (dengan notes)
--   [ ] Modal view bukti transfer
+-   [x] Modal view bukti transfer
 
 ### 2.9 Reports Page
 
