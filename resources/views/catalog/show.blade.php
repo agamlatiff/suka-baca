@@ -149,16 +149,11 @@
                         {{-- Actions --}}
                         <div class="flex flex-col sm:flex-row gap-4 mt-auto">
                             @auth
-                                <form action="{{ route('borrowings.store') }}" method="POST" class="flex-1">
-                                    @csrf
-                                    <input type="hidden" name="book_id" value="{{ $book->id }}">
-                                    <button type="submit" 
-                                        class="w-full bg-primary hover:bg-primary-light text-white text-lg font-bold py-4 px-8 rounded-xl transition-all shadow-xl shadow-primary/20 hover:shadow-primary/40 transform hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                                        {{ $book->available_copies < 1 ? 'disabled' : '' }}>
-                                        <span class="material-symbols-rounded">bookmark_add</span>
-                                        {{ $book->available_copies > 0 ? 'Pinjam Buku' : 'Stok Habis' }}
-                                    </button>
-                                </form>
+                                <a href="{{ route('borrow.create', $book) }}" 
+                                    class="flex-1 bg-primary hover:bg-primary-light text-white text-lg font-bold py-4 px-8 rounded-xl transition-all shadow-xl shadow-primary/20 hover:shadow-primary/40 transform hover:-translate-y-1 flex items-center justify-center gap-3 {{ $book->available_copies < 1 ? 'pointer-events-none opacity-50' : '' }}">
+                                    <span class="material-symbols-rounded">bookmark_add</span>
+                                    {{ $book->available_copies > 0 ? 'Pinjam Buku' : 'Stok Habis' }}
+                                </a>
                             @else
                                 <a href="{{ route('login') }}" class="flex-1 bg-primary hover:bg-primary-light text-white text-lg font-bold py-4 px-8 rounded-xl transition-all shadow-xl shadow-primary/20 hover:shadow-primary/40 transform hover:-translate-y-1 flex items-center justify-center gap-3">
                                     <span class="material-symbols-rounded">login</span>

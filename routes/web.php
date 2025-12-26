@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\DashboardController;
@@ -20,6 +21,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('wishlist', WishlistController::class)->only(['index', 'store', 'destroy']);
     Route::resource('borrowings', BorrowingController::class)->only(['index', 'store', 'show']);
     Route::resource('payments', App\Http\Controllers\PaymentController::class)->only(['index']);
+
+    // Borrowing wizard
+    Route::get('/borrow/{book}', [BorrowController::class, 'create'])->name('borrow.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
