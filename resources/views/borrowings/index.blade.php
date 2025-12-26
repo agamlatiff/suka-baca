@@ -175,11 +175,11 @@
                                             <span class="material-symbols-rounded text-lg">timer</span>
                                             <span>Sisa waktu: {{ $borrowing->due_date->diffInDays(now()) }} Hari</span>
                                         </div>
-                                        {{-- Extend Button (Future) --}}
-                                        <button class="px-5 py-2 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-secondary-accent text-primary dark:text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow flex items-center gap-2 group/btn">
+                                        {{-- Extend Button --}}
+                                        <a href="{{ route('extend.create', $borrowing) }}" class="px-5 py-2 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-secondary-accent text-primary dark:text-white text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow flex items-center gap-2 group/btn">
                                             <span class="material-symbols-rounded text-secondary-accent group-hover/btn:rotate-180 transition-transform duration-500">update</span>
-                                            Perpanjang Sewa
-                                        </button>
+                                            <span>Perpanjang</span>
+                                        </a>
                                     </div>
                                 @elseif($borrowing->status == 'returned')
                                      <div class="flex flex-wrap items-center justify-end gap-4 pt-4 border-t border-gray-200 dark:border-white/5">

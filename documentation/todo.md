@@ -16,15 +16,15 @@
 
 ## Progress Summary
 
-| Phase                           | Status         | Estimasi |
-| ------------------------------- | -------------- | -------- |
-| Phase 1: Setup & Foundation     | ✅ Complete    | 2 hari   |
-| Phase 2: Admin Panel (Filament) | ✅ Complete    | 4 hari   |
-| Phase 2.10: Service Repository  | ✅ Complete    | 2 hari   |
-| Phase 3: User Frontend          | 🔄 In Progress | 5 hari   |
-| Phase 4: Payment & Approval     | 🔲 Pending     | 3 hari   |
-| Phase 5: Reports & Analytics    | 🔲 Pending     | 2 hari   |
-| Phase 6: Testing & Polish       | 🔲 Pending     | 2 hari   |
+| Phase                           | Status      | Estimasi |
+| ------------------------------- | ----------- | -------- |
+| Phase 1: Setup & Foundation     | ✅ Complete | 2 hari   |
+| Phase 2: Admin Panel (Filament) | ✅ Complete | 4 hari   |
+| Phase 2.10: Service Repository  | ✅ Complete | 2 hari   |
+| Phase 3: User Frontend          | ✅ Complete | 5 hari   |
+| Phase 4: Payment & Approval     | 🔲 Pending  | 3 hari   |
+| Phase 5: Reports & Analytics    | 🔲 Pending  | 2 hari   |
+| Phase 6: Testing & Polish       | 🔲 Pending  | 2 hari   |
 
 **Total Estimasi:** 18 hari kerja
 
@@ -290,24 +290,20 @@
 
 ### 3.10 Request Peminjaman Flow (4 steps)
 
--   [ ] **Slicing:** Step 1 → `design-website/request-peminjaman-step-1-page/`
--   [ ] **Slicing:** Step 2 → `design-website/request-peminjaman-step-2-page/`
--   [ ] **Slicing:** Step 3 → `design-website/request-peminjaman-step-3-page/`
--   [ ] **Slicing:** Step 4 → `design-website/request-peminjaman-step-4-page/`
--   [ ] Konfirmasi buku & harga
--   [ ] Pilih metode bayar
--   [ ] Upload bukti transfer
--   [ ] Status pending notification
+-   [x] Step 1: Konfirmasi buku & durasi
+-   [x] Step 2: Pilih metode bayar
+-   [x] Step 3: Upload bukti transfer
+-   [x] Step 4: Konfirmasi selesai
+-   [x] BorrowController + BorrowWizard Livewire component
 
 ### 3.11 Perpanjangan Buku Flow (4 steps)
 
--   [ ] **Slicing:** Step 1 → `design-website/perpanjangan-buku-step-1-page/`
--   [ ] **Slicing:** Step 2 → `design-website/perpanjangan-buku-step-2-page/`
--   [ ] **Slicing:** Step 3 → `design-website/perpanjangan-buku-step-3-page/`
--   [ ] **Slicing:** Step 4 → `design-website/perpanjangan-buku-step-4-page/`
--   [ ] Validasi perpanjangan (maks 1x, tidak terlambat)
--   [ ] Upload bukti bayar perpanjangan
--   [ ] Konfirmasi perpanjangan
+-   [x] **Slicing:** Step 1 → `design-website/perpanjangan-buku-step-1-page/`
+-   [x] **Slicing:** Step 2 → `design-website/perpanjangan-buku-step-2-page/`
+-   [x] **Slicing:** Step 3 → `design-website/perpanjangan-buku-step-3-page/`
+-   [x] **Slicing:** Step 4 → `design-website/perpanjangan-buku-step-4-page/`
+-   [x] ExtendController + ExtendWizard Livewire component
+-   [x] Update borrowings page with extend button
 
 ---
 

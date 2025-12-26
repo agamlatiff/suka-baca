@@ -4,6 +4,7 @@ use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExtendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
@@ -24,6 +25,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Borrowing wizard
     Route::get('/borrow/{book}', [BorrowController::class, 'create'])->name('borrow.create');
+
+    // Extension wizard
+    Route::get('/extend/{borrowing}', [ExtendController::class, 'create'])->name('extend.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
