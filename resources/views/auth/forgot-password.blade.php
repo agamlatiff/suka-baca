@@ -16,7 +16,7 @@
     <style>body { font-family: 'Poppins', sans-serif; }</style>
     <script>if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');</script>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-text-color-light dark:text-text-color-dark transition-colors duration-300 font-sans min-h-screen flex items-center justify-center p-6">
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-300 font-sans min-h-screen flex items-center justify-center p-6">
     <div class="w-full max-w-md">
         {{-- Logo --}}
         <div class="text-center mb-8">

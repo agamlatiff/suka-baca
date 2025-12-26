@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Book extends Model
 {
@@ -61,6 +62,14 @@ class Book extends Model
   public function copies(): HasMany
   {
     return $this->hasMany(BookCopy::class);
+  }
+
+  /**
+   * Get the borrowings for the book through copies.
+   */
+  public function borrowings(): HasManyThrough
+  {
+    return $this->hasManyThrough(Borrowing::class, BookCopy::class);
   }
 
   /**

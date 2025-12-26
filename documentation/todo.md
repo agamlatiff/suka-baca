@@ -16,15 +16,15 @@
 
 ## Progress Summary
 
-| Phase                           | Status      | Estimasi |
-| ------------------------------- | ----------- | -------- |
-| Phase 1: Setup & Foundation     | ✅ Complete | 2 hari   |
-| Phase 2: Admin Panel (Filament) | ✅ Complete | 4 hari   |
-| Phase 2.10: Service Repository  | ✅ Complete | 2 hari   |
-| Phase 3: User Frontend          | 🔲 Pending  | 5 hari   |
-| Phase 4: Payment & Approval     | 🔲 Pending  | 3 hari   |
-| Phase 5: Reports & Analytics    | 🔲 Pending  | 2 hari   |
-| Phase 6: Testing & Polish       | 🔲 Pending  | 2 hari   |
+| Phase                           | Status         | Estimasi |
+| ------------------------------- | -------------- | -------- |
+| Phase 1: Setup & Foundation     | ✅ Complete    | 2 hari   |
+| Phase 2: Admin Panel (Filament) | ✅ Complete    | 4 hari   |
+| Phase 2.10: Service Repository  | ✅ Complete    | 2 hari   |
+| Phase 3: User Frontend          | 🔄 In Progress | 5 hari   |
+| Phase 4: Payment & Approval     | 🔲 Pending     | 3 hari   |
+| Phase 5: Reports & Analytics    | 🔲 Pending     | 2 hari   |
+| Phase 6: Testing & Polish       | 🔲 Pending     | 2 hari   |
 
 **Total Estimasi:** 18 hari kerja
 
@@ -259,34 +259,34 @@
 ### 3.6 User Dashboard
 
 -   [x] Dashboard page (existing)
--   [ ] **Slicing:** Dashboard → `design-website/dashboard-user-page/`
--   [ ] Alert notifikasi (terlambat, jatuh tempo, tagihan)
--   [ ] Countdown hari tersisa per buku
+-   [x] **Slicing:** Dashboard → `design-website/dashboard-user-page/`
+-   [x] Alert notifikasi (terlambat, jatuh tempo, tagihan)
+-   [x] Countdown hari tersisa per buku
 -   [ ] Badge warning H-2 sebelum deadline
 -   [ ] Request pending list
--   [ ] Outstanding payment alert
--   [ ] Quick actions
+-   [x] Outstanding payment alert
+-   [x] Quick actions
 
 ### 3.7 Riwayat Peminjaman
 
 -   [x] Borrowing list (existing)
--   [ ] **Slicing:** Riwayat → `design-website/riwayat-peminjaman-user-page/`
--   [ ] Filter tabs (semua, pending, aktif, dikembalikan, terlambat)
--   [ ] Pagination
--   [ ] Empty state
+-   [x] **Slicing:** Riwayat → `design-website/riwayat-peminjaman-user-page/`
+-   [x] Filter tabs (semua, pending, aktif, dikembalikan, terlambat)
+-   [x] Pagination
+-   [x] Empty state
 
 ### 3.8 Riwayat Pembayaran
 
--   [ ] **Slicing:** Pembayaran → `design-website/riwayat-pembayaran-user-page/`
--   [ ] Payment history list
--   [ ] Filter status pembayaran
--   [ ] Outstanding payment summary
+-   [x] **Slicing:** Pembayaran → `design-website/riwayat-pembayaran-user-page/`
+-   [x] Payment history list
+-   [x] Filter status pembayaran
+-   [x] Outstanding payment summary
 
 ### 3.9 Profile Page
 
 -   [x] Edit profile form (existing)
 -   [x] Change password form
--   [ ] **Slicing:** Profile → `design-website/profile-page/`
+-   [x] **Slicing:** Profile → `design-website/profile-page/`
 
 ### 3.10 Request Peminjaman Flow (4 steps)
 

@@ -20,12 +20,10 @@
                     Katalog
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </a>
-                @auth
-                    <a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="#">
-                        Wishlist
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
-                    </a>
-                @endauth
+                <a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="{{ route('wishlist.index') }}">
+                    Wishlist
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+                </a>
             </div>
 
             {{-- Right Side Actions --}}

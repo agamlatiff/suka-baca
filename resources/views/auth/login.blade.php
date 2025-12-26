@@ -33,7 +33,7 @@
         }
     </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-text-color-light dark:text-text-color-dark transition-colors duration-300 font-sans min-h-screen flex">
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-300 font-sans min-h-screen flex">
     {{-- Left Panel - Branding --}}
     <div class="hidden lg:flex w-1/2 bg-primary relative overflow-hidden flex-col justify-between p-12 xl:p-20">
         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] bg-cover bg-center mix-blend-overlay opacity-20"></div>

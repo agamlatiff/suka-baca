@@ -32,7 +32,7 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased bg-background-light dark:bg-background-dark text-text-color-light dark:text-text-color-dark transition-colors duration-300 bg-grid-pattern">
+    <body class="font-sans antialiased bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-300 bg-grid-pattern">
         <!-- Navigation -->
         @include('components.navbar')
 
