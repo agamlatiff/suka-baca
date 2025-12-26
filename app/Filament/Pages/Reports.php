@@ -167,4 +167,72 @@ class Reports extends Page implements HasForms, HasTable
             'laporan-peminjaman-' . now()->format('Y-m-d') . '.xlsx'
         );
     }
+
+    public function exportPopularBooks()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\PopularBooksExport(),
+            'buku-terpopuler-' . now()->format('Y-m-d') . '.xlsx'
+        );
+    }
+
+    public function exportActiveBorrowers()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\ActiveBorrowersExport($this->startDate, $this->endDate),
+            'peminjam-teraktif-' . now()->format('Y-m-d') . '.xlsx'
+        );
+    }
+
+    public function exportRevenue()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\RevenueExport(),
+            'laporan-revenue-' . now()->format('Y-m-d') . '.xlsx'
+        );
+    }
+
+    public function getRecentActivities(): array
+    {
+        return Borrowing::with(['user', 'bookCopy.book'])
+            ->latest('updated_at')
+            ->limit(10)
+            ->get()
+            ->map(fn($b) => [
+                'id' => $b->id,
+                'code' => $b->borrowing_code,
+                'user' => $b->user->name,
+                'book' => $b->bookCopy->book->title,
+                'action' => match ($b->status) {
+                    'pending' => 'Request peminjaman baru',
+                    'active' => 'Peminjaman dikonfirmasi',
+                    'returned' => 'Buku dikembalikan',
+                    'overdue' => 'Keterlambatan tercatat',
+                    default => 'Aktivitas lain',
+                },
+                'time' => $b->updated_at->diffForHumans(),
+            ])
+            ->toArray();
+    }
+
+    public function getCategoryDistribution(): array
+    {
+        return \App\Models\Category::withCount('books')
+            ->get()
+            ->map(fn($cat) => [
+                'name' => $cat->name,
+                'count' => $cat->books_count,
+            ])
+            ->toArray();
+    }
+
+    public function getTopBooksChartData(): array
+    {
+        return $this->bookService->getPopularBooks(10)
+            ->map(fn($book) => [
+                'label' => \Illuminate\Support\Str::limit($book->title, 20),
+                'value' => $book->times_borrowed,
+            ])
+            ->toArray();
+    }
 }

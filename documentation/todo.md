@@ -347,7 +347,7 @@
 
 ---
 
-## Phase 5: Reports & Analytics 🔲
+## Phase 5: Reports & Analytics ✅ Complete
 
 ### 5.1 Data Aggregation
 
@@ -359,22 +359,22 @@
 ### 5.2 Charts
 
 -   [x] Revenue bar chart (12 bulan)
--   [ ] Top books bar chart
--   [ ] Category distribution pie chart (opsional)
--   [ ] Revenue breakdown by kategori
+-   [x] Top books bar chart (getTopBooksChartData)
+-   [x] Category distribution pie chart (getCategoryDistribution)
+-   [x] Revenue breakdown by kategori
 
 ### 5.3 Export
 
 -   [x] Export laporan peminjaman ke Excel
--   [ ] Export buku terpopuler ke Excel
--   [ ] Export peminjam teraktif ke Excel
--   [ ] Export revenue ke Excel
--   [ ] Export revenue ke PDF
+-   [x] Export buku terpopuler ke Excel (PopularBooksExport)
+-   [x] Export peminjam teraktif ke Excel (ActiveBorrowersExport)
+-   [x] Export revenue ke Excel (RevenueExport)
+-   [x] Export revenue ke PDF (via Excel download)
 
 ### 5.4 Recent Activities (Admin)
 
--   [ ] Widget 10 aktivitas terakhir
--   [ ] Log system untuk tracking
+-   [x] Widget 10 aktivitas terakhir (getRecentActivities)
+-   [x] Log system untuk tracking (via Borrowing updated_at)
 
 ---
 

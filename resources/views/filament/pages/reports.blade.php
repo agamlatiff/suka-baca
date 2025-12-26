@@ -33,9 +33,15 @@
         {{-- Tab: Popular Books --}}
         <div x-show="activeTab === 'popular-books'" x-cloak>
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Top 10 Buku Terpopuler</h3>
-                    <p class="text-sm text-gray-500">Berdasarkan jumlah peminjaman dalam periode</p>
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Top 10 Buku Terpopuler</h3>
+                        <p class="text-sm text-gray-500">Berdasarkan jumlah peminjaman</p>
+                    </div>
+                    <button wire:click="exportPopularBooks" class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Export
+                    </button>
                 </div>
                 <div class="p-6">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -69,9 +75,15 @@
         {{-- Tab: Active Borrowers --}}
         <div x-show="activeTab === 'active-borrowers'" x-cloak>
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Top 10 Peminjam Teraktif</h3>
-                    <p class="text-sm text-gray-500">Berdasarkan jumlah peminjaman dalam periode</p>
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Top 10 Peminjam Teraktif</h3>
+                        <p class="text-sm text-gray-500">Berdasarkan jumlah peminjaman dalam periode</p>
+                    </div>
+                    <button wire:click="exportActiveBorrowers" class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Export
+                    </button>
                 </div>
                 <div class="p-6">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -123,8 +135,12 @@
 
             {{-- Revenue Chart --}}
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Revenue 12 Bulan Terakhir</h3>
+                    <button wire:click="exportRevenue" class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Export
+                    </button>
                 </div>
                 <div class="p-6">
                     @php $revenueData = $this->getRevenueData(); @endphp
