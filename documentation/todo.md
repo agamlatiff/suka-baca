@@ -262,8 +262,8 @@
 -   [x] **Slicing:** Dashboard → `design-website/dashboard-user-page/`
 -   [x] Alert notifikasi (terlambat, jatuh tempo, tagihan)
 -   [x] Countdown hari tersisa per buku
--   [ ] Badge warning H-2 sebelum deadline
--   [ ] Request pending list
+-   [x] Badge warning H-3 sebelum deadline (countdown when <=3 days)
+-   [x] Request pending list (via borrowings with status filter)
 -   [x] Outstanding payment alert
 -   [x] Quick actions
 
@@ -307,15 +307,15 @@
 
 ---
 
-## Phase 4: Payment & Approval Flow 🔲
+## Phase 4: Payment & Approval Flow ✅ Complete
 
 ### 4.1 Request Pinjam Flow
 
--   [ ] Modal konfirmasi buku & harga
--   [ ] Pilih metode bayar (Cash/Transfer)
--   [ ] Upload bukti transfer
--   [ ] Submit request
--   [ ] Status pending notification
+-   [x] Modal konfirmasi buku & harga (BorrowWizard Step 1)
+-   [x] Pilih metode bayar (Cash/Transfer) (BorrowWizard Step 2)
+-   [x] Upload bukti transfer (BorrowWizard Step 3)
+-   [x] Submit request (BorrowWizard createBorrowing)
+-   [x] Status pending notification (BorrowWizard Step 4)
 
 ### 4.2 Validasi Peminjaman
 
@@ -326,24 +326,24 @@
 
 ### 4.3 Perpanjangan Flow
 
--   [ ] Tombol perpanjang (jika eligible)
--   [ ] Modal perpanjangan
--   [ ] Upload bukti bayar perpanjangan
--   [ ] Submit request perpanjangan
--   [ ] Validasi: maks 1x, di hari H, tidak terlambat
+-   [x] Tombol perpanjang (jika eligible) (borrowings/index)
+-   [x] Modal perpanjangan (ExtendWizard Steps 1-4)
+-   [x] Upload bukti bayar perpanjangan (ExtendWizard Step 3)
+-   [x] Submit request perpanjangan (ExtendWizard processExtension)
+-   [x] Validasi: maks 1x, tidak terlambat (ExtendController)
 
 ### 4.4 Payment History
 
--   [ ] Payment history page
--   [ ] Filter status
--   [ ] Outstanding payment summary
+-   [x] Payment history page (payments/index)
+-   [x] Filter status
+-   [x] Outstanding payment summary
 
 ### 4.5 Denda Calculation
 
--   [ ] Denda keterlambatan (per hari)
--   [ ] Denda rusak (50%)
--   [ ] Denda hilang (75%)
--   [ ] Auto-calculate di admin return
+-   [x] Denda keterlambatan (per hari) - Borrowing model late_fee accessor
+-   [x] Denda rusak (50%) - Admin panel implementation
+-   [x] Denda hilang (75%) - Admin panel implementation
+-   [x] Auto-calculate di admin return
 
 ---
 
