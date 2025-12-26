@@ -20,8 +20,18 @@
                     Katalog
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </a>
-                <a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="{{ route('wishlist.index') }}">
+                <a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group flex items-center gap-1" href="{{ route('wishlist.index') }}">
                     Wishlist
+                    @auth
+                        @php
+                            $wishlistCount = Auth::user()->wishlists()->count();
+                        @endphp
+                        @if($wishlistCount > 0)
+                            <span class="bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                                {{ $wishlistCount > 9 ? '9+' : $wishlistCount }}
+                            </span>
+                        @endif
+                    @endauth
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </a>
             </div>

@@ -203,12 +203,12 @@
 -   [x] Footer component
 -   [x] **Slicing:** Update navbar sesuai design
 -   [x] **Slicing:** Update footer sesuai design
--   [ ] Book card component
--   [ ] Stats card component
--   [ ] Badge component
--   [ ] Alert component
--   [ ] Modal component
--   [ ] Wishlist badge notifikasi di navbar
+-   [x] Book card component
+-   [x] Stats card component
+-   [x] Badge component
+-   [x] Alert component
+-   [x] Modal component
+-   [x] Wishlist badge notifikasi di navbar
 
 ### 3.2 Homepage (home-page)
 
