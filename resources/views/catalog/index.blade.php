@@ -67,8 +67,11 @@
                             <select name="sort" onchange="this.form.submit()" 
                                 class="block w-full pl-3 pr-10 py-3 text-base border-gray-200 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm rounded-xl bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white appearance-none cursor-pointer">
                                 <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
+                                <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }}>Populer</option>
                                 <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>A-Z Judul</option>
                                 <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Z-A Judul</option>
+                                <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Harga Terendah</option>
+                                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Harga Tertinggi</option>
                             </select>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                                 <span class="material-symbols-rounded">sort</span>

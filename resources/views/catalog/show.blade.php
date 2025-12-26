@@ -185,8 +185,16 @@
                         Lihat Semua <span class="material-symbols-rounded text-lg">arrow_forward</span>
                     </a>
                 </div>
-                {{-- Grid for similar books would go here --}}
-                 <p class="text-gray-500 italic">Fitur rekomendasi buku akan segera hadir.</p>
+                
+                @if($relatedBooks->isNotEmpty())
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        @foreach($relatedBooks as $relatedBook)
+                            <x-book-card :book="$relatedBook" />
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-gray-500 italic">Belum ada buku serupa dalam kategori ini.</p>
+                @endif
             </div>
         </div>
     </main>

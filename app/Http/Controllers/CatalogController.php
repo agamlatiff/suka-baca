@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Services\BookService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -53,8 +54,17 @@ class CatalogController extends Controller
       $query->where('status', 'available')->limit(5);
     }]);
 
+    // Get related books from same category
+    $relatedBooks = Book::where('category_id', $book->category_id)
+      ->where('id', '!=', $book->id)
+      ->where('available_copies', '>', 0)
+      ->inRandomOrder()
+      ->limit(4)
+      ->get();
+
     return view('catalog.show', [
       'book' => $book,
+      'relatedBooks' => $relatedBooks,
     ]);
   }
 }

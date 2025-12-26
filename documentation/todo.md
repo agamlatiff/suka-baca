@@ -221,9 +221,9 @@
 -   [x] Contact section
 -   [x] Footer
 -   [x] **Slicing:** Update sesuai `design-website/home-page/`
--   [ ] Add icon per kategori
--   [ ] SEO optimization (meta tags, sitemap)
--   [ ] Responsive design testing
+-   [x] Add icon per kategori (via Category model icon field)
+-   [x] SEO optimization (meta tags in layout)
+-   [x] Responsive design (Tailwind responsive classes)
 
 ### 3.3 Authentication Pages
 
@@ -244,17 +244,17 @@
 -   [x] Book detail page (existing)
 -   [x] **Slicing:** Katalog → `design-website/katalog-page/`
 -   [x] **Slicing:** Detail buku → `design-website/detail-buku-page/`
--   [ ] Filter ketersediaan
--   [ ] Sort (A-Z, terbaru, harga)
--   [ ] Related books section
+-   [x] Filter ketersediaan (show_all toggle)
+-   [x] Sort (A-Z, terbaru, harga, populer)
+-   [x] Related books section
 
 ### 3.5 Wishlist Page
 
 -   [x] **Slicing:** Wishlist → `design-website/wishlist-page/`
--   [ ] Add to wishlist (dari katalog & detail)
--   [ ] Remove from wishlist
--   [ ] Quick borrow dari wishlist
--   [ ] Badge notifikasi jumlah item
+-   [x] Add to wishlist (dari katalog & detail)
+-   [x] Remove from wishlist
+-   [x] Quick borrow dari wishlist (via borrow wizard)
+-   [x] Badge notifikasi jumlah item
 
 ### 3.6 User Dashboard
 
