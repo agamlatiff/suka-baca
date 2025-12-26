@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Http\Requests\AddToWishlistRequest;
+use App\Services\WishlistService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class WishlistController extends Controller
 {
+    public function __construct(
+        protected WishlistService $wishlistService
+    ) {}
+
     /**
      * Display the user's wishlist.
      */
     public function index(): View
     {
-        $wishlists = Auth::user()->wishlists()->with('book.category')->latest()->paginate(12);
+        $wishlists = $this->wishlistService->getUserWishlists(Auth::id(), 12);
 
         return view('wishlist.index', [
             'wishlists' => $wishlists,
@@ -23,24 +28,12 @@ class WishlistController extends Controller
     /**
      * Add a book to the wishlist.
      */
-    public function store(Request $request)
+    public function store(AddToWishlistRequest $request)
     {
-        $request->validate([
-            'book_id' => 'required|exists:books,id',
-        ]);
+        $result = $this->wishlistService->addToWishlist(Auth::id(), $request->book_id);
 
-        $user = Auth::user();
-
-        // Check if already in wishlist
-        if ($user->wishlists()->where('book_id', $request->book_id)->exists()) {
-            return back()->with('info', 'Buku ini sudah ada di wishlist Anda.');
-        }
-
-        $user->wishlists()->create([
-            'book_id' => $request->book_id,
-        ]);
-
-        return back()->with('success', 'Buku berhasil ditambahkan ke wishlist.');
+        $type = $result['success'] ? 'success' : 'info';
+        return back()->with($type, $result['message']);
     }
 
     /**
@@ -48,9 +41,9 @@ class WishlistController extends Controller
      */
     public function destroy(string $id)
     {
-        $wishlist = Auth::user()->wishlists()->findOrFail($id);
-        $wishlist->delete();
+        $result = $this->wishlistService->removeFromWishlist(Auth::id(), (int) $id);
 
-        return back()->with('success', 'Buku berhasil dihapus dari wishlist.');
+        $type = $result['success'] ? 'success' : 'error';
+        return back()->with($type, $result['message']);
     }
 }

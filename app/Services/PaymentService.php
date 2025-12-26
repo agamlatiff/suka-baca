@@ -96,4 +96,46 @@ class PaymentService
       'month' => $thisMonth,
     ];
   }
+
+  /**
+   * Get user payments filtered by status for frontend.
+   */
+  public function getUserPaymentsFiltered(int $userId, ?string $status = null, int $perPage = 10): \Illuminate\Pagination\LengthAwarePaginator
+  {
+    $query = Payment::where('user_id', $userId)
+      ->with(['borrowing.bookCopy.book']);
+
+    if ($status && $status !== 'all') {
+      $dbStatus = $status === 'verified' ? 'confirmed' : $status;
+      $query->where('status', $dbStatus);
+    }
+
+    return $query->latest()->paginate($perPage);
+  }
+
+  /**
+   * Get payment counts for tabs.
+   */
+  public function getPaymentCounts(int $userId): array
+  {
+    $base = Payment::where('user_id', $userId);
+
+    return [
+      'all' => (clone $base)->count(),
+      'pending' => (clone $base)->where('status', 'pending')->count(),
+      'verified' => (clone $base)->where('status', 'confirmed')->count(),
+      'rejected' => (clone $base)->where('status', 'rejected')->count(),
+    ];
+  }
+
+  /**
+   * Get total outstanding fees for user.
+   */
+  public function getTotalOutstandingFees(int $userId): float
+  {
+    return \App\Models\Borrowing::where('user_id', $userId)
+      ->where('is_paid', false)
+      ->where('total_fee', '>', 0)
+      ->sum('total_fee');
+  }
 }

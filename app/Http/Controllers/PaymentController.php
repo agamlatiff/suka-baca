@@ -2,53 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class PaymentController extends Controller
 {
+    public function __construct(
+        protected PaymentService $paymentService
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): View
     {
-        $user = Auth::user();
+        $userId = Auth::id();
         $status = $request->query('status', 'all');
 
-        $query = $user->payments()
-            ->with(['borrowing.bookCopy.book']);
+        $payments = $this->paymentService->getUserPaymentsFiltered($userId, $status, 10);
+        $payments->appends($request->query());
 
-        // Apply Filter
-        switch ($status) {
-            case 'pending':
-                $query->where('status', 'pending');
-                break;
-            case 'verified': // Using 'verified' to match design, assume 'confirmed' or 'verified' in DB
-                $query->where('status', 'confirmed');
-                break;
-            case 'rejected':
-                $query->where('status', 'rejected');
-                break;
-        }
-
-        $payments = $query->latest()->paginate(10)->appends($request->query());
-
-        // Calculate stats
-        $counts = [
-            'all' => $user->payments()->count(),
-            'pending' => $user->payments()->where('status', 'pending')->count(),
-            'verified' => $user->payments()->where('status', 'confirmed')->count(),
-            'rejected' => $user->payments()->where('status', 'rejected')->count(),
-        ];
-
-        // Total Outstanding for the sidebar widget
-        // Assuming this means unpaid borrowings total fee, similar to dashboard
-        $totalOutstandingFees = $user->borrowings()
-            ->where('is_paid', false)
-            ->where('total_fee', '>', 0)
-            ->sum('total_fee');
+        $counts = $this->paymentService->getPaymentCounts($userId);
+        $totalOutstandingFees = $this->paymentService->getTotalOutstandingFees($userId);
 
         return view('payments.index', [
             'payments' => $payments,

@@ -179,4 +179,55 @@ class BorrowingService
       'total_late_fee' => $borrowings->sum('late_fee'),
     ];
   }
+
+  /**
+   * Get user borrowings with filters for frontend.
+   */
+  public function getUserBorrowingsFiltered(int $userId, array $filters, int $perPage = 10): LengthAwarePaginator
+  {
+    $query = Borrowing::where('user_id', $userId)
+      ->with(['bookCopy.book' => fn($q) => $q->select('id', 'title', 'author', 'image')]);
+
+    // Apply search
+    if (!empty($filters['search'])) {
+      $search = $filters['search'];
+      $query->where(function ($q) use ($search) {
+        $q->where('borrowing_code', 'like', "%{$search}%")
+          ->orWhereHas('bookCopy.book', fn($q) => $q->where('title', 'like', "%{$search}%"));
+      });
+    }
+
+    // Apply status filter
+    if (!empty($filters['status']) && $filters['status'] !== 'all') {
+      if ($filters['status'] === 'overdue') {
+        $query->where(function ($q) {
+          $q->where('status', 'overdue')
+            ->orWhere(fn($sub) => $sub->where('status', 'active')->where('due_date', '<', now()));
+        });
+      } else {
+        $query->where('status', $filters['status']);
+      }
+    }
+
+    return $query->latest()->paginate($perPage);
+  }
+
+  /**
+   * Get borrowing counts for tabs.
+   */
+  public function getBorrowingCounts(int $userId): array
+  {
+    $base = Borrowing::where('user_id', $userId);
+
+    return [
+      'all' => (clone $base)->count(),
+      'pending' => (clone $base)->where('status', 'pending')->count(),
+      'active' => (clone $base)->where('status', 'active')->count(),
+      'returned' => (clone $base)->where('status', 'returned')->count(),
+      'overdue' => (clone $base)->where(function ($q) {
+        $q->where('status', 'overdue')
+          ->orWhere(fn($sub) => $sub->where('status', 'active')->where('due_date', '<', now()));
+      })->count(),
+    ];
+  }
 }

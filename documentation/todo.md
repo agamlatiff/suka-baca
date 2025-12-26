@@ -16,17 +16,51 @@
 
 ## Progress Summary
 
-| Phase                           | Status      | Estimasi |
-| ------------------------------- | ----------- | -------- |
-| Phase 1: Setup & Foundation     | ✅ Complete | 2 hari   |
-| Phase 2: Admin Panel (Filament) | ✅ Complete | 4 hari   |
-| Phase 2.10: Service Repository  | ✅ Complete | 2 hari   |
-| Phase 3: User Frontend          | ✅ Complete | 5 hari   |
-| Phase 4: Payment & Approval     | 🔲 Pending  | 3 hari   |
-| Phase 5: Reports & Analytics    | 🔲 Pending  | 2 hari   |
-| Phase 6: Testing & Polish       | 🔲 Pending  | 2 hari   |
+| Phase                               | Status      | Estimasi |
+| ----------------------------------- | ----------- | -------- |
+| Phase 1: Setup & Foundation         | ✅ Complete | 2 hari   |
+| Phase 2: Admin Panel (Filament)     | ✅ Complete | 4 hari   |
+| Phase 2.10: Service Repository      | ✅ Complete | 2 hari   |
+| Phase 3: User Frontend              | ✅ Complete | 5 hari   |
+| Phase 4: Payment & Approval         | ✅ Complete | 3 hari   |
+| Phase 5: Reports & Analytics        | ✅ Complete | 2 hari   |
+| Phase 6: Testing & Polish           | 🔲 Pending  | 2 hari   |
+| **Phase 7: Controller Refactoring** | ✅ Complete | 1 hari   |
 
-**Total Estimasi:** 18 hari kerja
+**Total Estimasi:** 19 hari kerja
+
+---
+
+## Phase 7: Controller Refactoring ✅ Complete
+
+> Clean Architecture: Controllers only have DI, validation, and routing
+
+### 7.1 DashboardController
+
+-   [x] Move queries to `DashboardService.getUserDashboardData()`
+-   [x] Remove inline queries for active/pending/overdue borrowings
+
+### 7.2 BorrowingController
+
+-   [x] Create `BorrowingService.getUserBorrowingsFiltered(userId, filters)`
+-   [x] Create `BorrowingService.getBorrowingCounts(userId)`
+-   [x] Remove inline filter/search logic
+
+### 7.3 PaymentController
+
+-   [x] Create `PaymentService.getUserPaymentsFiltered(userId, status)`
+-   [x] Create `PaymentService.getPaymentCounts(userId)`
+-   [x] Remove inline queries
+
+### 7.4 WishlistController
+
+-   [x] Create `WishlistService` class
+-   [x] Create `AddToWishlistRequest` Form Request
+-   [x] Move all wishlist logic to service
+
+### 7.5 BorrowController
+
+-   [x] Use `BorrowingValidationService.canBorrow()` instead of inline checks
 
 ---
 

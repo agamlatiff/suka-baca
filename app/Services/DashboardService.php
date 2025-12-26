@@ -77,4 +77,51 @@ class DashboardService
     }
     return $data;
   }
+
+  /**
+   * Get user dashboard data (for user frontend).
+   */
+  public function getUserDashboardData(int $userId): array
+  {
+    $user = $this->userRepository->find($userId);
+
+    // Active borrowings (including overdue)
+    $activeBorrowings = $user->borrowings()
+      ->with(['bookCopy.book' => fn($q) => $q->select('id', 'title', 'author', 'image', 'slug')])
+      ->whereIn('status', ['active', 'overdue'])
+      ->orderBy('due_date', 'asc')
+      ->get();
+
+    // Pending borrowings
+    $pendingBorrowings = $user->borrowings()
+      ->with(['bookCopy.book'])
+      ->where('status', 'pending')
+      ->latest()
+      ->get();
+
+    // Overdue borrowings for alert
+    $overdueBorrowings = $activeBorrowings->filter(
+      fn($b) => $b->is_overdue || ($b->status === 'active' && $b->due_date < now())
+    );
+
+    // Unpaid bills
+    $unpaidBorrowings = $user->borrowings()
+      ->where('is_paid', false)
+      ->where('total_fee', '>', 0)
+      ->get();
+
+    return [
+      'user' => $user,
+      'activeBorrowings' => $activeBorrowings,
+      'pendingBorrowings' => $pendingBorrowings,
+      'overdueBorrowings' => $overdueBorrowings,
+      'unpaidBorrowings' => $unpaidBorrowings,
+      'stats' => [
+        'active_count' => $activeBorrowings->count(),
+        'total_borrowed' => $user->borrowings()->count(),
+        'wishlist_count' => $user->wishlists()->count(),
+        'total_outstanding_fees' => $unpaidBorrowings->sum('total_fee'),
+      ],
+    ];
+  }
 }
