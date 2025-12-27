@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
@@ -21,7 +22,7 @@ class Setting extends Model
   ];
 
   /**
-   * Get a setting value by key.
+   * Get a setting value by key (cached for 1 hour).
    *
    * @param string $key
    * @param mixed $default
@@ -29,12 +30,14 @@ class Setting extends Model
    */
   public static function get(string $key, mixed $default = null): mixed
   {
-    $setting = static::where('key', $key)->first();
-    return $setting ? $setting->value : $default;
+    return Cache::remember("setting_{$key}", 3600, function () use ($key, $default) {
+      $setting = static::where('key', $key)->first();
+      return $setting ? $setting->value : $default;
+    });
   }
 
   /**
-   * Set a setting value by key.
+   * Set a setting value by key and clear cache.
    *
    * @param string $key
    * @param mixed $value
@@ -42,6 +45,9 @@ class Setting extends Model
    */
   public static function set(string $key, mixed $value): bool
   {
+    // Clear the cache for this setting
+    Cache::forget("setting_{$key}");
+
     return static::updateOrCreate(
       ['key' => $key],
       ['value' => $value]

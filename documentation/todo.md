@@ -244,10 +244,10 @@
 
 ### 10.5 General Polish
 
--   [ ] Sidebar: Active state indicator, badge count pending items
--   [ ] Dark mode improvements
--   [ ] Loading skeletons untuk data fetch
--   [ ] Better empty states dengan ilustrasi
+-   [x] Sidebar: Active state indicator, badge count pending items
+-   [x] Dark mode improvements
+-   [x] Loading skeletons untuk data fetch
+-   [x] Better empty states dengan ilustrasi
 
 ---
 
@@ -257,19 +257,19 @@
 
 ### 11.1 Caching Strategy
 
--   [ ] **Query Caching**: Cache heavy widgets (StatsOverview, Trends) duration 5-10 mins
--   [ ] **Data Caching**: Cache global settings (avoid DB hits)
--   [ ] **Route & View Caching**: Ensure `php artisan route:cache` & `view:cache` capability
+-   [x] **Query Caching**: Cache heavy widgets (StatsOverview, Trends) duration 5-10 mins
+-   [x] **Data Caching**: Cache global settings (avoid DB hits)
+-   [x] **Route & View Caching**: Ensure `php artisan route:cache` & `view:cache` capability
 
 ### 11.2 Database Tuning
 
--   [ ] **Indexing**: Add index on `borrowings` (user_id, status, due_date) & `payments` (status)
--   [ ] **N+1 Logic Check**: Review all Filament resources & widgets for lazy loading issues
+-   [x] **Indexing**: Add index on `borrowings` (user_id, status, due_date) & `payments` (status)
+-   [x] **N+1 Logic Check**: Review all Filament resources & widgets for lazy loading issues
 
 ### 11.3 Asset Optimization
 
--   [ ] **Images**: Compress uploaded images
--   [ ] **Minification**: Ensure JS/CSS are minified for production
+-   [x] **Images**: Compress uploaded images
+-   [x] **Minification**: Ensure JS/CSS are minified for production
 
 ---
 
