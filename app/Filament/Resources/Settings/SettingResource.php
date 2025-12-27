@@ -26,7 +26,13 @@ class SettingResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pengaturan';
 
-    protected static ?string $navigationLabel = 'Pengaturan';
+    protected static ?string $navigationLabel = 'Pengaturan (Tabel)';
+
+    // Hide from navigation - use ManageSettings page instead
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $schema): Schema
     {
