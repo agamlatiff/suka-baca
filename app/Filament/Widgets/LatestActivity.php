@@ -8,29 +8,38 @@ use Filament\Widgets\Widget;
 
 class LatestActivity extends Widget
 {
-  protected static string $view = 'filament.widgets.latest-activity';
+  protected string $view = 'filament.widgets.latest-activity';
 
   protected static ?int $sort = 5;
 
   protected int | string | array $columnSpan = 1;
 
+  public int $limit = 5;
+
+  public function loadMore(): void
+  {
+    $this->limit += 5;
+  }
+
   protected function getViewData(): array
   {
-    $borrowings = Borrowing::with('user', 'book')
+    $limit = $this->limit;
+
+    $borrowings = Borrowing::with('user', 'bookCopy.book')
       ->latest('created_at')
-      ->limit(5)
+      ->limit($limit)
       ->get();
 
     $payments = Payment::with('user')
       ->latest('created_at')
-      ->limit(5)
+      ->limit($limit)
       ->get();
 
     $activities = $borrowings->map(function ($borrowing) {
       return [
         'type' => 'borrowing',
         'user' => $borrowing->user->name,
-        'description' => "meminjam buku \"{$borrowing->book->title}\"",
+        'description' => "meminjam buku \"{$borrowing->bookCopy->book->title}\"",
         'time' => $borrowing->created_at->diffForHumans(),
         'date' => $borrowing->created_at,
         'status' => $borrowing->status,
@@ -46,7 +55,7 @@ class LatestActivity extends Widget
       ];
     }))
       ->sortByDesc('date')
-      ->take(10);
+      ->take($limit);
 
     return [
       'activities' => $activities,

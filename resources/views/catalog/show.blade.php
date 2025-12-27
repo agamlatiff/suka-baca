@@ -46,13 +46,17 @@
                         <div class="relative group mx-auto max-w-sm lg:max-w-none">
                             <div class="absolute inset-0 bg-primary/20 blur-2xl rounded-[2rem] transform rotate-3 scale-95 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div class="relative aspect-[2/3] rounded-2xl overflow-hidden shadow-2xl border border-gray-100 dark:border-white/10">
-                                @if($book->image)
-                                    <img src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-400">
-                                        <span class="material-symbols-rounded text-6xl opacity-30">menu_book</span>
-                                    </div>
-                                @endif
+                                @php
+                                    $coverUrl = $book->image ? asset('storage/' . $book->image) : null;
+                                    if (!$coverUrl && $book->isbn) {
+                                        $isbnClean = str_replace(['-', ' '], '', $book->isbn);
+                                        $coverUrl = "https://covers.openlibrary.org/b/isbn/{$isbnClean}-L.jpg?default=false";
+                                    }
+                                    if (!$coverUrl) {
+                                        $coverUrl = "https://placehold.co/400x600?text=" . urlencode($book->title);
+                                    }
+                                @endphp
+                                <img src="{{ $coverUrl }}" onerror="this.onerror=null; this.src='https://placehold.co/400x600?text={{ urlencode($book->title) }}';" alt="{{ $book->title }}" class="w-full h-full object-cover">
                                 
                                 <div class="absolute top-4 left-4">
                                     <span class="bg-secondary-accent text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
@@ -67,7 +71,7 @@
                         <div class="mt-6 flex justify-center gap-6 lg:hidden">
                             <div class="text-center">
                                 <p class="text-xs text-gray-500 uppercase font-semibold">Tahun</p>
-                                <p class="text-lg font-bold text-primary dark:text-white">{{ $book->publication_year }}</p>
+                                <p class="text-lg font-bold text-primary dark:text-white">{{ $book->year }}</p>
                             </div>
                             <div class="text-center">
                                 <p class="text-xs text-gray-500 uppercase font-semibold">Stok</p>
@@ -91,7 +95,7 @@
                             <div>
                                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Harga Sewa / Minggu</p>
                                 <div class="flex items-baseline gap-1">
-                                    <span class="text-3xl font-bold text-secondary-accent">Rp {{ number_format($book->rental_price, 0, ',', '.') }}</span>
+                                    <span class="text-3xl font-bold text-secondary-accent">Rp {{ number_format($book->rental_fee, 0, ',', '.') }}</span>
                                     <span class="text-sm text-gray-400">/minggu</span>
                                 </div>
                             </div>
@@ -122,7 +126,7 @@
                                 Sinopsis
                             </h3>
                             <div class="prose dark:prose-invert text-gray-600 dark:text-gray-300 leading-relaxed max-w-none">
-                                <p>{{ $book->synopsis }}</p>
+                                <p>{{ $book->description }}</p>
                             </div>
                         </div>
 
@@ -134,7 +138,7 @@
                             </div>
                             <div>
                                 <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Tahun Terbit</p>
-                                <p class="font-medium text-gray-900 dark:text-white">{{ $book->publication_year }}</p>
+                                <p class="font-medium text-gray-900 dark:text-white">{{ $book->year }}</p>
                             </div>
                             <div>
                                 <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">ISBN</p>

@@ -25,6 +25,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 3,
         'times_borrowed' => rand(15, 50),
+        'publisher' => 'Bentang Pustaka',
+        'year' => 2005,
+        'isbn' => '979-3062-79-7',
       ],
       [
         'title' => 'Bumi Manusia',
@@ -34,6 +37,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(20, 60),
+        'publisher' => 'Lentera Dipantara',
+        'year' => 2005,
+        'isbn' => '9789799731234',
       ],
       [
         'title' => 'Tenggelamnya Kapal Van Der Wijck',
@@ -43,6 +49,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 3,
         'times_borrowed' => rand(10, 40),
+        'publisher' => 'Gema Insani',
+        'year' => 2017,
+        'isbn' => '9786022503835',
       ],
       [
         'title' => 'Dilan 1990',
@@ -52,6 +61,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 4,
         'times_borrowed' => rand(25, 70),
+        'publisher' => 'Pastel Books',
+        'year' => 2014,
+        'isbn' => '9786027870413',
       ],
       [
         'title' => 'Perahu Kertas',
@@ -61,6 +73,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 3,
         'times_borrowed' => rand(15, 45),
+        'publisher' => 'Bentang Pustaka',
+        'year' => 2009,
+        'isbn' => '9789791227780',
       ],
       [
         'title' => 'Ayat-Ayat Cinta',
@@ -70,6 +85,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 3,
         'times_borrowed' => rand(20, 55),
+        'publisher' => 'Republika',
+        'year' => 2004,
+        'isbn' => '9789793604022',
       ],
       [
         'title' => 'Negeri 5 Menara',
@@ -79,6 +97,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 3,
         'times_borrowed' => rand(15, 40),
+        'publisher' => 'Gramedia Pustaka Utama',
+        'year' => 2009,
+        'isbn' => '9789792248616',
       ],
       [
         'title' => 'Supernova: Ksatria, Puteri, dan Bintang Jatuh',
@@ -88,6 +109,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(10, 35),
+        'publisher' => 'Truedee',
+        'year' => 2001,
+        'isbn' => '9789791227025',
       ],
       [
         'title' => 'Pulang',
@@ -97,6 +121,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 3,
         'times_borrowed' => rand(18, 50),
+        'publisher' => 'Republika',
+        'year' => 2015,
+        'isbn' => '9786020822129',
       ],
       [
         'title' => 'Harry Potter dan Batu Bertuah',
@@ -106,6 +133,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 5,
         'times_borrowed' => rand(30, 80),
+        'publisher' => 'Gramedia Pustaka Utama',
+        'year' => 2000,
+        'isbn' => '9786020305882',
       ],
 
       // ==================== NON-FIKSI (5 buku) ====================
@@ -117,6 +147,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 8000,
         'copies' => 2,
         'times_borrowed' => rand(15, 45),
+        'publisher' => 'KPG (Kepustakaan Populer Gramedia)',
+        'year' => 2011,
+        'isbn' => '9786024248744',
       ],
       [
         'title' => 'Homo Deus',
@@ -126,6 +159,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 8000,
         'copies' => 2,
         'times_borrowed' => rand(10, 30),
+        'publisher' => 'KPG (Kepustakaan Populer Gramedia)',
+        'year' => 2015,
+        'isbn' => '9786024810576',
       ],
       [
         'title' => '21 Lessons for the 21st Century',
@@ -135,6 +171,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 8000,
         'copies' => 2,
         'times_borrowed' => rand(8, 25),
+        'publisher' => 'Manulife',
+        'year' => 2018,
+        'isbn' => '9780525512172',
       ],
       [
         'title' => 'Educated',
@@ -144,6 +183,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(12, 35),
+        'publisher' => 'Gramedia Pustaka Utama',
+        'year' => 2018,
+        'isbn' => '9786020646619',
       ],
       [
         'title' => 'Guns, Germs, and Steel',
@@ -153,6 +195,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 8000,
         'copies' => 2,
         'times_borrowed' => rand(8, 22),
+        'publisher' => 'KPG',
+        'year' => 1997,
+        'isbn' => '9780393317558',
       ],
 
       // ==================== ANAK-ANAK (5 buku) ====================
@@ -164,6 +209,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 5,
         'times_borrowed' => rand(20, 60),
+        'publisher' => 'Bintang Indonesia',
+        'year' => 2010,
+        'isbn' => '9786022181552', // Placeholder valid format
       ],
       [
         'title' => 'Petualangan Timun Mas',
@@ -173,6 +221,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 4,
         'times_borrowed' => rand(18, 50),
+        'publisher' => 'Erlangga for Kids',
+        'year' => 2015,
+        'isbn' => '9786022521198',
       ],
       [
         'title' => 'Malin Kundang',
@@ -182,6 +233,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 4,
         'times_borrowed' => rand(15, 45),
+        'publisher' => 'Balai Pustaka',
+        'year' => 2008,
+        'isbn' => '9789794071748',
       ],
       [
         'title' => 'Keong Emas',
@@ -191,6 +245,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 4,
         'times_borrowed' => rand(12, 40),
+        'publisher' => 'Bintang Indonesia',
+        'year' => 2012,
+        'isbn' => '9786029532548',
       ],
       [
         'title' => 'Bawang Merah Bawang Putih',
@@ -200,6 +257,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 5,
         'times_borrowed' => rand(20, 55),
+        'publisher' => 'Serba Jaya',
+        'year' => 2014,
+        'isbn' => '9786028275323',
       ],
 
       // ==================== PENDIDIKAN (5 buku) ====================
@@ -211,6 +271,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 4000,
         'copies' => 6,
         'times_borrowed' => rand(25, 70),
+        'publisher' => 'Kemendikbud',
+        'year' => 2018,
+        'isbn' => '9786022829980',
       ],
       [
         'title' => 'Bahasa Indonesia untuk Pemula',
@@ -220,6 +283,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 4000,
         'copies' => 3,
         'times_borrowed' => rand(12, 35),
+        'publisher' => 'Pustaka Pelajar',
+        'year' => 2019,
+        'isbn' => '9786022299880',
       ],
       [
         'title' => 'Fisika Dasar untuk Universitas',
@@ -229,6 +295,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 4,
         'times_borrowed' => rand(18, 50),
+        'publisher' => 'ITB Press',
+        'year' => 1997,
+        'isbn' => '9798001004',
       ],
       [
         'title' => 'Kimia Organik',
@@ -238,6 +307,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 3,
         'times_borrowed' => rand(10, 30),
+        'publisher' => 'Erlangga',
+        'year' => 1999,
+        'isbn' => '9797810756',
       ],
       [
         'title' => 'TOEFL Preparation Guide',
@@ -247,6 +319,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 4,
         'times_borrowed' => rand(20, 55),
+        'publisher' => 'Barron\'s Educational Series',
+        'year' => 2020,
+        'isbn' => '9781438011875',
       ],
 
       // ==================== KOMIK & MANGA (6 buku) ====================
@@ -258,6 +333,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 5,
         'times_borrowed' => rand(40, 100),
+        'publisher' => 'Elex Media Komputindo',
+        'year' => 1997,
+        'isbn' => '9781569319017',
       ],
       [
         'title' => 'Naruto Vol. 1',
@@ -267,6 +345,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 4,
         'times_borrowed' => rand(35, 90),
+        'publisher' => 'Elex Media Komputindo',
+        'year' => 2003,
+        'isbn' => '9781569319000',
       ],
       [
         'title' => 'Attack on Titan Vol. 1',
@@ -276,6 +357,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3500,
         'copies' => 4,
         'times_borrowed' => rand(30, 80),
+        'publisher' => 'Elex Media Komputindo',
+        'year' => 2012,
+        'isbn' => '9781612620244',
       ],
       [
         'title' => 'Dragon Ball Vol. 1',
@@ -285,6 +369,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 3,
         'times_borrowed' => rand(25, 65),
+        'publisher' => 'Elex Media Komputindo',
+        'year' => 2003,
+        'isbn' => '9781569319208',
       ],
       [
         'title' => 'Demon Slayer Vol. 1',
@@ -294,6 +381,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3500,
         'copies' => 4,
         'times_borrowed' => rand(35, 85),
+        'publisher' => 'Elex Media Komputindo',
+        'year' => 2018,
+        'isbn' => '9781974700523',
       ],
       [
         'title' => 'Doraemon Vol. 1',
@@ -303,6 +393,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 3000,
         'copies' => 5,
         'times_borrowed' => rand(30, 75),
+        'publisher' => 'Elex Media Komputindo',
+        'year' => 1990,
+        'isbn' => '9789792015515', // Estimasi
       ],
 
       // ==================== PENGEMBANGAN DIRI (5 buku) ====================
@@ -314,6 +407,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 4,
         'times_borrowed' => rand(35, 90),
+        'publisher' => 'Gramedia Pustaka Utama',
+        'year' => 2018,
+        'isbn' => '9780735211292',
       ],
       [
         'title' => 'Sebuah Seni Untuk Bersikap Bodo Amat',
@@ -323,6 +419,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 4,
         'times_borrowed' => rand(30, 80),
+        'publisher' => 'Grasindo',
+        'year' => 2016,
+        'isbn' => '9780062457714',
       ],
       [
         'title' => 'Mindset: The New Psychology of Success',
@@ -332,6 +431,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 3,
         'times_borrowed' => rand(20, 55),
+        'publisher' => 'Ballantine Books',
+        'year' => 2006,
+        'isbn' => '9780345472328',
       ],
       [
         'title' => 'The 7 Habits of Highly Effective People',
@@ -341,6 +443,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 3,
         'times_borrowed' => rand(25, 65),
+        'publisher' => 'Simon & Schuster',
+        'year' => 1989,
+        'isbn' => '9780743269513',
       ],
       [
         'title' => 'Deep Work',
@@ -350,6 +455,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 3,
         'times_borrowed' => rand(15, 45),
+        'publisher' => 'Grand Central Publishing',
+        'year' => 2016,
+        'isbn' => '9781455586691',
       ],
 
       // ==================== BISNIS (5 buku) ====================
@@ -361,6 +469,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 3,
         'times_borrowed' => rand(30, 75),
+        'publisher' => 'Plata Publishing',
+        'year' => 1997,
+        'isbn' => '9781612680194',
       ],
       [
         'title' => 'The Psychology of Money',
@@ -370,6 +481,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 3,
         'times_borrowed' => rand(25, 65),
+        'publisher' => 'Harriman House',
+        'year' => 2020,
+        'isbn' => '9780857197689',
       ],
       [
         'title' => 'Zero to One',
@@ -379,6 +493,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(18, 50),
+        'publisher' => 'Crown Currency',
+        'year' => 2014,
+        'isbn' => '9780804139298',
       ],
       [
         'title' => 'The Lean Startup',
@@ -388,6 +505,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(15, 45),
+        'publisher' => 'Crown Currency',
+        'year' => 2011,
+        'isbn' => '9780307887894',
       ],
       [
         'title' => 'Think and Grow Rich',
@@ -397,6 +517,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 3,
         'times_borrowed' => rand(22, 60),
+        'publisher' => 'The Ralston Society',
+        'year' => 1937,
+        'isbn' => '9781585424337',
       ],
 
       // ==================== SEJARAH (4 buku) ====================
@@ -408,6 +531,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(10, 30),
+        'publisher' => 'Gadjah Mada University Press',
+        'year' => 2008,
+        'isbn' => '9780804723055',
       ],
       [
         'title' => 'Indonesia: Sejarah & Budaya',
@@ -417,6 +543,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 2,
         'times_borrowed' => rand(8, 25),
+        'publisher' => 'Djambatan',
+        'year' => 2004,
+        'isbn' => '9789794282366', // Estimasi
       ],
       [
         'title' => 'Nusantara: Sejarah Indonesia',
@@ -426,6 +555,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(6, 20),
+        'publisher' => 'KPG',
+        'year' => 2008,
+        'isbn' => '9789799103093',
       ],
       [
         'title' => 'Dari Penjara ke Penjara',
@@ -435,6 +567,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 2,
         'times_borrowed' => rand(8, 22),
+        'publisher' => 'Tempo',
+        'year' => 2008,
+        'isbn' => '9789799635747',
       ],
 
       // ==================== KESEHATAN (4 buku) ====================
@@ -446,6 +581,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 3,
         'times_borrowed' => rand(15, 40),
+        'publisher' => 'Gramedia Pustaka Utama',
+        'year' => 2015,
+        'isbn' => '9786020619040', // Estimasi
       ],
       [
         'title' => 'Why We Sleep',
@@ -455,6 +593,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 2,
         'times_borrowed' => rand(12, 35),
+        'publisher' => 'Scribner',
+        'year' => 2017,
+        'isbn' => '9781501144318',
       ],
       [
         'title' => 'The Body: A Guide for Occupants',
@@ -464,6 +605,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(10, 30),
+        'publisher' => 'Doubleday',
+        'year' => 2019,
+        'isbn' => '9780385539302',
       ],
       [
         'title' => 'Brain Rules',
@@ -473,6 +617,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 2,
         'times_borrowed' => rand(8, 25),
+        'publisher' => 'Pear Press',
+        'year' => 2008,
+        'isbn' => '9780979777707',
       ],
 
       // ==================== SASTRA KLASIK (4 buku) ====================
@@ -484,6 +631,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 2,
         'times_borrowed' => rand(12, 35),
+        'publisher' => 'Balai Pustaka',
+        'year' => 1922,
+        'isbn' => '9786022600044', // Estimasi
       ],
       [
         'title' => 'Layar Terkembang',
@@ -493,6 +643,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 2,
         'times_borrowed' => rand(8, 25),
+        'publisher' => 'Balai Pustaka',
+        'year' => 1936,
+        'isbn' => '9789794071663', // Estimasi
       ],
       [
         'title' => 'Azab dan Sengsara',
@@ -502,6 +655,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 2,
         'times_borrowed' => rand(6, 20),
+        'publisher' => 'Balai Pustaka',
+        'year' => 1920,
+        'isbn' => '9789794071670', // Estimasi
       ],
       [
         'title' => 'Atheis',
@@ -511,6 +667,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 2,
         'times_borrowed' => rand(8, 22),
+        'publisher' => 'Balai Pustaka',
+        'year' => 1949,
+        'isbn' => '9789794071687', // Estimasi
       ],
 
       // ==================== SAINS & TEKNOLOGI (4 buku) ====================
@@ -522,6 +681,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 7000,
         'copies' => 2,
         'times_borrowed' => rand(15, 40),
+        'publisher' => 'Bantam Books',
+        'year' => 1988,
+        'isbn' => '9780553380163',
       ],
       [
         'title' => 'The Code Breaker',
@@ -531,6 +693,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 8000,
         'copies' => 2,
         'times_borrowed' => rand(10, 30),
+        'publisher' => 'Simon & Schuster',
+        'year' => 2021,
+        'isbn' => '9781982115852',
       ],
       [
         'title' => 'Clean Code',
@@ -540,6 +705,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 8000,
         'copies' => 3,
         'times_borrowed' => rand(20, 55),
+        'publisher' => 'Prentice Hall',
+        'year' => 2008,
+        'isbn' => '9780132350884',
       ],
       [
         'title' => 'The Pragmatic Programmer',
@@ -549,6 +717,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 8000,
         'copies' => 3,
         'times_borrowed' => rand(18, 50),
+        'publisher' => 'Addison-Wesley Professional',
+        'year' => 1999,
+        'isbn' => '9780201616224',
       ],
 
       // ==================== AGAMA (3 buku) ====================
@@ -560,6 +731,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 3,
         'times_borrowed' => rand(15, 40),
+        'publisher' => 'Gema Insani',
+        'year' => 1967,
+        'isbn' => '9786022502395', // Estimasi
       ],
       [
         'title' => 'Ihya Ulumuddin',
@@ -569,6 +743,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 6000,
         'copies' => 2,
         'times_borrowed' => rand(10, 30),
+        'publisher' => 'Republika',
+        'year' => 2011,
+        'isbn' => '9786028997324', // Estimasi
       ],
       [
         'title' => 'Fiqih Sunnah',
@@ -578,6 +755,9 @@ class BookSeeder extends Seeder
         'rental_fee' => 5000,
         'copies' => 3,
         'times_borrowed' => rand(12, 35),
+        'publisher' => 'Pena Pundi Aksara',
+        'year' => 2006,
+        'isbn' => '9789793033525', // Estimasi
       ],
     ];
 
@@ -589,8 +769,8 @@ class BookSeeder extends Seeder
         continue;
       }
 
-      // Create book
-      $book = Book::firstOrCreate(
+      // Create or update book
+      $book = Book::updateOrCreate(
         ['title' => $bookData['title']],
         [
           'author' => $bookData['author'],
@@ -600,6 +780,10 @@ class BookSeeder extends Seeder
           'total_copies' => $bookData['copies'],
           'available_copies' => $bookData['copies'],
           'times_borrowed' => $bookData['times_borrowed'] ?? 0,
+          'publisher' => $bookData['publisher'] ?? 'Penerbit Umum',
+          'year' => $bookData['year'] ?? rand(2010, 2023),
+          'isbn' => $bookData['isbn'] ?? fake()->isbn13(),
+          'book_price' => $bookData['rental_fee'] * 20, // Simulasi harga beli
         ]
       );
 

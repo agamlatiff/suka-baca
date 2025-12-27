@@ -79,16 +79,23 @@
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                 @foreach($latestBooks as $book)
+                @php
+                    $coverUrl = $book->image ? asset('storage/' . $book->image) : null;
+                    if (!$coverUrl && $book->isbn) {
+                        $isbnClean = str_replace(['-', ' '], '', $book->isbn);
+                        $coverUrl = "https://covers.openlibrary.org/b/isbn/{$isbnClean}-L.jpg?default=false";
+                    }
+                    if (!$coverUrl) {
+                        $coverUrl = "https://placehold.co/400x600?text=" . urlencode($book->title);
+                    }
+                @endphp
                 <a href="{{ route('catalog.show', $book) }}" class="group cursor-pointer">
                     <div class="relative overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 aspect-[2/3] mb-4 shadow-sm group-hover:shadow-md transition-all">
                         <span class="absolute top-2 left-2 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm z-10">BARU</span>
-                        @if($book->image)
-                            <img alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ asset('storage/' . $book->image) }}"/>
-                        @else
-                            <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
-                                <span class="material-symbols-rounded text-6xl text-primary/50">menu_book</span>
-                            </div>
-                        @endif
+                        <img src="{{ $coverUrl }}" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x600?text={{ urlencode($book->title) }}';"
+                            alt="{{ $book->title }}" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
                     </div>
                     <h3 class="font-bold text-gray-900 dark:text-white truncate">{{ $book->title }}</h3>
@@ -242,18 +249,25 @@
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                 @foreach($popularBooks as $book)
+                @php
+                    $coverUrl = $book->image ? asset('storage/' . $book->image) : null;
+                    if (!$coverUrl && $book->isbn) {
+                        $isbnClean = str_replace(['-', ' '], '', $book->isbn);
+                        $coverUrl = "https://covers.openlibrary.org/b/isbn/{$isbnClean}-L.jpg?default=false";
+                    }
+                    if (!$coverUrl) {
+                        $coverUrl = "https://placehold.co/400x600?text=" . urlencode($book->title);
+                    }
+                @endphp
                 <a href="{{ route('catalog.show', $book) }}" class="group cursor-pointer">
                     <div class="relative overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 aspect-[2/3] mb-4 shadow-sm group-hover:shadow-md transition-all">
                         @if($book->times_borrowed > 10)
                         <span class="absolute top-2 left-2 bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm z-10">POPULER</span>
                         @endif
-                        @if($book->image)
-                            <img alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ asset('storage/' . $book->image) }}"/>
-                        @else
-                            <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
-                                <span class="material-symbols-rounded text-6xl text-primary/50">menu_book</span>
-                            </div>
-                        @endif
+                        <img src="{{ $coverUrl }}" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x600?text={{ urlencode($book->title) }}';"
+                            alt="{{ $book->title }}" 
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                     </div>
                     <h3 class="font-bold text-gray-900 dark:text-white truncate">{{ $book->title }}</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400">{{ $book->author }}</p>
@@ -307,31 +321,30 @@
                     </div>
                 </div>
                 <div class="relative h-[500px] w-full bg-gray-200 dark:bg-gray-800 rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white dark:border-white/5">
-                    <div class="absolute inset-0 bg-primary opacity-10" style="background-image: radial-gradient(#2F483A 1px, transparent 1px); background-size: 20px 20px;"></div>
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                    {{-- Google Maps Embed for Bogor --}}
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.4495750095477!2d106.79470957499502!3d-6.593449293398799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5d1f4e7c5e5%3A0x301576d14feb980!2sKebun%20Raya%20Bogor!5e0!3m2!1sid!2sid!4v1703715600000!5m2!1sid!2sid"
+                        class="absolute inset-0 w-full h-full"
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    {{-- Overlay with location marker --}}
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none z-10">
                         <div class="w-20 h-20 rounded-full bg-secondary-accent/20 flex items-center justify-center animate-ping absolute"></div>
-                        <div class="relative w-16 h-16 bg-secondary-accent text-white rounded-full flex items-center justify-center shadow-xl border-4 border-white dark:border-gray-800 z-10">
+                        <div class="relative w-16 h-16 bg-secondary-accent text-white rounded-full flex items-center justify-center shadow-xl border-4 border-white dark:border-gray-800">
                             <span class="material-symbols-rounded text-3xl">menu_book</span>
                         </div>
-                        <div class="mt-4 bg-white dark:bg-surface-dark px-4 py-2 rounded-xl shadow-lg font-bold text-primary dark:text-white text-sm whitespace-nowrap z-10">Sukabaca HQ</div>
+                        <div class="mt-4 bg-white dark:bg-surface-dark px-4 py-2 rounded-xl shadow-lg font-bold text-primary dark:text-white text-sm whitespace-nowrap">Sukabaca Bogor</div>
                     </div>
-                    <div class="absolute top-6 right-6 bg-white dark:bg-surface-dark p-2 rounded-lg shadow-md">
-                        <span class="material-symbols-rounded text-gray-400">layers</span>
-                    </div>
-                    <div class="absolute bottom-6 right-6 flex flex-col gap-2">
-                        <div class="bg-white dark:bg-surface-dark w-10 h-10 rounded-lg shadow-md flex items-center justify-center text-gray-600 hover:bg-gray-50 cursor-pointer">
-                            <span class="material-symbols-rounded">add</span>
-                        </div>
-                        <div class="bg-white dark:bg-surface-dark w-10 h-10 rounded-lg shadow-md flex items-center justify-center text-gray-600 hover:bg-gray-50 cursor-pointer">
-                            <span class="material-symbols-rounded">remove</span>
-                        </div>
-                    </div>
-                    <div class="absolute bottom-6 left-6 bg-white/90 dark:bg-surface-dark/90 backdrop-blur-sm p-4 rounded-xl shadow-lg max-w-[200px]">
+                    {{-- Route info --}}
+                    <div class="absolute bottom-6 left-6 bg-white/90 dark:bg-surface-dark/90 backdrop-blur-sm p-4 rounded-xl shadow-lg max-w-[200px] z-10">
                         <div class="flex items-center gap-2 mb-1">
                             <span class="w-2 h-2 rounded-full bg-green-500"></span>
                             <p class="text-xs font-bold text-gray-500">Rute Tercepat</p>
                         </div>
-                        <p class="text-sm font-bold text-primary dark:text-white">15 min dari Stasiun Tebet</p>
+                        <p class="text-sm font-bold text-primary dark:text-white">10 min dari Stasiun Bogor</p>
                     </div>
                 </div>
             </div>

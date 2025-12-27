@@ -110,7 +110,7 @@ class CopiesRelationManager extends RelationManager
             $this->syncBookCopyCounts();
           }),
       ])
-      ->rowActions([
+      ->actions([
         EditAction::make()
           ->label('Edit')
           ->after(function () {

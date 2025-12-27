@@ -53,9 +53,10 @@ class BorrowWizard extends Component
             ]);
 
             if ($this->paymentMethod === 'cash') {
-                // Skip upload step for cash, go to step 4 (completion)
-                $this->createBorrowing();
-                $this->currentStep = 4;
+                // Skip upload step for cash, go to step 4 (completion) ONLY if success
+                if ($this->createBorrowing()) {
+                    $this->currentStep = 4;
+                }
             } else {
                 $this->currentStep = 3;
             }
@@ -65,8 +66,10 @@ class BorrowWizard extends Component
                 'proofFile' => 'required|image|max:2048',
             ]);
 
-            $this->createBorrowing();
-            $this->currentStep = 4;
+            // Only proceed to step 4 if createBorrowing succeeds
+            if ($this->createBorrowing()) {
+                $this->currentStep = 4;
+            }
         }
     }
 
@@ -77,7 +80,7 @@ class BorrowWizard extends Component
         }
     }
 
-    protected function createBorrowing()
+    protected function createBorrowing(): bool
     {
         $user = Auth::user();
 
@@ -88,7 +91,7 @@ class BorrowWizard extends Component
 
         if (!$availableCopy) {
             session()->flash('error', 'Maaf, tidak ada eksemplar yang tersedia saat ini.');
-            return;
+            return false;
         }
 
         // Generate borrowing code
@@ -128,7 +131,7 @@ class BorrowWizard extends Component
             ]);
         }
 
-        session()->flash('success', 'Peminjaman berhasil dibuat! Kode: ' . $borrowingCode);
+        return true;
     }
 
     public function render()

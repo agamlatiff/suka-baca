@@ -12,15 +12,15 @@
 
             {{-- Desktop Navigation --}}
             <div class="hidden md:flex space-x-10 items-center">
-                <a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="{{ route('home') }}">
+                <a class="{{ request()->routeIs('home') ? 'text-primary dark:text-secondary-accent' : 'text-gray-600 dark:text-gray-300' }} hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="{{ route('home') }}">
                     Beranda
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+                    <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all {{ request()->routeIs('home') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
                 </a>
-                <a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="{{ route('catalog.index') }}">
+                <a class="{{ request()->routeIs('catalog.*') ? 'text-primary dark:text-secondary-accent' : 'text-gray-600 dark:text-gray-300' }} hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group" href="{{ route('catalog.index') }}">
                     Katalog
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+                    <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all {{ request()->routeIs('catalog.*') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
                 </a>
-                <a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group flex items-center gap-1" href="{{ route('wishlist.index') }}">
+                <a class="{{ request()->routeIs('wishlist.*') ? 'text-primary dark:text-secondary-accent' : 'text-gray-600 dark:text-gray-300' }} hover:text-primary dark:hover:text-primary-light transition-colors font-medium relative group flex items-center gap-1" href="{{ route('wishlist.index') }}">
                     Wishlist
                     @auth
                         @php
@@ -32,7 +32,7 @@
                             </span>
                         @endif
                     @endauth
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+                    <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all {{ request()->routeIs('wishlist.*') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
                 </a>
             </div>
 

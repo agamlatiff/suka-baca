@@ -85,6 +85,7 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
       'title_desc' => $query->orderByDesc('title'),
       'price_asc' => $query->orderBy('rental_fee'),
       'price_desc' => $query->orderByDesc('rental_fee'),
+      'random' => $query->inRandomOrder(),
       default => $query->latest(),
     };
 

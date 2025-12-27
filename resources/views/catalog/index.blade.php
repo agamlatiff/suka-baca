@@ -66,8 +66,9 @@
                         <div class="relative w-full sm:w-40">
                             <select name="sort" onchange="this.form.submit()" 
                                 class="block w-full pl-3 pr-10 py-3 text-base border-gray-200 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm rounded-xl bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white appearance-none cursor-pointer">
-                                <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
+                            <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
                                 <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }}>Populer</option>
+                                <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>Acak</option>
                                 <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>A-Z Judul</option>
                                 <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Z-A Judul</option>
                                 <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Harga Terendah</option>
@@ -118,13 +119,17 @@
                     @foreach($books as $book)
                         <div class="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 flex flex-col h-full relative">
                             <div class="relative aspect-[2/3] overflow-hidden bg-gray-100 dark:bg-gray-800">
-                                @if($book->image)
-                                    <img src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                                @else
-                                    <div class="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-400">
-                                        <span class="material-symbols-rounded text-6xl opacity-30">menu_book</span>
-                                    </div>
-                                @endif
+                                @php
+                                    $coverUrl = $book->image ? asset('storage/' . $book->image) : null;
+                                    if (!$coverUrl && $book->isbn) {
+                                        $isbnClean = str_replace(['-', ' '], '', $book->isbn);
+                                        $coverUrl = "https://covers.openlibrary.org/b/isbn/{$isbnClean}-L.jpg?default=false";
+                                    }
+                                    if (!$coverUrl) {
+                                        $coverUrl = "https://placehold.co/400x600?text=" . urlencode($book->title);
+                                    }
+                                @endphp
+                                <img src="{{ $coverUrl }}" onerror="this.onerror=null; this.src='https://placehold.co/400x600?text={{ urlencode($book->title) }}';" alt="{{ $book->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
 
                                 <div class="absolute top-3 left-3">
                                     <span class="bg-white/90 dark:bg-surface-dark/90 backdrop-blur-sm text-primary text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm">
@@ -143,7 +148,7 @@
 
                             <div class="p-4 flex flex-col flex-1">
                                 <h3 class="font-bold text-gray-900 dark:text-white text-lg leading-tight mb-1 line-clamp-1 group-hover:text-primary transition-colors">
-                                    <a href="{{ route('catalog.show', $book) }}">{{ $book->title }}</a>
+                                    <a href="{{ route('catalog.show', $book->slug) }}">{{ $book->title }}</a>
                                 </h3>
                                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">{{ $book->author }}</p>
                                 
@@ -160,16 +165,28 @@
                                 </div>
 
                                 <div class="flex gap-2">
-                                    <a href="{{ route('catalog.show', $book) }}" class="flex-1 bg-primary hover:bg-primary-light text-white text-sm font-medium py-2 rounded-lg transition-colors shadow-lg shadow-primary/20 hover:shadow-primary/30 flex items-center justify-center">
+                                    <a href="{{ route('catalog.show', $book->slug) }}" class="flex-1 bg-primary hover:bg-primary-light text-white text-sm font-medium py-2 rounded-lg transition-colors shadow-lg shadow-primary/20 hover:shadow-primary/30 flex items-center justify-center">
                                         Detail
                                     </a>
-                                    <form action="{{ route('wishlist.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="book_id" value="{{ $book->id }}">
-                                        <button type="submit" class="p-2 border border-gray-200 dark:border-white/10 rounded-lg text-gray-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all">
-                                            <span class="material-symbols-rounded text-xl">favorite</span>
-                                        </button>
-                                    </form>
+                                    @auth
+                                        @php
+                                            $isInWishlist = Auth::user()->wishlists()->where('book_id', $book->id)->exists();
+                                        @endphp
+                                        <form action="{{ $isInWishlist ? route('wishlist.destroy', $book->id) : route('wishlist.store') }}" method="POST">
+                                            @csrf
+                                            @if($isInWishlist)
+                                                @method('DELETE')
+                                            @endif
+                                            <input type="hidden" name="book_id" value="{{ $book->id }}">
+                                            <button type="submit" class="p-2 border rounded-lg transition-all {{ $isInWishlist ? 'border-red-300 bg-red-50 dark:bg-red-900/20 text-red-500' : 'border-gray-200 dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 dark:hover:bg-red-900/10' }}">
+                                                <span class="material-symbols-rounded text-xl">{{ $isInWishlist ? 'favorite' : 'favorite_border' }}</span>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('login') }}" class="p-2 border border-gray-200 dark:border-white/10 rounded-lg text-gray-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all">
+                                            <span class="material-symbols-rounded text-xl">favorite_border</span>
+                                        </a>
+                                    @endauth
                                 </div>
                             </div>
                         </div>

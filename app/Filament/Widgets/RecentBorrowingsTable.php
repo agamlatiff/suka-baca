@@ -22,7 +22,7 @@ class RecentBorrowingsTable extends TableWidget
     return $table
       ->query(
         Borrowing::query()
-          ->with(['user', 'book', 'bookCopy'])
+          ->with(['user', 'bookCopy.book'])
           ->orderBy('created_at', 'desc')
           ->limit(10)
       )
@@ -33,7 +33,7 @@ class RecentBorrowingsTable extends TableWidget
         TextColumn::make('user.name')
           ->label('Peminjam')
           ->searchable(),
-        TextColumn::make('book.title')
+        TextColumn::make('bookCopy.book.title')
           ->label('Buku')
           ->limit(25),
         TextColumn::make('borrowed_at')

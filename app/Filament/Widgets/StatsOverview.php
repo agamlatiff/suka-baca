@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class StatsOverview extends StatsOverviewWidget
 {
   protected static ?int $sort = 1;
-  protected static ?string $pollingInterval = '30s';
+  protected ?string $pollingInterval = '30s';
 
   protected function getStats(): array
   {

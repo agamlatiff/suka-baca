@@ -4,13 +4,21 @@
 ])
 
 @php
-    $imageUrl = $book->image ? asset('storage/' . $book->image) : asset('placeholder-book.jpg');
+    $coverUrl = $book->image ? asset('storage/' . $book->image) : null;
+    if (!$coverUrl && $book->isbn) {
+        $isbnClean = str_replace(['-', ' '], '', $book->isbn);
+        $coverUrl = "https://covers.openlibrary.org/b/isbn/{$isbnClean}-L.jpg?default=false";
+    }
+    if (!$coverUrl) {
+        $coverUrl = "https://placehold.co/400x600?text=" . urlencode($book->title);
+    }
 @endphp
 
 <div {{ $attributes->merge(['class' => 'group bg-white dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/30 transition-all duration-500 hover:-translate-y-1']) }}>
     {{-- Book Cover --}}
-    <a href="{{ route('catalog.show', $book) }}" class="block relative aspect-[2/3] overflow-hidden">
-        <img src="{{ $imageUrl }}" 
+    <a href="{{ route('catalog.show', $book->slug) }}" class="block relative aspect-[2/3] overflow-hidden">
+        <img src="{{ $coverUrl }}" 
+            onerror="this.onerror=null; this.src='https://placehold.co/400x600?text={{ urlencode($book->title) }}';" 
             alt="{{ $book->title }}" 
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
         
@@ -37,7 +45,7 @@
 
     {{-- Book Info --}}
     <div class="p-4">
-        <a href="{{ route('catalog.show', $book) }}" class="block">
+        <a href="{{ route('catalog.show', $book->slug) }}" class="block">
             <h3 class="font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight mb-1 group-hover:text-primary dark:group-hover:text-secondary-accent transition-colors">
                 {{ $book->title }}
             </h3>
