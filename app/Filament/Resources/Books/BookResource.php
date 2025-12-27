@@ -31,6 +31,8 @@ class BookResource extends Resource
 
     protected static ?string $navigationLabel = 'Daftar Buku';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Manajemen';
+
     public static function form(Schema $schema): Schema
     {
         return BookForm::configure($schema);

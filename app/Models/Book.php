@@ -12,6 +12,15 @@ class Book extends Model
 {
   use HasFactory;
 
+  protected static function booted(): void
+  {
+    static::creating(function (Book $book) {
+      if (empty($book->slug)) {
+        $book->slug = \Illuminate\Support\Str::slug($book->title);
+      }
+    });
+  }
+
   /**
    * The attributes that are mass assignable.
    *

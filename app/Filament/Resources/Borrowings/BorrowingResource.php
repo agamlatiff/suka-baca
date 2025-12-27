@@ -30,6 +30,8 @@ class BorrowingResource extends Resource
 
     protected static ?string $navigationLabel = 'Daftar Peminjaman';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Manajemen';
+
     public static function form(Schema $schema): Schema
     {
         return BorrowingForm::configure($schema);

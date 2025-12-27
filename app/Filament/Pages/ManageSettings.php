@@ -22,6 +22,8 @@ class ManageSettings extends Page implements HasForms
 
   protected static ?int $navigationSort = 100;
 
+  protected static string|\UnitEnum|null $navigationGroup = 'Sistem';
+
   protected string $view = 'filament.pages.settings';
 
   public ?array $librarySettings = [];

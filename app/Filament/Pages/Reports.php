@@ -31,6 +31,8 @@ class Reports extends Page implements HasForms, HasTable
 
     protected static ?int $navigationSort = 10;
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Sistem';
+
     protected string $view = 'filament.pages.reports';
 
     public ?string $activeTab = 'popular-books';
