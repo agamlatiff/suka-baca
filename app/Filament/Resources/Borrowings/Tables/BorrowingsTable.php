@@ -249,10 +249,8 @@ class BorrowingsTable
                             ->send();
                     }),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()->label('Hapus'),
-                ]),
+            ->groupedBulkActions([
+                DeleteBulkAction::make()->label('Hapus'),
             ])
             ->emptyStateHeading('Belum Ada Peminjaman')
             ->emptyStateDescription('Daftar peminjaman akan muncul di sini.');

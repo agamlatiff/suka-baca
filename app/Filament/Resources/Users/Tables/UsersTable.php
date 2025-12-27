@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use App\Models\User;
@@ -28,6 +28,7 @@ class UsersTable
                     ->color(fn(string $state): string => match ($state) {
                         'admin' => 'danger',
                         'user' => 'info',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn(string $state): string => match ($state) {
                         'admin' => 'Admin',
@@ -43,6 +44,7 @@ class UsersTable
                     ->color(fn(string $state): string => match ($state) {
                         'active' => 'success',
                         'suspended' => 'danger',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn(string $state): string => match ($state) {
                         'active' => 'Aktif',
@@ -73,17 +75,17 @@ class UsersTable
                         'suspended' => 'Suspended',
                     ]),
             ])
-            ->actions([
+            ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                \Filament\Tables\Actions\Action::make('suspend')
+                Action::make('suspend')
                     ->label('Suspend')
                     ->icon('heroicon-o-no-symbol')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->visible(fn(User $record) => $record->status === 'active' && $record->id !== auth()->id())
+                    ->visible(fn(User $record) => $record->status === 'active' && $record->id !== \Illuminate\Support\Facades\Auth::id())
                     ->action(fn(User $record) => $record->update(['status' => 'suspended'])),
-                \Filament\Tables\Actions\Action::make('activate')
+                Action::make('activate')
                     ->label('Aktifkan')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -91,10 +93,8 @@ class UsersTable
                     ->visible(fn(User $record) => $record->status === 'suspended')
                     ->action(fn(User $record) => $record->update(['status' => 'active'])),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+            ->groupedBulkActions([
+                DeleteBulkAction::make(),
             ]);
     }
 }

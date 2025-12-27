@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources\Payments\Tables;
 
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use App\Models\Payment;
 use Filament\Forms\Components\Textarea;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentsTable
 {
@@ -61,7 +62,8 @@ class PaymentsTable
                     }),
                 ImageColumn::make('proof_image')
                     ->label('Bukti')
-                    ->simpleLightbox(),
+                    ->circular()
+                    ->size(40),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
@@ -111,7 +113,7 @@ class PaymentsTable
                     ->color('success')
                     ->requiresConfirmation()
                     ->visible(fn(Payment $record) => $record->status === 'pending')
-                    ->action(fn(Payment $record) => $record->verify(auth()->id())),
+                    ->action(fn(Payment $record) => $record->verify(Auth::id())),
                 Action::make('reject')
                     ->label('Tolak')
                     ->icon('heroicon-o-x-circle')
@@ -122,13 +124,11 @@ class PaymentsTable
                             ->label('Alasan Penolakan')
                             ->required(),
                     ])
-                    ->action(fn(Payment $record, array $data) => $record->reject(auth()->id(), $data['rejection_notes'])),
+                    ->action(fn(Payment $record, array $data) => $record->reject(Auth::id(), $data['rejection_notes'])),
                 EditAction::make(),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+            ->groupedBulkActions([
+                DeleteBulkAction::make(),
             ]);
     }
 }

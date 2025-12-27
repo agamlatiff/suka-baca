@@ -44,10 +44,8 @@ class CategoriesTable
             ->recordActions([
                 EditAction::make()->label('Edit'),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()->label('Hapus'),
-                ]),
+            ->groupedBulkActions([
+                DeleteBulkAction::make()->label('Hapus'),
             ])
             ->emptyStateHeading('Belum Ada Kategori')
             ->emptyStateDescription('Klik "Baru" untuk menambahkan kategori pertama.');

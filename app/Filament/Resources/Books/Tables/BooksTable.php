@@ -4,15 +4,17 @@ namespace App\Filament\Resources\Books\Tables;
 
 use App\Exports\BooksExport;
 use App\Imports\BooksImport;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BooksTable
@@ -62,6 +64,19 @@ class BooksTable
             ->filters([
                 //
             ])
+            ->recordActions([
+                ViewAction::make()->label('Lihat'),
+                EditAction::make()->label('Edit'),
+            ])
+            ->groupedBulkActions([
+                DeleteBulkAction::make()->label('Hapus'),
+                BulkAction::make('export')
+                    ->label('Export Excel')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->action(function (Collection $records) {
+                        return Excel::download(new BooksExport, 'books-' . now()->format('Y-m-d') . '.xlsx');
+                    }),
+            ])
             ->headerActions([
                 Action::make('export')
                     ->label('Export Excel')
@@ -96,15 +111,6 @@ class BooksTable
                                 ->send();
                         }
                     }),
-            ])
-            ->recordActions([
-                ViewAction::make()->label('Lihat'),
-                EditAction::make()->label('Edit'),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()->label('Hapus'),
-                ]),
             ])
             ->emptyStateHeading('Belum Ada Buku')
             ->emptyStateDescription('Klik "Baru" untuk menambahkan buku pertama.');
